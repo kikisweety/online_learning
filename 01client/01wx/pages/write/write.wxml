@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view class="container">
+  <scroll-view scroll-x='true' class="coursesBox">
+    <view class="coursesItem" wx:for="{{courses}}" wx:key="index" wx:for-item="course">
+      <view class="courseItemView">
+        <view class="courseTitle">{{course.title}}</view>
+        <view class="line"></view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,50 @@
+
+.courseBox {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pageHeader {
+    width: 90%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-bottom: 2px solid gainsboro;
+    margin: 20px 0px 30px 0px;
+}
+
+.header_left {
+    font-size: 18px;
+}
+
+.header_right {
+    height: 32px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+}
+
+.headerBtn {
+    background-color: #5CB85C;
+    padding: 0px 10px;
+    color: white;
+}
+
+.btnGroup {
+    width: 90%;
+    margin-bottom: 30px;
+}
+
+.btnGroup>a {
+    padding: 7px 10px;
+    border: 1px solid #CCCCCC;
+    color: #333333;
+    border-radius: 3px;
+    font-size: 12px;
+}

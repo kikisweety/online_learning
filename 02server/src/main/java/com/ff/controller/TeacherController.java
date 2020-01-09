@@ -51,4 +51,13 @@ public class TeacherController {
 		return teacherService.insertTeacher(teacher, request);
 
 	}
+	@ResponseBody
+	@RequestMapping( value = "delTeacher")
+	public Msg delTeacher(Teacher teacher,HttpServletRequest respone,HttpServletRequest request){
+		System.out.println(teacher);
+
+		int teacherId = teacher.getId();
+		Integer id=teacherId;
+		return teacherService.delTeacher(id);
+	}
 }

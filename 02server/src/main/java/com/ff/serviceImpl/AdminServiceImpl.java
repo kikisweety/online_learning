@@ -41,4 +41,9 @@ public class AdminServiceImpl implements AdminService {
 		return msg;
 	}
 
+	@Override
+	public Msg insertSelective(Admin admin) {
+		return null;
+	}
+
 }

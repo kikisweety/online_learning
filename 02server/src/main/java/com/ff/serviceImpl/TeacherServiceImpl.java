@@ -72,4 +72,20 @@ public class TeacherServiceImpl implements TeacherService {
 		return msg;
 	}
 
+    @Override
+    public Msg delTeacher(Integer id) {
+	    Msg msg =new Msg();
+
+        if (teacherMapper.delTeacher(id) == 1) {
+            msg.setCode(1);
+            msg.setMsg("删除成功");
+        }else {
+            msg.setCode(-1);
+            msg.setMsg("删除失败");
+        }
+
+        return msg;
+    }
+
+
 }

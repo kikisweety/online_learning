@@ -37,7 +37,7 @@ public class ExamController {
 			examChapters.add(examChapter);
 
 		}
-
+		System.out.println("11111");
 		return examService.insertExamForChapter(examChapters);
 	}
 

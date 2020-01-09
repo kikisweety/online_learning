@@ -1,5 +1,8 @@
 package com.ff.pojo;
 
+/**
+ * 用户
+ */
 public class Admin {
 	private Integer id;
 

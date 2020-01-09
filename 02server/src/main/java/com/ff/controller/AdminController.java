@@ -28,4 +28,10 @@ public class AdminController {
 		return adminService.check(admin);
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "adminAdd")
+	public Msg regist(Admin admin ,HttpServletRequest req, HttpServletResponse resp){
+		return adminService.insertSelective(admin);
+	}
+
 }

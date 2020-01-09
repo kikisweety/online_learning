@@ -21,4 +21,11 @@ public interface TeacherService {
 	 * @return 处理结果
 	 */
 	Msg insertTeacher(Teacher teacher, HttpServletRequest multipartRequest);
+
+	/**
+	 *
+	 * @param teacher
+	 * @return
+	 */
+	Msg delTeacher(Integer id);
 }

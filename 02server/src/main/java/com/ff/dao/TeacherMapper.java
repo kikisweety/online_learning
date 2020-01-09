@@ -21,9 +21,10 @@ public interface TeacherMapper {
     /**
      *  删除老师
      * @param Teacher  删除的老师
+     * @param teacher
      * @return  是否删除成功
      */
-     int delTeacher(Teacher teacher);
+     int delTeacher(Integer teacher);
      
      /**
  	 * 查询指定老师

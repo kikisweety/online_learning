@@ -24,5 +24,11 @@
 		where
 		name = #{name}
 	</select>
+	<delete id="delTeacher" parameterType="java.lang.Integer">
+	delete from
+	teachers
+	where
+	id = #{id}
+	</delete>
 
 </mapper>

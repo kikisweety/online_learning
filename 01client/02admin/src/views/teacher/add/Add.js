@@ -106,7 +106,7 @@ export default class Add extends React.Component {
     net.uploadFile(
       "teacherAdd",
 
-      { name: name, introduce: introduce, files: fileList[0] },
+      // { name: name, introduce: introduce, files: fileList[0] },
 
       { name: name, introduce: introduce, files: fileList },
 
@@ -114,6 +114,14 @@ export default class Add extends React.Component {
         console.log(ob);
       }
     );
+    // net.post(
+    //   "/teacherAdd",
+    //   { name: name, introduce: introduce },
+    //   function (ob) {
+    //     console.log("上传老师");
+    //     console.log(ob);
+    //   }
+    // )
   };
   componentDidMount() {
     let that = this;
@@ -284,3 +292,7 @@ export default class Add extends React.Component {
     );
   }
 }
+
+
+
+

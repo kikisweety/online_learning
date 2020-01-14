@@ -26,13 +26,13 @@ import com.qcloud.cos.region.Region;
 
 public class CosTool {
 
-	private final String accessKey = "AKID8A1hUmP2wfDc2HBDwTp0OejeOyNdHbJq";
+	private final String accessKey = "AKIDwmOmxwOd7QYSdcPHRL1YqsdCXbQPJfut";
 
-	private final String secretKey = "LZbTBmCbrwqY8Xk6JJ9nMl7M3ZxACXns";
+	private final String secretKey = "umPlrkNk5RyINFvfAPNEpEWcuVtUMyLV";
 
-	private final String bucket = "chengd-1253990303";
+	private final String bucket = "noi-1259634096";
 	private final String Region = "ap-chengdu";
-	private final String path = "LZbTBmCbrwqY8Xk6JJ9nMl7M3ZxACXns";
+	private final String path = "https://noi-1259634096.cos.ap-chengdu.myqcloud.com";
 	private final String tengxun = "noi";
 
 	private final String videoFolder = "video";// 1

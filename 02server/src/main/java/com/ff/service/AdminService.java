@@ -13,5 +13,7 @@ public interface AdminService {
 	 */
 	Msg check(Admin admin);
 
-    Msg insertSelective(Admin admin);
+    Msg insert(Admin admin);
+
+
 }

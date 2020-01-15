@@ -31,7 +31,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "adminAdd")
 	public Msg regist(Admin admin ,HttpServletRequest req, HttpServletResponse resp){
-		return adminService.insertSelective(admin);
+		return adminService.insert(admin);
 	}
 
 }

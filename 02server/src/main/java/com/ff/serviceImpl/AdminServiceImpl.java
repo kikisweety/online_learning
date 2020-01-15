@@ -1,5 +1,6 @@
 package com.ff.serviceImpl;
 
+import com.ff.pojo.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ff.dao.AdminMapper;
@@ -42,8 +43,23 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Msg insertSelective(Admin admin) {
-		return null;
+	public Msg insert(Admin admin) {
+		// 创建信息对象
+		Msg msg = new Msg();
+
+		System.out.println(admin);
+		Topic buffer = null;
+		if (adminMapper.insert(admin) == 1) {
+			msg.setCode(1);
+			msg.setObject(buffer);
+			msg.setMsg("添加(" + admin.getName() + ")用户成功!");
+		} else {
+			msg.setCode(-1);
+			msg.setMsg("添加(" + admin.getName() + ")用户失败!");
+		}
+		
+		return msg;
 	}
+
 
 }

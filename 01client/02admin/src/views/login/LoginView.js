@@ -1,6 +1,6 @@
 import React from "react";
 import "./Login.css";
-import { Row, Col, Input, Button, message } from "antd";
+import { Row, Col, Input, Button, message ,Icon} from "antd";
 import net from "../../utils/net";
 export default class LoginView extends React.Component {
   constructor() {
@@ -31,7 +31,7 @@ export default class LoginView extends React.Component {
       return;
     }
     //2，提交数据到后台服务器
-    net.post("adminCheck", { name: userName, passwd: inputPasswd }, function(
+    net.post("adminCheck", { name: userName, passwd: inputPasswd }, function (
       data
     ) {
       console.log(data);
@@ -60,38 +60,43 @@ export default class LoginView extends React.Component {
     return (
       <div className="view">
         <div className="content">
-          <h1>登录页面</h1>
+          <p>您好，欢迎来到在线教育系统</p>
+          <h4>登录界面</h4>
           <div className="loginVeiw">
-            <div className="content">
+            <div className="content1">
               <Row className="row">
-                <Col span={4}>用户名</Col>
+                {/* <Col span={4}>用户名</Col> */}
                 <Col span={20}>
                   <Input
+                    id="input"
                     ref="inputUser"
-                    style={{ width: 300 }}
-                    placeholder="输入你的用户名"
+                    style={{ width: 300}}
+                    placeholder="输入用户名"
+                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   />
                 </Col>
               </Row>
               <Row className="row">
-                <Col span={4}>密码</Col>
+                {/* <Col span={4}>密码</Col> */}
                 <Col span={20}>
                   <Input.Password
+                    id="input"
                     onChange={this.passwdChange.bind(this)}
                     ref="inputPasswd"
                     placeholder="输入密码"
                     style={{ width: 300 }}
+                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   />
                 </Col>
               </Row>
               <Row className="row">
                 <Col span={12} className="col">
-                  <Button type="primary" onClick={this.checkUser.bind(this)}>
+                  <Button type="primary" onClick={this.checkUser.bind(this)} style={{width:150,marginRight:2}}>
                     登录
                   </Button>
                 </Col>
                 <Col span={12} className="col">
-                  <Button onClick={this.toRegisterView.bind(this)}>注册</Button>
+                  <Button id="test" onClick={this.toRegisterView.bind(this)} style={{ width: 150 }}>注册</Button>
                 </Col>
               </Row>
             </div>

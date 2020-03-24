@@ -50,6 +50,13 @@ public class CourseController {
 		return courseService.selectCourseAndChapters();
 	}
 
+	/**
+	 * 添加课程
+	 * @param course
+	 * @param resp
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping(value = "courses/add")
 	@ResponseBody
 	public Msg addCourses(Course course, HttpServletResponse resp, HttpServletRequest req) {
@@ -57,15 +64,21 @@ public class CourseController {
 		return courseService.insertCourses(course, req);
 	}
 
+	/**
+	 * 所有问题
+	 * @param resp
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping(value = "questions/all")
 	@ResponseBody
 	public Msg selectAllQuestionsOfCourses(HttpServletResponse resp, HttpServletRequest req) {
 
 		return courseService.selectAllQuestionsOfCourses();
 	}
+//	删除课程
 	@ResponseBody
 	@RequestMapping(value = "courses/delete")
-
 	public Msg deleteById(Course course, HttpServletResponse resp, HttpServletRequest req){
 		return courseService.deleteById();
 	}

@@ -24,9 +24,11 @@ public interface AdVideoService {
 	/**
 	 * 更新视频
 	 * 
-	 * @param video
-	 * @return
+	 * @param adVideo
+	 * @return、、、
 	 */
 	Msg updateVideo(AdVideo adVideo);
+
+	Msg deleteAdVide(AdVideo adVideo);
 
 }

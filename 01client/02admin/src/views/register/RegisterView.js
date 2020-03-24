@@ -29,14 +29,6 @@ export default class RegisterView extends React.Component {
                     prefix={
                       <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
-                    // suffix={
-                    //   <Tooltip title="">
-                    //     <Icon
-                    //       type="info-circle"
-                    //       style={{ color: "rgba(0,0,0,.45)" }}
-                    //     />
-                    //   </Tooltip>
-                    // }
                   />
                 </Col>
               </Row>

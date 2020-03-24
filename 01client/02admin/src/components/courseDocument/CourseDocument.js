@@ -345,10 +345,15 @@ export default class CourseDocument extends React.Component {
 
           <div className="addCourseBox">
             <Table
+              style={{ maxWidth:'100%', margin: "0 auto", margin: "10px" }}
               className="components-table-demo-nested courseTable"
               columns={this.state.columns}
               expandedRowRender={this.expandedRowRender}
               dataSource={this.state.allLeaf}
+              pagination={{
+                pageSize:8
+              }}
+              scroll={{ y: 500 }}
             />
           </div>
           {/* 视频播放 */}

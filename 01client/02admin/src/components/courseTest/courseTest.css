@@ -21,6 +21,7 @@
 .testTitle{
     font-size: 20px;
     color: #595959;
+    line-height: 80px;
 }
 .btnBox{
     padding-bottom: 20px;

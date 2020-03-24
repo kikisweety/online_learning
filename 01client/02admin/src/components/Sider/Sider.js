@@ -11,7 +11,7 @@ class MySider extends React.Component {
   render() {
     return (
       <div className="siderBox">
-        <div className="headView">NOI后台管理</div>
+        <div className="headView">在线教育后台管理</div>
         <Sider
           className="sider"
           trigger={null}

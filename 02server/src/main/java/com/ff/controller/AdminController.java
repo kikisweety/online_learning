@@ -11,7 +11,7 @@ import com.ff.pojo.Admin;
 import com.ff.pojo.Msg;
 import com.ff.service.AdminService;
 
-@CrossOrigin(origins = { "http://localhost:3000", "null" })
+//@CrossOrigin(origins = { "http://localhost:3000", "null" })
 @Controller
 @RequestMapping("/noi")
 public class AdminController {
@@ -33,5 +33,5 @@ public class AdminController {
 	public Msg regist(Admin admin ,HttpServletRequest req, HttpServletResponse resp){
 		return adminService.insert(admin);
 	}
-
+//#1111111
 }

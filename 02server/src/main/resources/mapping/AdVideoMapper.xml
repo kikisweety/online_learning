@@ -23,7 +23,7 @@
 		select * from
 		ad_video
 		where
-		name = #{name}
+		av_name = #{name}
 	</select>
 
 

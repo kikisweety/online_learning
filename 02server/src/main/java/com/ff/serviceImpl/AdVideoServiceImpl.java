@@ -66,4 +66,9 @@ public class AdVideoServiceImpl implements AdVideoService {
 		return msg;
 	}
 
+	@Override
+	public Msg deleteAdVide(AdVideo adVideo) {
+		return null;
+	}
+
 }

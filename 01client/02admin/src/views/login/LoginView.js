@@ -40,7 +40,7 @@ export default class LoginView extends React.Component {
       if (code === 1) {
         //把用户的数据保存起来
         localStorage.setItem("user", data.user);
-        that.props.history.push({ pathname: "/", state: {} });
+        that.props.history.push({ pathname: "/home/courses/add", state: {} });
       } else {
         message.error(data.msg);
       }

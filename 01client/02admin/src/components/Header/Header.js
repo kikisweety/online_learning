@@ -29,9 +29,9 @@ class MyHeader extends React.Component {
             退出登录<Icon type="logout" />
           </div>
           </Link>
-          <div className = "headImag">
+          {/* <div className = "headImag">
             <img src = "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2420043518,103827907&fm=26&gp=0.jpg" />
-          </div>
+          </div> */}
         </div>
       </Header>
     );

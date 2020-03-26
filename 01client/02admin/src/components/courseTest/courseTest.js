@@ -5,26 +5,7 @@ import net from "../../utils/net";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 const { Option } = Select;
 // 课程信息测试数据
-const newData = [
-  {
-    key: 1,
-    name: 'John Brown',
-    chapters: 32,
-    introduce: 'New York No. 1 Lake Park',
-  },
-  {
-    key: 2,
-    name: 'John Brown',
-    chapters: 32,
-    introduce: 'New York No. 1 Lake Park',
-  },
-  {
-    key: 3,
-    name: 'John Brown',
-    chapters: 32,
-    introduce: 'New York No. 1 Lake Park'
-  },
-];
+
 export default class MyCourseTest extends React.Component {
   constructor(props) {
     super(props);
@@ -111,7 +92,7 @@ export default class MyCourseTest extends React.Component {
     return (
       <div className="courseTestBox">
         <div className="testHeader">
-          <h1 className="testTitle">课程试卷</h1>
+          <span className="testTitle">课程试卷</span>
           <div className="btnBox">
             <Link to={`/home/courses/add/created`}
               style={{ color: "white" }}>
@@ -130,12 +111,14 @@ export default class MyCourseTest extends React.Component {
           </div>
         </div>
         <Table
+          className="components-table-demo-nested courseTable"
           columns={this.state.newColumns}
-          style={{ width: "98.5%", margin: "0 auto", margin: "10px"}}
+          style={{ width: "98.5%", margin: "0 auto", margin: "10px" }}
           //额外的展开行Function(record, index, indent, expanded):ReactNode
           expandedRowRender={this.expandedRowRender}
           dataSource={this.state.allLeaf}
-          pagination={{ pageSize: 12, position: "right" }}
+          pagination={{ pageSize: 8 }}
+          scroll={{y:500}}
         />
         {/* <Button style={{ backgroundColor: "#ECECEC" }}>删除</Button> */}
       </div>

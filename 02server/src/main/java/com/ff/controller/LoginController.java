@@ -45,6 +45,7 @@ public class LoginController {
         User user = (User) SecurityUtils.getSubject().getPrincipals();
         model.addAttribute("user",user);
         msg.setMsg("欢迎"+user.getName());
+        msg.setObject(user);
 
         return msg;
     }

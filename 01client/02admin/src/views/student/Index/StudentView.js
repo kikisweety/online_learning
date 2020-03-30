@@ -9,6 +9,7 @@ export default class StudentView extends React.Component {
         return (
             <div className="studentBox">
                 <Layout className="layout">
+                    {/* 导航栏 */}
                     <Header style={{width: '100%', height: '80px', backgroundColor: 'white' }}>
                         <div className="headerContainer">
                             <div className="logoBox" >
@@ -48,7 +49,7 @@ export default class StudentView extends React.Component {
                         </div>
                     </Header>
                     <Content></Content>
-                    <Footer style={{textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                    {/* <Footer style={{textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
                 </Layout>
             </div>
         );

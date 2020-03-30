@@ -142,5 +142,9 @@ public class CosTool {
 		}
 
 	}
+	public void delete(String bucketName, String key){
+		cosclient.deleteObject(bucketName,key);
+	}
+
 
 }

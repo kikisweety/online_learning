@@ -82,5 +82,10 @@ public class CourseController {
 	public Msg deleteById(Course course, HttpServletResponse resp, HttpServletRequest req){
 		return courseService.deleteById();
 	}
+	@RequestMapping("courses/type")
+	@ResponseBody
+	public Msg selectByType(Course course, HttpServletResponse resp, HttpServletRequest req){
+		return courseService.selectByType(course.getCourseType());
+	}
 
 }

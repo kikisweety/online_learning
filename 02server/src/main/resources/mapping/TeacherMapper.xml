@@ -8,9 +8,9 @@
 
 	<insert id="insert" keyProperty="id" useGeneratedKeys="true">
 		insert
-		into teachers(name,introduce,tkey)
+		into teachers(name,introduce,tkey,t_type)
 		values
-		(#{name},#{introduce},#{tkey})
+		(#{name},#{introduce},#{tkey},#{tType})
 	</insert>
 
 	<select id="selectTeachers" resultMap="BaseResultMap">

@@ -19,6 +19,8 @@ public class Teacher {
 	 */
 	private String introduce;
 
+	private String  tType;
+
 	public Teacher() {
 		super();
 	}
@@ -61,6 +63,14 @@ public class Teacher {
 
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
+	}
+
+	public String gettType() {
+		return tType;
+	}
+
+	public void settType(String tType) {
+		this.tType = tType;
 	}
 
 	@Override

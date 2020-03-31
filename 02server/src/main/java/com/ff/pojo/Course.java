@@ -38,6 +38,8 @@ public class Course {
 	 */
 	private int ctype;
 
+	private int courseType;
+
 	/**
 	 * 当前课程的所有章节
 	 */
@@ -122,6 +124,14 @@ public class Course {
 
 	public void setChapters(List<Chapter> chapters) {
 		this.chapters = chapters;
+	}
+
+	public int getCourseType() {
+		return courseType;
+	}
+
+	public void setCourseType(int courseType) {
+		this.courseType = courseType;
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package com.ff.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,8 +86,8 @@ public class CourseController {
 	}
 	@RequestMapping("courses/type")
 	@ResponseBody
-	public Msg selectByType(Course course, HttpServletResponse resp, HttpServletRequest req){
-		return courseService.selectByType(course.getCourseType());
+	public Msg selectByType(@Param("courseType") int courseType, HttpServletResponse resp, HttpServletRequest req){
+		return courseService.selectByType(courseType);
 	}
 
 }

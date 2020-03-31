@@ -33,47 +33,7 @@ export default class MyCourses extends React.Component {
             ],
             currentIndex: 1,
             // currentStyle: false
-            courses: [
-                // {
-                //     id: 1,
-                //     name: 'C++',
-                //     introduce: '面向对象的编程语言',
-                //     url: '',
-                //     children: [
-                //         {
-                //             chapterId: 13,
-                //             name: '基础课程',
-                //             course_id:1
-                //         }, {
-                //             chapterId: 14,
-                //             name: '控制语句',
-                //             course_id: 1
-                //         }, {
-                //             chapterId: 15,
-                //             name: '函数',
-                //             course_id: 1
-                //         }
-                //     ]
-                // },
-                // {
-                //     id: 2,
-                //     name: '数据结构',
-                //     introduce: '一个面向对象语言',
-                //     url: ''
-                // },
-                // {
-                //     id: 3,
-                //     name: 'Java',
-                //     introduce: '一个面向对象的编程语言',
-                //     url: ''
-                // },
-                // {
-                //     id: 4,
-                //     name: 'Python',
-                //     introduce: 'python是个好课程',
-                //     url: ''
-                // }
-            ],
+            courses: [],
         }
     }
     componentDidMount() { 
@@ -97,7 +57,7 @@ export default class MyCourses extends React.Component {
         //         courses: ob.data.object
         //     })
         // })
-        net.get('courses/type', { coursetype:id },function (ob) {
+        net.get('courses/type', { courseType:id },function (ob) {
             console.log(ob);
             that.setState({
                 courses: ob.data.object
@@ -108,10 +68,10 @@ export default class MyCourses extends React.Component {
     callback(key) {
         console.log(key);
     };
-    routerTo(item) {
-        this.props.history.push({ pathname: `/CoursesDetail/${item.id}`, state: { courses: item } })
-        // console.log(this.state.data);
-    }
+    // routerTo(item) {
+    //     this.props.history.push({ pathname: `/CoursesDetail/${item.id}`, state: { courses: item } })
+    //     // console.log(this.state.data);
+    // }
     render() {
         var _this = this;
         var isBox1Show = this.state.currentIndex == 1 ? 'block' : 'none';
@@ -155,7 +115,7 @@ export default class MyCourses extends React.Component {
                                         <List.Item>
                                             <Card
                                                 key={item.id}
-                                                onClick={() => this.routerTo(item)}
+                                                // onClick={() => this.routerTo(item)}
                                                 hoverable
                                                 style={{ height: 290, borderRadius: 5 }}
                                                 cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}

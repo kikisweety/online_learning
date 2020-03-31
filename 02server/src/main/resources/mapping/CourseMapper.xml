@@ -155,8 +155,8 @@
 		select * from
 		courses
 	</select>
-    <select id="selectByType" resultMap="courseMap">
-        select  *from courses
+    <select id="selectByType" resultMap="courseAndQuestionsMap">
+        select  * from courses
         where courseType=#{courseType}
     </select>
 

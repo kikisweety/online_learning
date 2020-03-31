@@ -125,4 +125,17 @@ public class CourseServiceImpl implements CourseService {
 		return null ;
 	}
 
+	@Override
+	public Msg selectByType(int courseType) {
+		Msg msg = new Msg();
+		msg.setMsg("查询失败！");
+
+		List<Course> list = courseMapper.selectByType(courseType);
+		if (list != null && list.size() >= 1) {
+			msg.setObject(list);
+			msg.setMsg("查询成功！！");
+		}
+		return msg;
+	}
+
 }

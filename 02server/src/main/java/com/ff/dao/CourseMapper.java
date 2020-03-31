@@ -62,4 +62,6 @@ public interface CourseMapper {
 	 * @return
 	 */
 	List<Course> selectAllQuestionsOfCourses();
+
+    List<Course> selectByType(int courseType);
 }

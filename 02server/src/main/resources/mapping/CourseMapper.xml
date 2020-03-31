@@ -9,6 +9,7 @@
 		<result column="url" property="url" />
 		<result column="teacher_id" property="teacherId" />
 		<result column="ctype" property="ctype" />
+		<result column="t_type" property="tType" />
 	</resultMap>
 
 
@@ -20,12 +21,11 @@
 		<result column="url" property="url" />
 		<result column="teacher_id" property="teacherId" />
 		<result column="ctype" property="ctype" />
-
+		<result column="t_type" property="tType" />
 		<collection property="chapters" javaType="ArrayList"
 			ofType="com.ff.pojo.Chapter" column="id"
 			select="com.ff.dao.ChapterMapper.getChaptersByCourseId">
 		</collection>
-
 	</resultMap>
 
 	<resultMap id="courseAndQuestionsMap"
@@ -37,7 +37,7 @@
 		<result column="url" property="url" />
 		<result column="teacher_id" property="teacherId" />
 		<result column="ctype" property="ctype" />
-
+		<result column="t_type" property="tType" />
 		<collection property="chapters" javaType="ArrayList"
 	ofType="com.ff.pojo.Chapter" column="id"
 	select="com.ff.dao.ChapterMapper.selectAllQuestionsOfChaptersByCoursesId">
@@ -55,7 +55,7 @@
 		<result column="url" property="url" />
 		<result column="teacher_id" property="teacherId" />
 		<result column="ctype" property="ctype" />
-
+		<result column="t_type" property="tType" />
 		<collection property="chapters" javaType="ArrayList"
 			ofType="com.ff.pojo.Chapter" column="id"
 			select="com.ff.dao.ChapterMapper.getChaptersByCourseId">
@@ -155,6 +155,9 @@
 		select * from
 		courses
 	</select>
-
+    <select id="selectByType" resultMap="courseMap">
+        select  *from courses
+        where courseType=#{courseType}
+    </select>
 
 </mapper>

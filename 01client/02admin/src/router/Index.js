@@ -7,7 +7,7 @@ import LoginView from "../views/login/LoginView";
 import RegisterView from "../views/register/RegisterView";
 import StudentView from "../views/student/Index/StudentView";
 import Detail from "../views/student/components/Details/details"
-
+import CoursesDetail from "../views/student/components/Courses/coursesDetail/coursesDetail"
 const history = createHashHistory();
 
 export default class Index extends React.Component {
@@ -19,6 +19,7 @@ export default class Index extends React.Component {
         <Route exact path="/login" component={LoginView} />
         <Route exact path="/register" component={RegisterView} />
         <Route path="/student" component={StudentView} />
+        <Route path="/CoursesDetail/:id" component={CoursesDetail}/>
         <Route path="/Detail/:id" component={Detail} />
       </Router>
     );

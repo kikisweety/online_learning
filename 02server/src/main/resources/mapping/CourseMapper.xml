@@ -21,6 +21,8 @@
 		<result column="url" property="url" />
 		<result column="teacher_id" property="teacherId" />
 		<result column="ctype" property="ctype" />
+		<result column="course_type" property="courseType"/>
+
 		<collection property="chapters" javaType="ArrayList"
 			ofType="com.ff.pojo.Chapter" column="id"
 			select="com.ff.dao.ChapterMapper.getChaptersByCourseId">
@@ -36,6 +38,8 @@
 		<result column="url" property="url" />
 		<result column="teacher_id" property="teacherId" />
 		<result column="ctype" property="ctype" />
+		<result column="course_type" property="courseType"/>
+
 		<collection property="chapters" javaType="ArrayList"
 	ofType="com.ff.pojo.Chapter" column="id"
 	select="com.ff.dao.ChapterMapper.selectAllQuestionsOfChaptersByCoursesId">
@@ -53,6 +57,8 @@
 		<result column="url" property="url" />
 		<result column="teacher_id" property="teacherId" />
 		<result column="ctype" property="ctype" />
+		<result column="course_type" property="courseType"/>
+
 		<collection property="chapters" javaType="ArrayList"
 			ofType="com.ff.pojo.Chapter" column="id"
 			select="com.ff.dao.ChapterMapper.getChaptersByCourseId">
@@ -152,9 +158,9 @@
 		select * from
 		courses
 	</select>
-    <select id="selectByType" resultMap="courseAndQuestionsMap">
+    <select id="selectByType" resultMap="courseAndChaptersMap">
         select  * from courses
-        where courseType=#{courseType}
+        where course_type=#{courseType}
     </select>
 
 </mapper>

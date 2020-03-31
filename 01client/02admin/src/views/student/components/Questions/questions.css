@@ -2,6 +2,9 @@
     /* position: absolute;
     top: 80px; */
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     background-color:rosybrown;
+}
+.questionContainer{
+    height: 1000px;
 }

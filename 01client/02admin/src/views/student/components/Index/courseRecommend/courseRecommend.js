@@ -7,7 +7,8 @@ export default class courseRecommend extends React.Component {
     constructor() {
         super();
         this.state = {
-            data: []
+            data: [],
+            coursesList:[]
         }
     };
     componentDidMount() {
@@ -16,8 +17,14 @@ export default class courseRecommend extends React.Component {
             that.setState({
                 data: ob.data.object
             });
-            console.log(that.state.data);
+            // console.log(that.state.data);
         });
+        net.get("courses/all", {}, function (ob) {
+            that.setState({
+                coursesList: ob.data.object
+            });
+            console.log(that.state.coursesList);
+         })
     };
     render() {
         return (
@@ -61,20 +68,20 @@ export default class courseRecommend extends React.Component {
                         className="list"
                         grid={{
                             gutter: 16,
-                            column:3
+                            column:4
                         }}
                         itemLayout="horizontal"
-                        dataSource={this.state.data}
+                        dataSource={this.state.coursesList}
                         renderItem={item => (
                             <List.Item>
-                                <Card>
+                                <Card
+                                    hoverable
+                                    style={{ height:290,borderRadius:5}}
+                                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                >
                                     <Meta
-                                        avatar={
-                                            <Avatar className="avatar" src={item.tkey} />
-                                        }
                                         title={item.name}
-                                        description={item.introduce}
-                                    />
+                                        description={item.introduce} />
                                 </Card>
                             </List.Item>
                         )}
@@ -83,8 +90,8 @@ export default class courseRecommend extends React.Component {
 
                 <div className="selectTeacher">
                     <div className="selectJingpin">
-                        <h2>优质讲师</h2>
-                        <p>特别甄选优质讲师</p>
+                        <h2>新课推荐</h2>
+                        <p>全新上线课程</p>
                     </div>
                     <List
                         className="list"

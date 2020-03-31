@@ -1,5 +1,6 @@
 import React from "react";
 import "./studentIndex.css";
+import Footer from "../Footer/footer"
 import CourseRecommend from "./courseRecommend/courseRecommend"
 import { Carousel, Menu, Dropdown, Button, Drawer } from 'antd';
 const menu1 = (
@@ -182,6 +183,7 @@ export default class MyIndex extends React.Component {
                     </ul>
                 </div>
                 <CourseRecommend></CourseRecommend>
+            <Footer></Footer>
             </div>
         );
     }

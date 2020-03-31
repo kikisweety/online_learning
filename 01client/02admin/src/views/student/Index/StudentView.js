@@ -1,6 +1,6 @@
 import React from "react";
 import "./StudentView.css";
-import { Layout,Menu, Icon } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 import { Link } from "react-router-dom";
 import Content from "../components/Content/content"
 const { Header, Footer } = Layout;
@@ -10,7 +10,7 @@ export default class StudentView extends React.Component {
             <div className="studentBox">
                 <Layout className="layout">
                     {/* 导航栏 */}
-                    <Header style={{width: '100%', height: '80px', backgroundColor: 'white' }}>
+                    <Header style={{ width: '100%', height: '80px', backgroundColor: 'white' }}>
                         <div className="headerContainer">
                             <div className="logoBox" >
                                 <img src="/imgs/logo.png"></img>
@@ -49,7 +49,7 @@ export default class StudentView extends React.Component {
                         </div>
                     </Header>
                     <Content></Content>
-                    {/* <Footer style={{textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
+                    {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UED</Footer> */}
                 </Layout>
             </div>
         );

@@ -46,4 +46,6 @@ public interface CourseService {
     Msg deleteById();
 
     Msg selectByType(int courseType);
+
+    Msg selectTeacher(int teacherId);
 }

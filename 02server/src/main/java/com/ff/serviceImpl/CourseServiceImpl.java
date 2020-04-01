@@ -2,12 +2,12 @@ package com.ff.serviceImpl;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
+import com.ff.dao.TeacherMapper;
+import com.ff.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ff.dao.CourseMapper;
-import com.ff.pojo.Course;
-import com.ff.pojo.Msg;
-import com.ff.pojo.Topic;
 import com.ff.service.CourseService;
 import com.ff.util.CosTool;
 
@@ -16,6 +16,8 @@ public class CourseServiceImpl implements CourseService {
 
 	@Autowired
 	private CourseMapper courseMapper;
+	@Autowired
+	private TeacherMapper teacherMapper;
 
 	public Msg selectCourseAll() {
 
@@ -140,6 +142,23 @@ public class CourseServiceImpl implements CourseService {
 			}
 			msg.setObject(list);
 			msg.setMsg("查询成功！！");
+		}
+		return msg;
+	}
+
+	@Override
+	public Msg selectTeacher(int teacherId) {
+		Msg msg =new Msg();
+		Teacher teacher=teacherMapper.selectTeacherById(teacherId);
+
+		if(teacher!=null){
+			CosTool cosTool = new CosTool();
+				String key = teacher.getTkey();
+				teacher.setTkey(cosTool.getUrl(key));
+
+			msg.setObject(teacher);
+			msg.setCode(1);
+			msg.setMsg("ok");
 		}
 		return msg;
 	}

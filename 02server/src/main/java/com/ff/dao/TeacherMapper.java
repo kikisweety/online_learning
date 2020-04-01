@@ -1,6 +1,8 @@
 package com.ff.dao;
 
 import java.util.List;
+
+import com.ff.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import com.ff.pojo.Teacher;
 @Mapper
@@ -31,4 +33,6 @@ public interface TeacherMapper {
  	 * @return 老师对象
  	 */
      Teacher selectTeacher(String name);
+
+    Teacher selectTeacherById(int teacherId);
 }

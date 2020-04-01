@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.ff.pojo.Teacher">
 		<id column="id" property="id" />
 		<result column="name" property="name" />
+        <result column="t_type" property="tType"/>
 	</resultMap>
 
 	<insert id="insert" keyProperty="id" useGeneratedKeys="true">

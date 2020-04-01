@@ -24,6 +24,12 @@
 		where
 		name = #{name}
 	</select>
+	<select id="selectTeacherById" resultMap="BaseResultMap">
+		select * from
+		teachers
+		where
+		id = #{teacherId}
+	</select>
 	<delete id="delTeacher" parameterType="java.lang.Integer">
 	delete from
 	teachers

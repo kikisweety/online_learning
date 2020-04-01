@@ -7,6 +7,26 @@ import { connect } from "react-redux";
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 class MySider extends React.Component {
+  // constructor(props) {
+  //   super(props)
+  //   this.state = { SelectedKeys: "sub11" }
+  // }
+  // componentWillMount() {
+  //   if (this.props.history.location.pathname == "/home/courses/add") {
+  //     this.setState({ SelectedKeys: "sub11" })
+  //   } else if (this.props.history.location.pathname == "/home/courses/list") {
+  //     this.setState({ SelectedKeys: "sub12" })
+  //   } else if (this.props.history.location.pathname == "/home/examination/add") {
+  //     this.setState({ SelectedKeys: "sub21" })
+  //   } else if (this.props.history.location.pathname == "/home/examination/query") {
+  //     this.setState({ SelectedKeys: "sub22" })
+  //   } else if (this.props.history.location.pathname == "/home/teacher/add") {
+  //     this.setState({ SelectedKeys: "sub31" })
+  //   } else if (this.props.history.location.pathname == "/home/teacher/query") {
+  //     this.setState({ SelectedKeys: "sub32" })
+  //   } 
+  //   }
+    // console.log(this.state)
   onCollapse() {}
   render() {
     return (
@@ -20,7 +40,7 @@ class MySider extends React.Component {
         >
           <Menu
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={"sub11"}
             defaultOpenKeys={["sub1"]}
             style={{ height: "100%", borderRight: 0 }}
           >

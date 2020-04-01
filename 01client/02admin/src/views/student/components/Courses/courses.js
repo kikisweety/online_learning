@@ -67,7 +67,7 @@ export default class MyCourses extends React.Component {
             pathname: `/CoursesDetail/${item.id}`,
             state: { courses: item }
         })
-        window.sessionStorage.setItem(item)
+        // window.sessionStorage.setItem(item)
     }
     render() {
         var _this = this;
@@ -109,8 +109,8 @@ export default class MyCourses extends React.Component {
                                                 key={item.id}
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
-                                                style={{ height: 290, borderRadius: 5 }}
-                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                                style={{ height: 270, borderRadius: 5 }}
+                                                cover={<img alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}
@@ -135,8 +135,8 @@ export default class MyCourses extends React.Component {
                                                 key={item.id}
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
-                                                style={{ height: 290, borderRadius: 5 }}
-                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                                style={{ height: 270, borderRadius: 5 }}
+                                                cover={<img alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}
@@ -161,8 +161,8 @@ export default class MyCourses extends React.Component {
                                                 key={item.id}
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
-                                                style={{ height: 290, borderRadius: 5 }}
-                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                                style={{ height: 270, borderRadius: 5 }}
+                                                cover={<img alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}
@@ -187,8 +187,8 @@ export default class MyCourses extends React.Component {
                                                 key={item.id}
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
-                                                style={{ height: 290, borderRadius: 5 }}
-                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                                style={{ height: 270, borderRadius: 5 }}
+                                                cover={<img alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}
@@ -213,8 +213,8 @@ export default class MyCourses extends React.Component {
                                                 key={item.id}
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
-                                                style={{ height: 290, borderRadius: 5 }}
-                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                                style={{ height: 270, borderRadius: 5 }}
+                                                cover={<img alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}

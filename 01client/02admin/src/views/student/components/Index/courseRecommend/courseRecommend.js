@@ -52,7 +52,7 @@ export default class courseRecommend extends React.Component {
                                         title={item.name}
                                         description={item.introduce}
                                     />
-                                    哈哈哈
+                                    {item.t_key}
                                 </Card>
                             </List.Item>
                         )}
@@ -76,8 +76,8 @@ export default class courseRecommend extends React.Component {
                             <List.Item>
                                 <Card
                                     hoverable
-                                    style={{ height:290,borderRadius:5}}
-                                    cover={<img alt="example" src={"item.url"} />}
+                                    style={{ height: 270,borderRadius:5}}
+                                    cover={<img alt="example" src={item.url} />}
                                 >
                                     <Meta
                                         title={item.name}

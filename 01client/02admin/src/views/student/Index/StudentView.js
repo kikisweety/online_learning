@@ -5,6 +5,22 @@ import { Link } from "react-router-dom";
 import Content from "../components/Content/content"
 const { Header, Footer } = Layout;
 export default class StudentView extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = { SelectedKeys: "1" }
+    }
+    componentWillMount() {
+        if (this.props.history.location.pathname == "/student/index") {
+            this.setState({ SelectedKeys: "1" })
+        } else if (this.props.history.location.pathname == "/student/courses") {
+            this.setState({ SelectedKeys: "2" })
+        } else if (this.props.history.location.pathname == "/student/questions") {
+            this.setState({ SelectedKeys: "3" })
+        } else if (this.props.history.location.pathname == "/student/books") {
+            this.setState({ SelectedKeys: "4" })
+        }
+        // console.log(this.state)
+    }
     render() {
         return (
             <div className="studentBox">
@@ -19,7 +35,7 @@ export default class StudentView extends React.Component {
                             <Menu
                                 // theme="dark"
                                 mode="horizontal"
-                                defaultSelectedKeys={['1']}
+                                defaultSelectedKeys={[this.state.SelectedKeys]}
                                 style={{ lineHeight: '80px', fontSize: '18px', borderBottom: '2px solid white' }}
                             >
                                 <Menu.Item key="1">
@@ -49,7 +65,6 @@ export default class StudentView extends React.Component {
                         </div>
                     </Header>
                     <Content></Content>
-                    {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UEDAnt Design ©2018 Created by Ant UED</Footer> */}
                 </Layout>
             </div>
         );

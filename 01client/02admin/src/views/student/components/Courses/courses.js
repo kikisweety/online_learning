@@ -43,7 +43,7 @@ export default class MyCourses extends React.Component {
             that.setState({
                 courses: ob.data.object
             })
-        })
+        });
     }
     tabChoiced = (id) => {
         let that = this;
@@ -63,13 +63,11 @@ export default class MyCourses extends React.Component {
         console.log(key);
     };
     routerTo(item) {
-        // let newCourses = JSON.stringify(courses);
         this.props.history.push({
             pathname: `/CoursesDetail/${item.id}`,
-            // query: {item},
             state: { courses: item }
         })
-        // console.log(this.state.data);
+        window.sessionStorage.setItem(item)
     }
     render() {
         var _this = this;

@@ -77,7 +77,7 @@ export default class courseRecommend extends React.Component {
                                 <Card
                                     hoverable
                                     style={{ height:290,borderRadius:5}}
-                                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                    cover={<img alt="example" src={"item.url"} />}
                                 >
                                     <Meta
                                         title={item.name}

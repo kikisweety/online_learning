@@ -4,11 +4,12 @@
 }
 .coursesContainer{
     width: 65%;
-    height: 1000px;
+    min-height: 660px;
     margin: auto;
     /* background-color: antiquewhite; */
 }
 .coursesType{
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -29,6 +30,9 @@
 }
 .newsList{
     width: 100%;
+    border-bottom: 1px solid gainsboro;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 .domnImg{
     width: 32px;

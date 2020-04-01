@@ -8,7 +8,7 @@ export default class courseRecommend extends React.Component {
         super();
         this.state = {
             data: [],
-            coursesList:[]
+            coursesList: [],
         }
     };
     componentDidMount() {
@@ -19,12 +19,12 @@ export default class courseRecommend extends React.Component {
             });
             // console.log(that.state.data);
         });
-        net.get("courses/all", {}, function (ob) {
+        net.get('courses/type', { courseType: 1 }, function (ob) {
+            console.log(ob);
             that.setState({
                 coursesList: ob.data.object
-            });
-            console.log(that.state.coursesList);
-         })
+            })
+        })
     };
     render() {
         return (

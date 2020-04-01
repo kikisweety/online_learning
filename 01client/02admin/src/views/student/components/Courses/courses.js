@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./courses.css";
 import Footer from "../Footer/footer"
-import { Collapse,List,Card } from 'antd';
+import { Collapse, List, Card } from 'antd';
 import net from "../../../../utils/net";
 const { Panel } = Collapse;
 const { Meta } = Card;
@@ -36,14 +36,14 @@ export default class MyCourses extends React.Component {
             courses: [],
         }
     }
-    componentDidMount() { 
-        // let that = this;
-        // net.get('courses/type', {}, function (ob) {
-        //     that.setState({
-        //         courses: ob.data.object
-        //     })
-        //     console.log(that.state.courses);
-        // })
+    componentDidMount() {
+        let that = this;
+        net.get('courses/type', { courseType: 1 }, function (ob) {
+            console.log(ob);
+            that.setState({
+                courses: ob.data.object
+            })
+        })
     }
     tabChoiced = (id) => {
         let that = this;
@@ -51,13 +51,7 @@ export default class MyCourses extends React.Component {
             currentIndex: id,
             currentStyle: true
         });
-        // net.get('courses/all', {}, function (ob) {
-        //     console.log(ob);
-        //     that.setState({
-        //         courses: ob.data.object
-        //     })
-        // })
-        net.get('courses/type', { courseType:id },function (ob) {
+        net.get('courses/type', { courseType: id }, function (ob) {
             console.log(ob);
             that.setState({
                 courses: ob.data.object
@@ -68,10 +62,15 @@ export default class MyCourses extends React.Component {
     callback(key) {
         console.log(key);
     };
-    // routerTo(item) {
-    //     this.props.history.push({ pathname: `/CoursesDetail/${item.id}`, state: { courses: item } })
-    //     // console.log(this.state.data);
-    // }
+    routerTo(item) {
+        // let newCourses = JSON.stringify(courses);
+        this.props.history.push({
+            pathname: `/CoursesDetail/${item.id}`,
+            // query: {item},
+            state: { courses: item }
+        })
+        // console.log(this.state.data);
+    }
     render() {
         var _this = this;
         var isBox1Show = this.state.currentIndex == 1 ? 'block' : 'none';
@@ -86,9 +85,9 @@ export default class MyCourses extends React.Component {
 
             return <li key={index} onClick={this.tabChoiced.bind(_this, res.id)} className={tabStyle}>{res.tabName}</li>
         }.bind(_this));
-        var coursesList = this.state.courses.map(function (res) {
-            return <Panel header={res.name} key={res.id}>{res.introduce}</Panel>
-        });
+        // var coursesList = this.state.courses.map(function (res) {
+        //     return <Panel header={res.name} key={res.id}>{res.introduce}</Panel>
+        // });
         return (
             <div className="coursesBox" >
                 <div className="coursesContainer">
@@ -98,11 +97,6 @@ export default class MyCourses extends React.Component {
                         </ul>
                         <div className="newsList">
                             <div style={{ "display": isBox1Show }} >
-                                {/* <Collapse bordered={false} defaultActiveKey={['1']}>
-                                    {
-                                        coursesList
-                                    }
-                                </Collapse> */}
                                 <List
                                     className="list"
                                     grid={{
@@ -115,7 +109,7 @@ export default class MyCourses extends React.Component {
                                         <List.Item>
                                             <Card
                                                 key={item.id}
-                                                // onClick={() => this.routerTo(item)}
+                                                onClick={() => this.routerTo(item)}
                                                 hoverable
                                                 style={{ height: 290, borderRadius: 5 }}
                                                 cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
@@ -129,17 +123,109 @@ export default class MyCourses extends React.Component {
                                 />
                             </div>
                             <div style={{ "display": isBox2Show }}>
-                                体育世界
-                                </div>
+                                <List
+                                    className="list"
+                                    grid={{
+                                        gutter: 16,
+                                        column: 4
+                                    }}
+                                    itemLayout="horizontal"
+                                    dataSource={this.state.courses}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <Card
+                                                key={item.id}
+                                                onClick={() => this.routerTo(item)}
+                                                hoverable
+                                                style={{ height: 290, borderRadius: 5 }}
+                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                            >
+                                                <Meta
+                                                    title={item.name}
+                                                    description={item.introduce} />
+                                            </Card>
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
                             <div style={{ "display": isBox3Show }}>
-                                娱乐圈
-                                </div>
+                                <List
+                                    className="list"
+                                    grid={{
+                                        gutter: 16,
+                                        column: 4
+                                    }}
+                                    itemLayout="horizontal"
+                                    dataSource={this.state.courses}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <Card
+                                                key={item.id}
+                                                onClick={() => this.routerTo(item)}
+                                                hoverable
+                                                style={{ height: 290, borderRadius: 5 }}
+                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                            >
+                                                <Meta
+                                                    title={item.name}
+                                                    description={item.introduce} />
+                                            </Card>
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
                             <div style={{ "display": isBox4Show }}>
-                                娱乐圈
-                                </div>
+                                <List
+                                    className="list"
+                                    grid={{
+                                        gutter: 16,
+                                        column: 4
+                                    }}
+                                    itemLayout="horizontal"
+                                    dataSource={this.state.courses}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <Card
+                                                key={item.id}
+                                                onClick={() => this.routerTo(item)}
+                                                hoverable
+                                                style={{ height: 290, borderRadius: 5 }}
+                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                            >
+                                                <Meta
+                                                    title={item.name}
+                                                    description={item.introduce} />
+                                            </Card>
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
                             <div style={{ "display": isBox5Show }}>
-                                娱乐圈
-                                </div>
+                                <List
+                                    className="list"
+                                    grid={{
+                                        gutter: 16,
+                                        column: 4
+                                    }}
+                                    itemLayout="horizontal"
+                                    dataSource={this.state.courses}
+                                    renderItem={item => (
+                                        <List.Item>
+                                            <Card
+                                                key={item.id}
+                                                onClick={() => this.routerTo(item)}
+                                                hoverable
+                                                style={{ height: 290, borderRadius: 5 }}
+                                                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                                            >
+                                                <Meta
+                                                    title={item.name}
+                                                    description={item.introduce} />
+                                            </Card>
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

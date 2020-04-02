@@ -1,39 +1,38 @@
 import React, { Component } from 'react';
 import "./coursesDetail.css"
-import { Button, Collapse } from 'antd';
+import { Button, Collapse,Icon } from 'antd';
 import net from "../../../../../utils/net"
+import { Player } from "video-react";
+// import "/node_modules/video-react/dist/video-react.css";
 const { Panel } = Collapse;
-const text = (
-    <p style={{ paddingLeft: 24 }}>
-        A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found
-        as a welcome guest in many households across the world.
-    </p>
-);
 class CoursesDetail extends Component { 
     constructor(props, context) { 
         super(props, context)
         this.courses = this.props.location.state.courses;
-        console.log(this.courses);
         this.state = {
-            videoList: [],
-            key:0
         }
     }
-    componentDidMount() {
-        let that = this;
-        net.get("videosByChapterId", { id: this.state.key },function (ob) {
-            that.setState({
-                videoList: ob.data.object
-            });
-            console.log(that.state.videoList);
-        })
-    }
-    showVideos(id) { 
-        console.log(id);
-        
-    }
+    componentDidMount() {}
     toBooks() { 
         this.props.history.push(`/student/courses`);
+    }
+    playVideo() { 
+        let coursePlayVideo = this.refs.playVideo;
+        let coursePlayVideoBox = this.refs.coursePlayVideoBox;
+        let player = this.refs.player;
+        coursePlayVideo.style.display = "block";
+        coursePlayVideoBox.style.display="block"
+        player.load();
+        console.log(111);
+        
+    }
+    closeVideo = () => { 
+        let coursePlayVideo = this.refs.playVideo;
+        let coursePlayVideoBox = this.refs.coursePlayVideoBox;
+        let player = this.refs.player;
+        coursePlayVideo.style.display = "none";
+        coursePlayVideoBox.style.display = "none";
+        player.pause();
     }
     render() {
         return (
@@ -57,19 +56,42 @@ class CoursesDetail extends Component {
                             <div className="contentLeft">
                                 <div className="contentTitle">课程章节目录</div>
                                 <Collapse bordered={false} defaultActiveKey={['1']} style={{backgroundColor:'white',fontSize:16}}>
-                                    {/* <Panel header="This is panel header 1" key="1">
-                                        {text}
-                                    </Panel> */}
                                     {this.courses.chapters.map((item) => {
-                                        console.log(item.id);
+                                        console.log(item.videos);
                                         return <Panel
                                             header={item.name}
                                             key={item.id}
                                         >
-                                        {this.state.videoList}
+                                            {item.videos.map((v) => {
+                                                console.log(v.url);
+                                                return <div className="videoBox" style={{display:'flex',position:'relative',padding:10}}>
+                                                    <span>{v.name}</span>
+                                                    <img
+                                                        src="/imgs/视频.png"
+                                                        style={{ position: 'absolute', right: 0 }}
+                                                        onClick={this.playVideo.bind(this)}
+                                                    />
+                                                    <div className="coursePlayVideoBox" ref="coursePlayVideoBox">
+                                                        <Icon
+                                                            className="closeVideo"
+                                                            type="close-circle"
+                                                            onClick={this.closeVideo}
+                                                        />
+                                                        <Player
+                                                            fluid={false}
+                                                            width={800}
+                                                            height={700}
+                                                            ref="player"
+                                                            videoId="video-1">
+                                                            <source ref="source" src={v.url}></source>
+                                                        </Player>
+                                                    </div>
+                                                </div>
+                                             })}
                                     </Panel> 
                                     })
                                 }
+                                    <div className="playVideo" ref="playVideo"></div>
                                 </Collapse>
                             </div>
                             <div className="contentRight"></div>

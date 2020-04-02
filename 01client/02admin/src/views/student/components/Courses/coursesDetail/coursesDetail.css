@@ -88,6 +88,36 @@ color: #555555;
     font-size: 30px;
     color: #5a5a5a;
 }
+.playVideo{
+    width: 140%;
+    height: 100%;
+    background: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+    z-index: 1;
+    display: none;
+}
+.coursePlayVideoBox{
+    width: 800px;
+    height: 700px;
+    background: pink;
+    z-index: 20;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+.closeVideo{
+    position: absolute;
+    top: 5px;
+    right:5px;
+    z-index: 30;
+    color: white;
+    font-size: 30px;
+}
 .contentRight{
     width: 30%;
     height: 700px;

@@ -17,7 +17,7 @@ export default class courseRecommend extends React.Component {
             that.setState({
                 data: ob.data.object
             });
-            // console.log(that.state.data);
+            console.log(that.state.data);
         });
         net.get('courses/type', { courseType: 1 }, function (ob) {
             console.log(ob);
@@ -52,7 +52,7 @@ export default class courseRecommend extends React.Component {
                                         title={item.name}
                                         description={item.introduce}
                                     />
-                                    {item.t_key}
+                                    {item.tType}
                                 </Card>
                             </List.Item>
                         )}

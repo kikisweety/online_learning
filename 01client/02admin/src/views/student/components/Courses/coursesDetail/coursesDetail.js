@@ -10,20 +10,27 @@ class CoursesDetail extends Component {
         super(props, context)
         this.courses = this.props.location.state.courses;
         this.state = {
+            source:''
         }
     }
     componentDidMount() {}
     toBooks() { 
         this.props.history.push(`/student/courses`);
     }
-    playVideo() { 
+    playVideo(url, id) { 
+        let source = url;
+        console.log(source, id);
+        this.setState({
+            source:source
+        })
+        this.refs.source.src = source;
         let coursePlayVideo = this.refs.playVideo;
         let coursePlayVideoBox = this.refs.coursePlayVideoBox;
         let player = this.refs.player;
         coursePlayVideo.style.display = "block";
         coursePlayVideoBox.style.display="block"
         player.load();
-        console.log(111);
+        // console.log(111);
         
     }
     closeVideo = () => { 
@@ -57,19 +64,19 @@ class CoursesDetail extends Component {
                                 <div className="contentTitle">课程章节目录</div>
                                 <Collapse bordered={false} defaultActiveKey={['1']} style={{backgroundColor:'white',fontSize:16}}>
                                     {this.courses.chapters.map((item) => {
-                                        console.log(item.videos);
+                                        // console.log(item.videos);
                                         return <Panel
                                             header={item.name}
                                             key={item.id}
                                         >
                                             {item.videos.map((v) => {
-                                                console.log(v.url);
+                                                // console.log(v.url);
                                                 return <div className="videoBox" style={{display:'flex',position:'relative',padding:10}}>
                                                     <span>{v.name}</span>
                                                     <img
                                                         src="/imgs/视频.png"
                                                         style={{ position: 'absolute', right: 0 }}
-                                                        onClick={this.playVideo.bind(this)}
+                                                        onClick={this.playVideo.bind(this,v.url)}
                                                     />
                                                     <div className="coursePlayVideoBox" ref="coursePlayVideoBox">
                                                         <Icon
@@ -83,7 +90,7 @@ class CoursesDetail extends Component {
                                                             height={700}
                                                             ref="player"
                                                             videoId="video-1">
-                                                            <source ref="source" src={v.url}></source>
+                                                            <source ref="source" src={this.state.source}></source>
                                                         </Player>
                                                     </div>
                                                 </div>

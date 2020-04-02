@@ -52,7 +52,7 @@ export default class courseRecommend extends React.Component {
                                         title={item.name}
                                         description={item.introduce}
                                     />
-                                    {item.tType}
+                                    {item.introduce}
                                 </Card>
                             </List.Item>
                         )}

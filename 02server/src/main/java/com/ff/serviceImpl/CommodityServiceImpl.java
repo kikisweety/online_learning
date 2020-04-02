@@ -26,6 +26,8 @@ public class CommodityServiceImpl implements CommodityService {
         for (int i = 0; i < length; i++) {
             String key = list.get(i).getUrl();
             list.get(i).setUrl(cosTool.getUrl(key));
+            String key1 = list.get(i).getCommodityDetails();
+            list.get(i).setCommodityDetails(cosTool.getUrl(key1));
         }
         msg.setObject(list);
         msg.setCode(1);

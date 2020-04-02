@@ -93,4 +93,17 @@ public class ChapterServiceImpl implements ChapterService {
 		return msg;
 	}
 
+	@Override
+	public Msg selectChaptersQuestion(Chapter chapter) {
+		Msg msg = new Msg();
+		List<Chapter> list = chapterMapper.selectAllQuestionsOfChaptersByCoursesId(chapter.getId());
+		if (list != null && list.size() >= 1) {
+			msg.setCode(1);
+			msg.setMsg("查询数据成功！");
+			msg.setObject(list);
+		}
+
+		return msg;
+	}
+
 }

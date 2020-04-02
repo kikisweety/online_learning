@@ -43,4 +43,9 @@ public interface ChapterMapper {
 	 */
 	List<Chapter> selectByName(Chapter chapter);
 
+	List<Chapter> selectAllQuestionsOfChaptersByCoursesId(int id);
+
+
+
+
 }

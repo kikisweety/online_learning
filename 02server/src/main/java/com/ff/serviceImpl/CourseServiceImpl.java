@@ -170,4 +170,24 @@ public class CourseServiceImpl implements CourseService {
 		return msg;
 	}
 
+	@Override
+	public Msg selectQuestionByType(int courseType) {
+		Msg msg = new Msg();
+		msg.setMsg("查询失败！");
+
+		List<Course> list = courseMapper.selectQuestionByType(courseType);
+		int length = list.size();
+		if (list != null && list.size() >= 1) {
+			CosTool cosTool = new CosTool();
+			for (int i = 0; i < length; i++) {
+				String key = list.get(i).getUrl();
+				list.get(i).setUrl(cosTool.getUrl(key));
+
+			}
+			msg.setObject(list);
+			msg.setMsg("查询成功！！");
+		}
+		return msg;
+	}
+
 }

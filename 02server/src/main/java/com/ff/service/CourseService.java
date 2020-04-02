@@ -48,4 +48,6 @@ public interface CourseService {
     Msg selectByType(int courseType);
 
     Msg selectTeacher(int teacherId);
+
+    Msg selectQuestionByType(int courseType);
 }

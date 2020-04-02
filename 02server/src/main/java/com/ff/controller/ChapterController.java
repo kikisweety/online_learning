@@ -53,5 +53,10 @@ public class ChapterController {
 
 		return chapterService.insertChapter(chapter);
 	}
+	@RequestMapping(value = "chapters/question")
+	@ResponseBody
+	public Msg selectChaptersQuestion(Chapter chapter, HttpServletResponse resp, HttpServletRequest req) {
 
+		return chapterService.selectChaptersQuestion(chapter);
+	}
 }

@@ -23,8 +23,7 @@
 	</insert>
 
 	<select id="selectQuestionsBychapterId" resultMap="questionMap">
-		select *
-		from
+		select *from
 		questions
 		where chapter_id = #{id}
 	</select>

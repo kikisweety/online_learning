@@ -19,16 +19,14 @@
 		</collection>
 	</resultMap>
 
-	<resultMap id="ChaptersAndQuestionsMap"
-		type="com.ff.pojo.Chapter">
+	<resultMap id="ChaptersAndQuestionsMap" type="com.ff.pojo.Chapter">
 		<id column="id" property="id" />
 		<result column="name" property="name" />
 		<result column="c_order" property="order" />
 		<collection property="questions" javaType="ArrayList"
 			ofType="com.ff.pojo.Question" column="id"
-			select="com.ff.dao.QuestionMapper.selectQuestionsByChapterId">
+			select="com.ff.dao.QuestionMapper.selectQuestionsBychapterId">
 		</collection>
-
 	</resultMap>
 
 

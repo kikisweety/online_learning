@@ -89,7 +89,19 @@ public class CourseController {
 	public Msg selectByType(@Param("courseType") int courseType, HttpServletResponse resp, HttpServletRequest req){
 		return courseService.selectByType(courseType);
 	}
-	@RequestMapping("courses/selectTeacher")
+    @RequestMapping("courses/questionByType")
+    @ResponseBody
+    public Msg selectQuestionByType(@Param("courseType") int courseType, HttpServletResponse resp, HttpServletRequest req){
+        return courseService.selectQuestionByType(courseType);
+    }
+
+
+
+
+
+
+
+    @RequestMapping("courses/selectTeacher")
 	@ResponseBody
 	public Msg selectTeacher(Course course, HttpServletResponse resp, HttpServletRequest req){
 

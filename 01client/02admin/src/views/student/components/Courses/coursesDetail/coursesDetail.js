@@ -14,12 +14,11 @@ class CoursesDetail extends Component {
         }
     }
     componentDidMount() {}
-    toBooks() { 
+    toCourses() { 
         this.props.history.push(`/student/courses`);
     }
     playVideo(url, id) { 
         let source = url;
-        console.log(source, id);
         this.setState({
             source:source
         })
@@ -30,7 +29,6 @@ class CoursesDetail extends Component {
         coursePlayVideo.style.display = "block";
         coursePlayVideoBox.style.display="block"
         player.load();
-        // console.log(111);
         
     }
     closeVideo = () => { 
@@ -47,7 +45,7 @@ class CoursesDetail extends Component {
                 <div className="detailHeader">
                     <div className="datailContainer">
                         <div className="datailTitle">课程详情</div>
-                        <div onClick={this.toBooks.bind(this)} className="toBooks">返回课堂首页</div>
+                        <div onClick={this.toCourses.bind(this)} className="toCourses">返回课堂</div>
                     </div>
                     <div className="detailBox">
                         <div className="coursesInfo">
@@ -64,7 +62,7 @@ class CoursesDetail extends Component {
                                 <div className="contentTitle">课程章节目录</div>
                                 <Collapse bordered={false} defaultActiveKey={['1']} style={{backgroundColor:'white',fontSize:16}}>
                                     {this.courses.chapters.map((item) => {
-                                        // console.log(item.videos);
+                                        console.log(item);
                                         return <Panel
                                             header={item.name}
                                             key={item.id}

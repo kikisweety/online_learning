@@ -1,5 +1,83 @@
-.testBox{
-    width: 1000px;
-    height: 1000px;
-    background-color: antiquewhite;
+.booksDetailBox{
+    width: 100%;
+    min-height: 900px;
+    background-color: #F5F6F8;
+}
+.booksDatailContainer{
+     width: 65%;
+    height: 100%;
+    /* background-color: aliceblue; */
+    margin: auto;
+    display: flex;
+    align-items: center;
+    line-height: 50px;
+    color: #f7f7f7;
+}
+.booksDetailTop{
+    width: 65%;
+    min-height:400px ;
+    margin: auto;
+}
+.toBooks{
+    cursor: pointer;
+}
+.booksInfo{
+    width: 90%;
+    padding: 40px;
+    height: 400px;
+    margin:10px auto;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+.booksImg{
+    max-width: 300px;
+    min-height: 300px;
+}
+.booksTitle{
+    font-size: 18px;
+    color: #333;
+    font-weight: 700;
+    margin: 15px 0;
+    line-height:25px;
+}
+.booksPrice{
+    font-size: 30px;
+    color: #f60;
+    font-weight: 500;
+}
+.booksAmout{
+    width: 200px;
+    height: 80px;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 20px;
+    margin:20px 0px;
+}
+.booksAmout>div{
+    padding: 5px;
+    color: #333;
+}
+.booksCar{
+    width: 100%;
+    margin-top: 20px;
+}
+.booksContentDetail{
+    width: 65%;
+    min-height: 500px;
+    margin: auto;
+}
+.introBox{
+    width: 90%;
+    margin: auto;
+}
+.detailTtile{
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
 }

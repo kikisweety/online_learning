@@ -90,27 +90,27 @@ export default class courseRecommend extends React.Component {
 
                 <div className="selectTeacher">
                     <div className="selectJingpin">
-                        <h2>新课推荐</h2>
-                        <p>全新上线课程</p>
+                        <h2>好书推荐</h2>
+                        <p>搭配课程学习效果更佳</p>
                     </div>
                     <List
                         className="list"
                         grid={{
                             gutter: 16,
-                            column: 3
+                            column: 4
                         }}
                         itemLayout="horizontal"
-                        dataSource={this.state.data}
+                        dataSource={this.state.coursesList}
                         renderItem={item => (
                             <List.Item>
-                                <Card style={{borderRadius:"5px"}}>
+                                <Card
+                                    hoverable
+                                    style={{ height: 270, borderRadius: 5 }}
+                                    cover={<img alt="example" src={item.url} />}
+                                >
                                     <Meta
-                                        avatar={
-                                            <Avatar className="avatar" src={item.tkey} />
-                                        }
                                         title={item.name}
-                                        description={item.introduce}
-                                    />
+                                        description={item.introduce} />
                                 </Card>
                             </List.Item>
                         )}

@@ -139,6 +139,13 @@ public class CourseServiceImpl implements CourseService {
 			for (int i = 0; i < length; i++) {
 				String key = list.get(i).getUrl();
 				list.get(i).setUrl(cosTool.getUrl(key));
+				for(int k=0;k<list.get(i).getChapters().size();k++){
+					for(int m=0;m<list.get(i).getChapters().get(k).getVideos().size();m++){
+						String video=list.get(i).getChapters().get(k).getVideos().get(i).getUrl();
+						list.get(i).getChapters().get(k).getVideos().get(m).setUrl(cosTool.getUrl(video));
+					}
+				}
+
 			}
 			msg.setObject(list);
 			msg.setMsg("查询成功！！");
@@ -153,8 +160,8 @@ public class CourseServiceImpl implements CourseService {
 
 		if(teacher!=null){
 			CosTool cosTool = new CosTool();
-				String key = teacher.getTkey();
-				teacher.setTkey(cosTool.getUrl(key));
+			String key = teacher.getTkey();
+			teacher.setTkey(cosTool.getUrl(key));
 
 			msg.setObject(teacher);
 			msg.setCode(1);

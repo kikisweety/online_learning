@@ -4,6 +4,8 @@ import com.ff.pojo.Chapter;
 import com.ff.pojo.Msg;
 import com.ff.pojo.Question;
 
+import java.util.List;
+
 public interface QuestionService {
 
 	/**
@@ -29,4 +31,5 @@ public interface QuestionService {
 
 	Msg selectQuestionsByChapterid(Chapter chapter);
 
+    Msg questionResult(List<Question> result);
 }

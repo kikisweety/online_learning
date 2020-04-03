@@ -12,6 +12,8 @@ import com.ff.pojo.Msg;
 import com.ff.pojo.Question;
 import com.ff.service.QuestionService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/noi")
 public class QuestionController {
@@ -30,6 +32,12 @@ public class QuestionController {
 	public Msg selectQuestionbyid(Chapter chapter, HttpServletResponse resp, HttpServletRequest request) {
 
 		return questionService.selectQuestionsByChapterid(chapter);
+	}
+	@RequestMapping(value = "question/result")
+	@ResponseBody
+	public Msg result(List<Question> result, HttpServletResponse resp, HttpServletRequest request) {
+
+		return questionService.questionResult(result);
 	}
 
 }

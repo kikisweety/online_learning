@@ -54,4 +54,18 @@ public class QuestionServiceImpl implements QuestionService {
 
 	}
 
+	@Override
+	public Msg questionResult(List<Question> result) {
+		Msg msg = new Msg();
+		int achievement=0;
+		for (int n=0;n<result.size();n++){
+			if(result.get(n).getAnswer().equals(result.get(n).getTextA())||result.get(n).getAnswer().equals(result.get(n).getTextB())||result.get(n).getAnswer().equals(result.get(n).getTextC())||result.get(n).getAnswer().equals(result.get(n).getTextD())){
+				achievement+=10;
+			}
+		}
+		msg.setObject(achievement);
+		msg.setMsg("ok");
+		return msg;
+	}
+
 }

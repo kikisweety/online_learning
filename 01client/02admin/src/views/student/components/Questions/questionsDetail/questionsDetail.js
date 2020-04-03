@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import "./questionsDetail.css"
-import { Button, Radio, Modal } from "antd"
+import { Button, Radio, Modal, Progress } from "antd"
 const { confirm } = Modal;
 class QuestionsDetail extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
             value: '',
+            index:0
         };
         this.list = props.location.state.questions
         console.log(this.list);
@@ -15,23 +16,26 @@ class QuestionsDetail extends Component {
         this.props.history.push(`/student/questions`);
     }
     onChange = e => {
-        // console.log('radio checked', e.target.value);
+        console.log('radio checked', e.target.value);
         this.setState({
             value: e.target.value,
+            // index: e.currentTarget.id
         });
     };
     // /确认框/ 
     showConfirm() {
+        let that = this;
         confirm({
             title: '您确定是否要交卷?',
             onOk() {
-                return new Promise((resolve, reject) => {
-                    setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-                }).catch(() => console.log('Oops errors!'));
+                that.refs.resultBox.style.display = "block";
             },
             onCancel() { },
         });
     };
+    closeResultBox() {
+        this.refs.resultBox.style.display = "none";
+    }
     render() {
         var questions = {}
         const radioStyle = {
@@ -54,26 +58,34 @@ class QuestionsDetail extends Component {
                     </div>
                     <div className="questionsList">
                         {this.list.questions.map((item, index) => {
+                            console.log(item);
                             return <div className="questionsContentBox" key={item.id}>
                                 <div className="questionsId">第{index+1}道选择题</div>
                                 <div className="questionsTitle">{item.title}</div>
                                 <div className="questionschoice">
                                     <Radio.Group
-                                        name="radiogroup"
+                                        // name={item.title}
                                         onChange={this.onChange}
                                         value={this.state.value}
+                                        id={item.id}
                                     >
-                                        <Radio value={1} style={radioStyle}>A、 {item.textA}</Radio>
-                                        <Radio value={2} style={radioStyle}>B、{item.textB}</Radio>
-                                        <Radio value={3} style={radioStyle}>C、{item.textC}</Radio>
-                                        <Radio value={4} style={radioStyle}>D、{item.textD}</Radio>
+                                        <Radio value={1}  style={radioStyle}>A、 {item.textA}</Radio>
+                                        <Radio value={2}  style={radioStyle}>B、{item.textB}</Radio>
+                                        <Radio value={3}  style={radioStyle}>C、{item.textC}</Radio>
+                                        <Radio value={4}  style={radioStyle}>D、{item.textD}</Radio>
                                     </Radio.Group>
                                 </div>
                             </div>
                         })}
                     </div>
                     <div className="submit">
-                        <Button type="primary" shape="round" onClick={this.showConfirm}>交卷</Button>
+                        <Button type="primary" shape="round" onClick={this.showConfirm.bind(this)}>交卷</Button>
+                        <div className="resultBox" ref='resultBox'>
+                            <img src="/imgs/取消.png" onClick={this.closeResultBox.bind(this)} style={{ position: 'absolute', right: 0, cursor: 'pointer'}}></img>
+                            <div className="resultTitle">练习报告</div>
+                            <Progress type="circle" percent={75} />
+                            <div className="resultTotal">总分：</div>
+                        </div>
                     </div>
                 </div>
             </div>

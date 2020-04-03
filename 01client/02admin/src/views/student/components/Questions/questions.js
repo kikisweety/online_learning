@@ -1,6 +1,9 @@
 import React from "react";
 import "./questions.css";
 import Footer from "../Footer/footer"
+import { Button, Collapse } from 'antd';
+import net from "../../../../utils/net"
+const { Panel } = Collapse;
 export default class MyQuestions extends React.Component {
     constructor() {
         super();
@@ -29,7 +32,7 @@ export default class MyQuestions extends React.Component {
             ],
             currentIndex: 1,
             // currentStyle: false
-            courses: [],
+            questions: [],
         }
     }
     tabChoiced = (id) => {
@@ -38,6 +41,27 @@ export default class MyQuestions extends React.Component {
             currentIndex: id,
             currentStyle: true
         });
+        net.get('courses/questionByType', { courseType: id }, function (ob) {
+            // console.log(ob);
+            that.setState({
+                questions: ob.data.object
+            })
+        })
+    }
+    componentDidMount() {
+        var that = this;
+        net.get('courses/questionByType', { courseType: 1 }, function (ob) {
+            // console.log(ob);
+            that.setState({
+                questions: ob.data.object
+            })
+        });
+    }
+    routerTo(v) { 
+        this.props.history.push({
+            pathname: `/QuestionsDetail/${v.id}`,
+            state: {questions:v}
+        })
     }
     render() {
         var _this = this;
@@ -59,21 +83,125 @@ export default class MyQuestions extends React.Component {
                     <ul className="coursesWrap">
                         {tabList}
                     </ul>
-                    <div className="newsList">
+                    <div className="coursesByChapterList">
                         <div style={{ "display": isBox1Show }} >
-                            哈斯试试
-                    </div>
+                            <Collapse accordion bordered={false} style={{ backgroundColor: 'white', fontSize: 16 }}>
+                                {this.state.questions.map((item) => {
+                                    return <Panel
+                                        header={item.name}
+                                        key={item.id}
+                                    >
+                                        {item.chapters.map((v) => {
+                                            return <div className="videoBox"
+                                                key={v.id}
+                                                style={{ display: 'flex', position: 'relative', padding: 20, alignItems: 'center' }}>
+                                                <span style={{ width: 5, height: 5, backgroundColor: '#1F9DFF',borderRadius:5,marginRight:20 }}></span>
+                                                <span>{v.name}</span>
+                                                <Button
+                                                    type="primary"
+                                                    shape="round"
+                                                    onClick={() => this.routerTo(v)}
+                                                    style={{ position: 'absolute', right: 0 }}>开始做题</Button>
+                                            </div>
+                                        })}
+                                    </Panel>
+                                })
+                                }
+                            </Collapse>
+                        </div>
                         <div style={{ "display": isBox2Show }}>
-                            体育世界
+                            <Collapse accordion bordered={false} style={{ backgroundColor: 'white', fontSize: 16 }}>
+                                {this.state.questions.map((item) => {
+                                    return <Panel
+                                        header={item.name}
+                                        key={item.id}
+                                    >
+                                        {item.chapters.map((v) => {
+                                            return <div className="videoBox"
+                                                key={v.id}
+                                                style={{ display: 'flex', position: 'relative', padding: 20, alignItems: 'center' }}>
+                                                <span style={{ width: 5, height: 5, backgroundColor: '#1F9DFF', borderRadius: 5, marginRight: 20 }}></span>
+                                                <span>{v.name}</span>
+                                                <Button
+                                                    type="primary"
+                                                    shape="round"
+                                                    onClick={() => this.routerTo(v)}
+                                                    style={{ position: 'absolute', right: 0 }}>开始做题</Button>
+                                            </div>
+                                        })}
+                                    </Panel>
+                                })
+                                }
+                            </Collapse>
                                 </div>
                         <div style={{ "display": isBox3Show }}>
-                            娱乐圈
+                            <Collapse accordion bordered={false} style={{ backgroundColor: 'white', fontSize: 16 }}>
+                                {this.state.questions.map((item) => {
+                                    return <Panel
+                                        header={item.name}
+                                        key={item.id}
+                                    >
+                                        {item.chapters.map((v) => {
+                                            return <div className="videoBox" key={v.id} style={{ display: 'flex', position: 'relative', padding: 20, alignItems: 'center' }}>
+                                                <span style={{ width: 5, height: 5, backgroundColor: '#1F9DFF', borderRadius: 5, marginRight: 20 }}></span>
+                                                <span>{v.name}</span>
+                                                <Button
+                                                    type="primary"
+                                                    shape="round"
+                                                    onClick={() => this.routerTo(v)}
+                                                    style={{ position: 'absolute', right: 0 }}>开始做题</Button>
+                                            </div>
+                                        })}
+                                    </Panel>
+                                })
+                                }
+                            </Collapse>
                                 </div>
                         <div style={{ "display": isBox4Show }}>
-                            娱乐圈
+                            <Collapse accordion bordered={false} style={{ backgroundColor: 'white', fontSize: 16 }}>
+                                {this.state.questions.map((item) => {
+                                    return <Panel
+                                        header={item.name}
+                                        key={item.id}
+                                    >
+                                        {item.chapters.map((v) => {
+                                            return <div className="videoBox" key={v.id} style={{ display: 'flex', position: 'relative', padding: 20, alignItems: 'center' }}>
+                                                <span style={{ width: 5, height: 5, backgroundColor: '#1F9DFF', borderRadius: 5, marginRight: 20 }}></span>
+                                                <span>{v.name}</span>
+                                                <Button
+                                                    type="primary"
+                                                    shape="round"
+                                                    onClick={() => this.routerTo(v)}
+                                                    style={{ position: 'absolute', right: 0 }}>开始做题</Button>
+                                            </div>
+                                        })}
+                                    </Panel>
+                                })
+                                }
+                            </Collapse>
                                 </div>
                         <div style={{ "display": isBox5Show }}>
-                            娱乐圈
+                            <Collapse accordion bordered={false} style={{ backgroundColor: 'white', fontSize: 16 }}>
+                                {this.state.questions.map((item) => {
+                                    return <Panel
+                                        header={item.name}
+                                        key={item.id}
+                                    >
+                                        {item.chapters.map((v) => {
+                                            return <div className="videoBox" key={v.id} style={{ display: 'flex', position: 'relative', padding: 20, alignItems: 'center' }}>
+                                                <span style={{ width: 5, height: 5, backgroundColor: '#1F9DFF', borderRadius: 5, marginRight: 20 }}></span>
+                                                <span>{v.name}</span>
+                                                <Button
+                                                    type="primary"
+                                                    shape="round"
+                                                    onClick={() => this.routerTo(v)}
+                                                    style={{ position: 'absolute', right: 0 }}>开始做题</Button>
+                                            </div>
+                                        })}
+                                    </Panel>
+                                })
+                                }
+                            </Collapse>
                                 </div>
                     </div>
                 </div>

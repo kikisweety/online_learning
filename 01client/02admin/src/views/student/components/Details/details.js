@@ -4,15 +4,15 @@ import { Button } from "antd"
 class Detail extends Component {
     constructor(props, context) {
         super(props, context)
-        console.info(props)
-        this.userList = props.location.state.userList
-        console.log(this.userList);
+        // console.info(props)
+        this.booksList = props.location.state.booksList
+        // console.log(this.booksList);
     }
     toBooks() {
         this.props.history.push(`/student/books`);
     }
     render() {
-        var userList = {}
+        var booksList = {}
         return (
             <div className="booksDetailBox">
                 <div className="detailHeader">
@@ -23,14 +23,14 @@ class Detail extends Component {
                 </div>
                 <div className="booksDetailTop">
                     <div className="booksInfo">
-                        <img src={this.userList.url} className="booksImg"></img>
+                        <img src={this.booksList.url} className="booksImg"></img>
                         <div className="infoBox">
-                            <h4 className="booksTitle">{this.userList.commodity_name}</h4>
-                            <div className="booksPrice">￥{this.userList.commodity_price}</div>
+                            <h4 className="booksTitle">{this.booksList.commodityName}</h4>
+                            <div className="booksPrice">￥{this.booksList.commodityPrice}</div>
                             <div className="booksAmout">
                                 <div>
                                     <span>库存：</span>
-                                    <span>{this.userList.amout}件</span>
+                                    <span>{this.booksList.amount}件</span>
                                 </div>
                                 <div>
                                     <span>运费：</span>
@@ -46,7 +46,7 @@ class Detail extends Component {
                 <div className="booksContentDetail">
                     <div className="introBox">
                         <div className="detailTtile">商品介绍</div>
-                        <img src={this.userList.commodity_details} style={{ width: '100%' }}></img>
+                        <img src={this.booksList.commodityDetails} style={{ width: '100%',marginBottom:'10px'}}></img>
                     </div>
                 </div>
             </div>

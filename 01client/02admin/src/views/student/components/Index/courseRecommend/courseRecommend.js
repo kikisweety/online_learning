@@ -14,13 +14,14 @@ export default class courseRecommend extends React.Component {
     componentDidMount() {
         let that = this;
         net.get("teachers", {}, function (ob) {
+            console.log(ob);
             that.setState({
                 data: ob.data.object
             });
-            console.log(that.state.data);
+            // console.log(that.state.data);
         });
         net.get('courses/type', { courseType: 1 }, function (ob) {
-            console.log(ob);
+            // console.log(ob);
             that.setState({
                 coursesList: ob.data.object
             })
@@ -52,7 +53,7 @@ export default class courseRecommend extends React.Component {
                                         title={item.name}
                                         description={item.introduce}
                                     />
-                                    {item.introduce}
+                                    {item.tType}
                                 </Card>
                             </List.Item>
                         )}

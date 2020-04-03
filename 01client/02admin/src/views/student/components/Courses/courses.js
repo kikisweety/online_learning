@@ -39,7 +39,7 @@ export default class MyCourses extends React.Component {
     componentDidMount() {
         let that = this;
         net.get('courses/type', { courseType: 1 }, function (ob) {
-            console.log(ob);
+            // console.log(ob);
             that.setState({
                 courses: ob.data.object
             })

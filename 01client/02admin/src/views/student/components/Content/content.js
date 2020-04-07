@@ -4,8 +4,9 @@ import "./content.css";
 import { Route, Switch } from "react-router-dom";
 import StudentIndex from "../Index/studentIndex";
 import Courses from "../Courses/courses";
-import Questions from "../Questions/questions"
-import Books from "../Books/books"
+import Questions from "../Questions/questions";
+import Books from "../Books/books";
+import UserCenter from "../User/user"
 
 const { Content } = Layout;
 export default class SContent extends React.Component {
@@ -33,6 +34,10 @@ export default class SContent extends React.Component {
                         exact
                         path={"/student/books"}
                         component={Books} />
+                    <Route
+                        exact
+                        path={"/student/userCenter"}
+                        component={UserCenter} />
                 </Switch>
             </Content>
         );

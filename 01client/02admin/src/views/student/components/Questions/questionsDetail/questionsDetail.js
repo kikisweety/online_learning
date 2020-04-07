@@ -7,10 +7,9 @@ class QuestionsDetail extends Component {
         super(props, context);
         this.state = {
             value: '',
-            index:0
         };
         this.list = props.location.state.questions
-        console.log(this.list);
+        // console.log(this.list);
     }
     toQuestions() {
         this.props.history.push(`/student/questions`);
@@ -19,7 +18,6 @@ class QuestionsDetail extends Component {
         console.log('radio checked', e.target.value);
         this.setState({
             value: e.target.value,
-            // index: e.currentTarget.id
         });
     };
     // /确认框/ 
@@ -48,7 +46,7 @@ class QuestionsDetail extends Component {
                 <div className="detailHeader">
                     <div className="datailContainer">
                         <div className="datailTitle">章节练习</div>
-                        <div className="toBooks" onClick={this.toQuestions.bind(this)} className="toBooks">返回商城</div>
+                        <div className="toBooks" onClick={this.toQuestions.bind(this)} className="toBooks">返回题库</div>
                     </div>
                 </div>
                 <div className="questionsDeatail">
@@ -58,21 +56,21 @@ class QuestionsDetail extends Component {
                     </div>
                     <div className="questionsList">
                         {this.list.questions.map((item, index) => {
-                            console.log(item);
+                            // console.log(item);
                             return <div className="questionsContentBox" key={item.id}>
                                 <div className="questionsId">第{index+1}道选择题</div>
                                 <div className="questionsTitle">{item.title}</div>
                                 <div className="questionschoice">
                                     <Radio.Group
-                                        // name={item.title}
+                                        name="radio checked"
                                         onChange={this.onChange}
-                                        value={this.state.value}
-                                        id={item.id}
+                                        // value={this.state.value}
+                                        // id={item.id}
                                     >
-                                        <Radio value={1}  style={radioStyle}>A、 {item.textA}</Radio>
-                                        <Radio value={2}  style={radioStyle}>B、{item.textB}</Radio>
-                                        <Radio value={3}  style={radioStyle}>C、{item.textC}</Radio>
-                                        <Radio value={4}  style={radioStyle}>D、{item.textD}</Radio>
+                                        <Radio value={item.title+item.textA}  style={radioStyle}>A、{item.textA}</Radio>
+                                        <Radio value={item.title + item.textB}   style={radioStyle}>B、{item.textB}</Radio>
+                                        <Radio value={item.title + item.textC}   style={radioStyle}>C、{item.textC}</Radio>
+                                        <Radio value={item.title + item.textD}   style={radioStyle}>D、{item.textD}</Radio>
                                     </Radio.Group>
                                 </div>
                             </div>

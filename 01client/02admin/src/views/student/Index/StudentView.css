@@ -3,6 +3,9 @@
     padding: 0px;
     list-style: none;
 }
+.ant-menu-horizontal > .ant-menu-item-selected > a{
+    color: #333333;
+}
 .studentBox {
             /* position: absolute; */
             width: 100%;

@@ -8,7 +8,8 @@ import RegisterView from "../views/register/RegisterView";
 import StudentView from "../views/student/Index/StudentView";
 import Detail from "../views/student/components/Details/details";
 import QuestionsDetail from "../views/student/components/Questions/questionsDetail/questionsDetail";
-import CoursesDetail from "../views/student/components/Courses/coursesDetail/coursesDetail"
+import CoursesDetail from "../views/student/components/Courses/coursesDetail/coursesDetail";
+import UserCenter from "../views/student/components/User/user";
 const history = createHashHistory();
 
 export default class Index extends React.Component {
@@ -22,7 +23,7 @@ export default class Index extends React.Component {
         <Route path="/student" component={StudentView} />
         <Route path="/CoursesDetail/:id" component={CoursesDetail}/>
         <Route path="/Detail/:id" component={Detail} />
-        <Route path="/QuestionsDetail/:id" component={QuestionsDetail}/>
+        <Route path="/QuestionsDetail/:id" component={QuestionsDetail} />
       </Router>
     );
   }

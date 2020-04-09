@@ -1,9 +1,9 @@
-.userInfoView{
-    width: 500px;
-    height: 500px;
-}
-.tehcsuhcd{
+.setUpView{
     width: 100%;
-    height: 1000px;
-    background-color: antiquewhite;
+    height: 100%;
+}
+.basicTitle{
+    font-size: 22px;
+    font-weight: bold;
+    padding: 20px;
 }

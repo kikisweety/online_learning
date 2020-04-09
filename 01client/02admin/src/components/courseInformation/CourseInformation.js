@@ -139,7 +139,7 @@ export default class CourseInformation extends React.Component {
           <div className="addCourseBox">
             <label for="title01">选择老师</label>
             <div>
-              <Select defaultValue="小刚" style={{ width: 120 }} onChange={this.handleChangeTeacher}>
+              <Select style={{ width: 120 }} onChange={this.handleChangeTeacher}>
                 {this.showTeacherOptions()}
               </Select>
             </div>

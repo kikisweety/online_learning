@@ -67,7 +67,7 @@ export default class StudentView extends React.Component {
                             <div className="userBox">
                                 <img src="/imgs/user.png"></img>
                                 <span className="userInfo">
-                                    <Link to={"/student/userCenter"}>
+                                    <Link to={"/student/userCenter/userInfo"}>
                                         <span style={{color:'black'}}>个人中心</span>
                                     </Link>
                                 </span>

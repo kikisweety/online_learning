@@ -2,6 +2,8 @@ package com.ff.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +41,21 @@ public class QuestionController {
 
 		return questionService.questionResult(result);
 	}
+	@RequestMapping(value = "question/delete")
+	@ResponseBody
+	public Msg delete(Question question, HttpServletResponse resp, HttpServletRequest request) {
 
+		return questionService.questionDelete(question);
+	}
+    @RequestMapping(value = "question/chapterid")
+    @ResponseBody
+    public Msg questionbyid(@Param("chapterId") int chapterId,HttpServletResponse resp, HttpServletRequest request) {
+
+        return questionService.Questionbyid(chapterId);
+    }@RequestMapping(value = "question/all")
+	@ResponseBody
+	public Msg questionAll(HttpServletResponse resp, HttpServletRequest request) {
+
+		return questionService.questionAll();
+	}
 }

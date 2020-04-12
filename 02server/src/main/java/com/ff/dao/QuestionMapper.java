@@ -27,4 +27,11 @@ public interface QuestionMapper {
 	 */
 	List<Question> selectQuestionsBychapterId(int id);
 
+
+
+	int questionDelete(int id);
+
+    List<Question> questionsBychapterId(int chapterId);
+
+    List<Question> questionsAll();
 }

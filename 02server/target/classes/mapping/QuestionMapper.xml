@@ -13,7 +13,7 @@
 	</resultMap>
 
 
-	<!-- 增加新视频 -->
+
 	<insert id="insert" parameterType="com.ff.pojo.Question"
 		keyProperty="id" useGeneratedKeys="true">
 		insert into questions
@@ -27,7 +27,20 @@
 		questions
 		where chapter_id = #{id}
 	</select>
+	<delete id="questionDelete" parameterType="java.lang.Integer">
+		delete from
+		 questions
+		 where id=#{id}
+	</delete>
+	<select id="selectQuestionsBychapterId" resultMap="questionMap">
+		select *from
+		questions
+		where chapter_id = #{chapterId}
+	</select>
+	<select id="questionsAll" resultMap="questionMap">
+		select *from
+		questions
 
-
+	</select>
 
 </mapper>

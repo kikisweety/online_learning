@@ -94,38 +94,38 @@ class MySider extends React.Component {
               key="sub3"
               title={
                 <span>
-                  <Icon type="user" />
+                  <Icon type="team" />
                   <span>老师管理</span>
                 </span>
               }
             >
               <Menu.Item key="sub31">
                 <Link to={"/home/teacher/add"}>
-                  <Icon type="pie-chart" />
-                  <span> 老师添加 </span>
+                  <Icon type="team" />
+                  <span> 老师列表 </span>
                 </Link>
               </Menu.Item>
 
-              <Menu.Item key="sub32">
+              {/* <Menu.Item key="sub32">
                 <Link to={"/home/teacher/query"}>
                   <Icon type="pie-chart" />
                   <span> 老师列表 </span>
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </SubMenu>
 
             <SubMenu
               key="sub4"
               title={
                 <span>
-                  <Icon type="user" />
+                  <Icon type="idcard" />
                   <span>用户管理</span>
                 </span>
               }
             >
               <Menu.Item key="sub41">
                 <Link to={"/home/teacher/add"}>
-                  <Icon type="pie-chart" />
+                  <Icon type="idcard" />
                   <span> 用户信息 </span>
                 </Link>
               </Menu.Item>
@@ -134,14 +134,14 @@ class MySider extends React.Component {
               key="sub5"
               title={
                 <span>
-                  <Icon type="user" />
+                  <Icon type="account-book" />
                   <span>订单管理</span>
                 </span>
               }
             >
               <Menu.Item key="sub51">
                 <Link to={"/home/teacher/add"}>
-                  <Icon type="pie-chart" />
+                  <Icon type="account-book" />
                   <span> 订单信息 </span>
                 </Link>
               </Menu.Item>
@@ -151,14 +151,14 @@ class MySider extends React.Component {
               key="sub6"
               title={
                 <span>
-                  <Icon type="user" />
+                  <Icon type="book" />
                   <span>商品管理</span>
                 </span>
               }
             >
               <Menu.Item key="sub61">
                 <Link to={"/home/teacher/query"}>
-                  <Icon type="pie-chart" />
+                  <Icon type="book" />
                   <span> 商品信息 </span>
                 </Link>
               </Menu.Item>

@@ -1,56 +1,9 @@
 import React from "react";
 import "./Query.css";
 import net from "../../../utils/net";
-import { Button, Cascader, Table, Radio, TreeSelect} from "antd";
+import { Button, Cascader, Table, Radio, TreeSelect } from "antd";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 const { TreeNode } = TreeSelect;
-const columns = [
-  {
-    title: '题目',
-    dataIndex: 'title',
-    key:'title',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: '选项A',
-    dataIndex: 'textA',
-    key:'textA'
-  },
-  {
-    title: '选项B',
-    dataIndex: 'textB',
-    key: 'textB'
-  },
-  {
-    title: '选项C',
-    dataIndex: 'textC',
-    key: 'textC'
-  },
-  {
-    title: '选项D',
-    dataIndex: 'textD',
-    key: 'textD'
-  },
-  {
-    title: '答案',
-    dataIndex: 'answer',
-    key: 'answer'
-  },
-  {
-    title: '操作',
-    dataIndex: 'action',
-    render: () => {
-      var that = this;
-      return (
-        <div>
-          <Button style={{ marginRight: 10 }}>修改</Button>
-          <Button>删除</Button>
-        </div>
-      )
-    }
-  },
-
-];
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -77,7 +30,54 @@ export default class ExaminationQuery extends React.Component {
       value: undefined,
       chapterId: -1,
       courses: [],
-      allQuestions:[]
+      allQuestions: [],
+      columns: [
+        {
+          title: '题目',
+          dataIndex: 'title',
+          key: 'title',
+          render: text => <a>{text}</a>,
+        },
+        {
+          title: '选项A',
+          dataIndex: 'textA',
+          key: 'textA'
+        },
+        {
+          title: '选项B',
+          dataIndex: 'textB',
+          key: 'textB'
+        },
+        {
+          title: '选项C',
+          dataIndex: 'textC',
+          key: 'textC'
+        },
+        {
+          title: '选项D',
+          dataIndex: 'textD',
+          key: 'textD'
+        },
+        {
+          title: '答案',
+          dataIndex: 'answer',
+          key: 'answer'
+        },
+        {
+          title: '操作',
+          dataIndex: 'action',
+          render: () => {
+            var that = this;
+            return (
+              <div>
+                <Button style={{ marginRight: 10 }}>修改</Button>
+                <Button>删除</Button>
+              </div>
+            )
+          }
+        },
+
+      ]
     };
 
   };
@@ -91,11 +91,11 @@ export default class ExaminationQuery extends React.Component {
         courses: ob.object
       });
     });
-    
-    net.post("questions/all", {},function (ob) {
+
+    net.post("questions/all", {}, function (ob) {
       console.log(ob);
       that.setState({
-        allQuestions:ob.object
+        allQuestions: ob.object
       })
     })
   };
@@ -106,7 +106,7 @@ export default class ExaminationQuery extends React.Component {
     this.setState({ value });
   };
   getId = (slectedKeys, e) => {
-    console.log(slectedKeys,e);
+    console.log(slectedKeys, e);
     this.setState({
       chapterId: slectedKeys
     })
@@ -129,7 +129,7 @@ export default class ExaminationQuery extends React.Component {
             <div>课程章节</div>
             <TreeSelect
               showSearch
-              style={{ width: '50%' }}
+              style={{ width: '70%' }}
               value={this.state.value}
               dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
               placeholder="请选择课程章节"
@@ -154,15 +154,18 @@ export default class ExaminationQuery extends React.Component {
         <div className="table-Bank">
           <Table
             rowSelection={rowSelection}
-            columns={columns}
+            columns={this.state.columns}
             dataSource={this.state.allQuestions}
+            style={{ width: "100%", height: 500, margin: "0 auto" }}
+            pagination={{ pageSize: 8 }}
+            scroll={{ y: 500 }}
           ></Table>
           {/* 删除按键 */}
 
-          <div className="bank-button">
+          {/* <div className="bank-button">
             <Radio className="bk-butten">全选</Radio>
             <Button type="primary" style={{ background: "#ECECEC", color: "black" }}>删除</Button>
-          </div>
+          </div> */}
 
         </div>
       </div>

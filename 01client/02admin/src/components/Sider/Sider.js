@@ -102,7 +102,7 @@ class MySider extends React.Component {
               <Menu.Item key="sub31">
                 <Link to={"/home/teacher/add"}>
                   <Icon type="team" />
-                  <span> 老师列表 </span>
+                  <span> 老师信息 </span>
                 </Link>
               </Menu.Item>
 

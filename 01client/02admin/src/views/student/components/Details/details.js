@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./details.css"
-import { Button } from "antd"
+import { Button,message } from "antd"
 class Detail extends Component {
     constructor(props, context) {
         super(props, context)
@@ -10,6 +10,9 @@ class Detail extends Component {
     }
     toBooks() {
         this.props.history.push(`/student/books`);
+    }
+    toOrder = () => { 
+        message.success('成功加入购物车，请到个人中心支付！');
     }
     render() {
         var booksList = {}
@@ -38,7 +41,7 @@ class Detail extends Component {
                                 </div>
                             </div>
                             <div className="booksCar">
-                                <Button type="primary" shape="round" style={{ backgorundColor: '#f60' }}>加入购物车</Button>
+                                <Button type="primary" shape="round" style={{ backgorundColor: '#f60' }} onClick={this.toOrder}>加入购物车</Button>
                             </div>
                         </div>
                     </div>

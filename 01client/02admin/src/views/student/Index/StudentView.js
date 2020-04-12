@@ -18,7 +18,7 @@ export default class StudentView extends React.Component {
             this.setState({ SelectedKeys: "3" })
         } else if (this.props.history.location.pathname == "/student/books") {
             this.setState({ SelectedKeys: "4" })
-        }
+        } 
         // console.log(this.state)
     }
     render() {
@@ -56,11 +56,21 @@ export default class StudentView extends React.Component {
                                 <Menu.Item key="4">
                                     <Link to={"/student/books"}>
                                         <span>商城</span>
-                                    </Link></Menu.Item>
+                                    </Link>
+                                </Menu.Item>
+                                {/* <Menu.Item key="5">
+                                    <Link to={"/student/user"}>
+                                        <span>个人中心</span>
+                                    </Link>
+                                </Menu.Item> */}
                             </Menu>
                             <div className="userBox">
                                 <img src="/imgs/user.png"></img>
-                                <span className="userInfo">个人中心</span>
+                                <span className="userInfo">
+                                    <Link to={"/student/userCenter/userInfo"}>
+                                        <span style={{color:'black'}}>个人中心</span>
+                                    </Link>
+                                </span>
                             </div>
                         </div>
                     </Header>

@@ -65,5 +65,5 @@ public interface CourseMapper {
 
     List<Course> selectByType(int courseType);
 
-    List<Course> selectQuestionByType(int courseType);
+	List<Course> selectQuestionByType(int courseType);
 }

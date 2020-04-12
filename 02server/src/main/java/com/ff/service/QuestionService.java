@@ -32,4 +32,10 @@ public interface QuestionService {
 	Msg selectQuestionsByChapterid(Chapter chapter);
 
     Msg questionResult(List<Question> result);
+
+    Msg questionDelete(Question question);
+
+	Msg Questionbyid(int chapterId);
+
+	Msg questionAll();
 }

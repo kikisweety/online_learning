@@ -68,4 +68,37 @@ public class QuestionServiceImpl implements QuestionService {
 		return msg;
 	}
 
+	@Override
+	public Msg questionDelete(Question question) {
+		Msg msg = new Msg();
+		if(questionMapper.questionDelete(question.getId())==1){
+			msg.setMsg("ok");
+		}
+		return null;
+	}
+
+	@Override
+	public Msg Questionbyid(int chapterId) {
+		Msg msg = new Msg();
+		List<Question> list = questionMapper.questionsBychapterId(chapterId);
+		if (list.size() >= 1) {
+			msg.setMsg("操作成功");
+			msg.setCode(1);
+			msg.setObject(list);
+		}
+		return msg;
+	}
+
+	@Override
+	public Msg questionAll() {
+		Msg msg = new Msg();
+		List<Question> list = questionMapper.questionsAll();
+		if (list.size() >= 1) {
+			msg.setMsg("操作成功");
+			msg.setCode(1);
+			msg.setObject(list);
+		}
+		return msg;
+	}
+
 }

@@ -86,7 +86,7 @@ export default class DressManage extends React.Component {
         super(props);
     }
     showForm() {
-        console.log(111);
+        // console.log(111);
         this.refs.form.style.display = "block"
     }
     closeForm() { 

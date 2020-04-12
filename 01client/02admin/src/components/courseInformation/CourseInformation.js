@@ -131,12 +131,12 @@ export default class CourseInformation extends React.Component {
             </Button>
           </div>
 
-          <div className="addCourseBox">
+          <div className="addCourse">
             <label for="title"><span style={{ color: "red", marginRight: "3px" }}>*</span>课程标题</label>
             <Input ref="courseName" placeholder="" id="title" />
           </div>
 
-          <div className="addCourseBox">
+          <div className="addCourse">
             <label for="title01">选择老师</label>
             <div>
               <Select style={{ width: 120 }} onChange={this.handleChangeTeacher}>
@@ -144,7 +144,7 @@ export default class CourseInformation extends React.Component {
               </Select>
             </div>
           </div>
-          <div className="addCourseBox">
+          <div className="addCourse">
             <label>连载状态</label>
             <div>
               <Radio.Group onChange={this.onChange} value={this.state.value}>
@@ -155,7 +155,7 @@ export default class CourseInformation extends React.Component {
             </div>
           </div>
 
-          <div className="addCourseBox">
+          <div className="addCourse">
             <label>封面图片</label>
             <div>
               <Upload onRemove={this.removeFile} beforeUpload={this.beforeUpload}>
@@ -167,7 +167,7 @@ export default class CourseInformation extends React.Component {
             </div>
           </div>
 
-          <div className="addCourseBox">
+          <div className="addCourse">
             <label for="title02">课程简介</label>
             <Input ref="instroduce" placeholder="" id="title02" />
           </div>

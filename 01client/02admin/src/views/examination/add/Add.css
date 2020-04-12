@@ -1,12 +1,15 @@
 .coursesBankBox-2{
-    width: 95%;
+    width: 90%;
+    height: 800px;
    background: #FFFFFF;
    margin: 20px auto;
 }
 .banktitle-2{
-    width: 40%;
-    margin: 20px 20px 0px 20px;
+    width: 98%;
+    padding: 20px;
+    margin: auto;
     font-size: 20px;
+    border-bottom: 1px solid #F0F0F0;
 }
 .bankheader{
     width: 90%;
@@ -24,8 +27,9 @@
     margin: 0 auto;
 }
 .bank2-buttom{
-    width: 40%;
-    margin: 10px auto;
+    width: 90%;
+    display: flex;
+    justify-content: center;
     
 }
 .Bank2ButtonCenter{

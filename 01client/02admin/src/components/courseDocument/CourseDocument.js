@@ -6,12 +6,6 @@ import { Player } from "video-react";
 const { Option } = Select;
 const { TreeNode } = TreeSelect;
 
-const dataTest = [
-  { id: 1, name: "hmc", chapters: [], introduce: "introduce00" },
-  { id: 2, name: "hmc", chapters: [], introduce: "introduce01" },
-  { id: 3, name: "hmc", chapters: [], introduce: "introduce02" }
-];
-
 export default class CourseDocument extends React.Component {
   constructor() {
     super();
@@ -23,32 +17,7 @@ export default class CourseDocument extends React.Component {
       courseSection: "",
       values: undefined,
       allLeaf: [],
-      columns: [
-        { title: "课程名称", dataIndex: "name", key: "name" },
-        {
-          title: "课程章节",
-          dataIndex: "chapters",
-          key: "chapters",
-          render: chapters => {
-            if (chapters.length < 1) {
-              return;
-            }
-            let temp = chapters[0].name;
-            return (
-              <Select
-                defaultValue={temp}
-                style={{ width: 120 }}
-                onChange={this.handleChange}
-              >
-                {chapters.map(function (item) {
-                  return <Option value={item.id}>{item.name}</Option>;
-                })}
-              </Select>
-            );
-          }
-        },
-        { title: '课程介绍', dataIndex: 'introduce', key: 'introduce' }
-      ],
+      chapters:[],
       videoData: [],
       chapterId: 13,
       source: "",
@@ -57,7 +26,8 @@ export default class CourseDocument extends React.Component {
     };
   }
 
-  handleChange = value => {
+  handleChange = (value) => {
+    // console.log(value);
     let id = value;
     let that = this;
     net.get(
@@ -66,6 +36,8 @@ export default class CourseDocument extends React.Component {
         id: id
       },
       function (ob) {
+        console.log(ob);
+
         that.setState({
           videoData: ob.data.object
         });
@@ -76,14 +48,16 @@ export default class CourseDocument extends React.Component {
   componentDidMount() {
     let that = this;
     net.get("courses/and/chapters", {}, function (ob) {
+      console.log(ob);
+      
       that.setState({
         allLeaf: ob.data.object
       });
     });
+    this.handleChange();
   }
 
-  expandedRowRender = record => {
-    console.log(record.id);
+  expandedRowRender = (record) => {
     const columns = [
       { title: "视频名称", dataIndex: "name", key: "name" },
       {
@@ -111,6 +85,19 @@ export default class CourseDocument extends React.Component {
                 style={{ background: "#43BB60", color: "white", width: "120px" }}>播放视频</Button>
             );
           }
+        }
+      },
+      {
+        title: '操作',
+        key: 'action',
+        render: () => {
+          var that = this;
+          return (
+            <div>
+              <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
+              <Button style={{ background: "#43BB60", color: 'white' }}>删除</Button>
+            </div>
+          )
         }
       }
     ];
@@ -329,11 +316,38 @@ export default class CourseDocument extends React.Component {
   };
 
   render() {
+    const columns = [
+      { title: "课程名称", dataIndex: "name", key: "name" },
+      {
+        title: "课程章节",
+        dataIndex: "chapters",
+        key: "chapters",
+        render: chapters => {
+          // console.log(chapters);
+          if (chapters.length < 1) {
+            return;
+          }
+          let temp = chapters[0].name;
+          return (
+            <Select
+              defaultValue={temp}
+              style={{ width: 120 }}
+              onSelect={this.handleChange}
+            >
+              {chapters.map(function (item) {
+                return <Option value={item.id} key={item.id}>{item.name}</Option>; 
+              })}
+            </Select>
+          );
+        }
+      },
+      { title: '课程介绍', dataIndex: 'introduce', key: 'introduce' },
+    ];
     return (
       <div className="coursesAdd-1">
         <div className="addCourseList">
           <div className="addCourseTitle">
-            <span>课程文件</span>
+            <span>课程视频</span>
             <Button
               onClick={this.addCourseFiles.bind(this)}
               type="primary"
@@ -347,8 +361,9 @@ export default class CourseDocument extends React.Component {
             <Table
               style={{ maxWidth: '100%', margin: "0 auto", margin: "10px" }}
               className="components-table-demo-nested courseTable"
-              columns={this.state.columns}
+              columns={columns}
               expandedRowRender={this.expandedRowRender}
+              // expandedRowKeys={this.state.allLeaf.map(item => item.id)} //展开的行
               dataSource={this.state.allLeaf}
               pagination={{
                 pageSize: 8

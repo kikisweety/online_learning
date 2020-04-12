@@ -114,12 +114,55 @@ class MySider extends React.Component {
               </Menu.Item>
             </SubMenu>
 
-            {/* <Menu.Item key="sub43">
-              <Link to={"/home/product"}>
-                <Icon type="desktop" />
-                <span> 产品管理页面 </span>
-              </Link>
-            </Menu.Item> */}
+            <SubMenu
+              key="sub4"
+              title={
+                <span>
+                  <Icon type="user" />
+                  <span>用户管理</span>
+                </span>
+              }
+            >
+              <Menu.Item key="sub41">
+                <Link to={"/home/teacher/add"}>
+                  <Icon type="pie-chart" />
+                  <span> 用户信息 </span>
+                </Link>
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub5"
+              title={
+                <span>
+                  <Icon type="user" />
+                  <span>订单管理</span>
+                </span>
+              }
+            >
+              <Menu.Item key="sub51">
+                <Link to={"/home/teacher/add"}>
+                  <Icon type="pie-chart" />
+                  <span> 订单信息 </span>
+                </Link>
+              </Menu.Item>
+
+            </SubMenu>
+            <SubMenu
+              key="sub6"
+              title={
+                <span>
+                  <Icon type="user" />
+                  <span>商品管理</span>
+                </span>
+              }
+            >
+              <Menu.Item key="sub61">
+                <Link to={"/home/teacher/query"}>
+                  <Icon type="pie-chart" />
+                  <span> 商品信息 </span>
+                </Link>
+              </Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
       </div>

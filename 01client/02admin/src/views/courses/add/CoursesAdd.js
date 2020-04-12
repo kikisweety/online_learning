@@ -41,7 +41,7 @@ export default class CoursesAdd extends React.Component {
           // onChange={this.onTabsChange.bind(this)}
           className="tabs" defaultActiveKey="1" onChange={this.callback.bind(this)}
         >
-          <TabPane className="courseTabs" tab="课程文件" key="1">
+          <TabPane className="courseTabs" tab="课程视频" key="1">
             <CourseDocument></CourseDocument>
           </TabPane>
           <TabPane tab="课程信息" key="2">

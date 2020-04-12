@@ -113,7 +113,7 @@ export default class MyCourseTest extends React.Component {
         <Table
           className="components-table-demo-nested courseTable"
           columns={this.state.newColumns}
-          style={{ width: "98.5%", margin: "0 auto", margin: "10px" }}
+          style={{ width: "98.5%",height:500, margin: "0 auto", margin: "10px" }}
           //额外的展开行Function(record, index, indent, expanded):ReactNode
           expandedRowRender={this.expandedRowRender}
           dataSource={this.state.allLeaf}

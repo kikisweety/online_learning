@@ -56,19 +56,21 @@
 .ant-btn:hover{
     border:none;
 }
-.addCourseBox{
-    width: 80%;
+.addCourse{
+    width: 50%;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
     flex-direction: row;
-    margin: 20px 0;
 }
-.addCourseBox>label{
+.addCourse>label{
     width: 20%;
     text-align: right;
     font-weight: 700;
     box-sizing: border-box;
     padding: 0px 20px;
 }
-.addCourseBox>input, .addCourseBox>div{
+.addCourse>input, .addCourse>div{
     width: 80%;
 }

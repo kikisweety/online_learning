@@ -53,7 +53,8 @@ export default class MyCourseCreate extends React.Component {
 
   componentDidMount() {
     let that = this;
-    net.post("courses/and/chapters", {}, function (ob) {
+    net.post("chapters/question", {}, function (ob) {
+      console.log(ob);
       let courseByChapters = StringUtil.CascaderData(ob.object);
       that.setState({
         courseByChapter: courseByChapters
@@ -160,6 +161,15 @@ export default class MyCourseCreate extends React.Component {
       <div className="courseTestBox">
         <div className="testHeader">
           <h1 className="testTitle">创建试卷</h1>
+          <div className="keepBtn">
+            <Button
+              style={{ backgroundColor: "#43BC60", width: "120px", textAlign: "center", color: "white",marginRight:10}}
+              onClick={this.upload}
+            >保存</Button>
+            <Link to={"/home/courses/add"}>
+              <Button className="backToCreate">返回</Button>
+            </Link>
+          </div>
         </div>
         <div className="createBox">
           <div className="createHeader">
@@ -196,18 +206,10 @@ export default class MyCourseCreate extends React.Component {
             rowSelection={rowSelection}
             columns={this.state.columns}
             dataSource={this.state.questionData}
-            style={{ width: "100%", margin: "0 auto" }}
-            pagination={{ pageSize: 12, position: "right" }}
+            style={{ width: "100%", height: 500, margin: "0 auto" }}
+            pagination={{ pageSize: 8}}
+            scroll={{ y: 500 }}
           />
-          <div className="keepBtn">
-            <Button
-              style={{ backgroundColor: "#43BC60", width: "120px", textAlign: "center", color: "white" }}
-              onClick={this.upload}
-            >保存</Button>
-            <Link to={"/home/courses/add"}>
-              <Button className="backToCreate">返回</Button>
-            </Link>
-          </div>
         </div>
       </div>
     );

@@ -34,4 +34,6 @@ public interface QuestionMapper {
     List<Question> questionsBychapterId(int chapterId);
 
     List<Question> questionsAll();
+
+	List<Question> Questionbyid(int chapterId);
 }

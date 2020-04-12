@@ -80,7 +80,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public Msg Questionbyid(int chapterId) {
 		Msg msg = new Msg();
-		List<Question> list = questionMapper.questionsBychapterId(chapterId);
+		List<Question> list = questionMapper.Questionbyid(chapterId);
 		if (list.size() >= 1) {
 			msg.setMsg("操作成功");
 			msg.setCode(1);

@@ -102,9 +102,16 @@ export default class MyUserAdd extends React.Component {
         key: "introduce"
       },
       {
-        title: "课程视频",
-        dataIndex: "video",
-        key: "video"
+        title: "课程图片",
+        dataIndex: "url",
+        key: "url",
+        render:(url)=> {
+          return(
+            <div>
+              <img src={url} style={{width:225,height:125}}></img>
+            </div>
+          )
+        }
       },
       {
         title: "操作",
@@ -114,13 +121,13 @@ export default class MyUserAdd extends React.Component {
           return (
             <div>
               <Button
-                style={{ backgroundColor: "1px solid #CCCCCC" }}
+                style={{ backgroundColor:"#43BB60",color:"white" }}
                 onClick={this.toCoursesAdd.bind(this)}
               >
                 管理
               </Button>
               <Divider type="vertical" />
-              <Button>删除</Button>
+              <Button style={{ backgroundColor: "#43BB60" ,color:"white"}}>删除</Button>
             </div>
           );
         }

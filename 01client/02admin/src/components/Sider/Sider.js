@@ -124,7 +124,7 @@ class MySider extends React.Component {
               }
             >
               <Menu.Item key="sub41">
-                <Link to={"/home/teacher/add"}>
+                <Link to={"/home/user/info"}>
                   <Icon type="idcard" />
                   <span> 用户信息 </span>
                 </Link>
@@ -140,7 +140,7 @@ class MySider extends React.Component {
               }
             >
               <Menu.Item key="sub51">
-                <Link to={"/home/teacher/add"}>
+                <Link to={"/home/order/info"}>
                   <Icon type="account-book" />
                   <span> 订单信息 </span>
                 </Link>
@@ -157,7 +157,7 @@ class MySider extends React.Component {
               }
             >
               <Menu.Item key="sub61">
-                <Link to={"/home/teacher/query"}>
+                <Link to={"/home/commodity/info"}>
                   <Icon type="book" />
                   <span> 商品信息 </span>
                 </Link>

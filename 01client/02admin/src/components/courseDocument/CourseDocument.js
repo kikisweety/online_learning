@@ -36,7 +36,7 @@ export default class CourseDocument extends React.Component {
         id: id
       },
       function (ob) {
-        console.log(ob);
+        // console.log(ob);
 
         that.setState({
           videoData: ob.data.object
@@ -48,7 +48,7 @@ export default class CourseDocument extends React.Component {
   componentDidMount() {
     let that = this;
     net.get("courses/and/chapters", {}, function (ob) {
-      console.log(ob);
+      // console.log(ob);
       
       that.setState({
         allLeaf: ob.data.object

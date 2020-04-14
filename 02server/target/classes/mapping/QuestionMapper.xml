@@ -32,7 +32,7 @@
 		 questions
 		 where id=#{id}
 	</delete>
-	<select id="selectQuestionsBychapterId" resultMap="questionMap">
+	<select id="Questionbyid" resultMap="questionMap">
 		select *from
 		questions
 		where chapter_id = #{chapterId}

@@ -11,7 +11,8 @@ import ExaminationAdd from "../../views/examination/add/Add.js";
 import CoursesList from "../../views/courses/list/CoursesList";
 import CoursesAdd from "../../views/courses/add/CoursesAdd";
 import Test from "../../views/test/Test";
-
+import Order from "../../views/order/Order";
+import Commodity from "../../views/commodity/Commodity";
 const { Content } = Layout;
 export default class MyContent extends React.Component {
   constructor(props) {
@@ -39,7 +40,9 @@ export default class MyContent extends React.Component {
           <Route exact path={"/home/teacher/query"} component={TeacherQuery} />
           <Route exact path={"/home/teacher/add"} component={TeacherAdd} />
           <Route exact path={"/home/user/query"} component={UserQuery} />
-          <Route exact path={"/home/user/infor"} component={User} />
+          <Route exact path={"/home/user/info"} component={User} />
+          <Route exact path={"/home/order/info"} component={Order} />
+          <Route exact path={"/home/commodity/info"} component={Commodity} />
         </Switch>
       </Content>
     );

@@ -13,8 +13,6 @@ import {
 import net from "../../../utils/net";
 import reqwest from "reqwest";
 
-import InfiniteScroll from "react-infinite-scroller";
-
 const { Option } = Select;
 const { TextArea } = Input;
 const fakeDataUrl =
@@ -22,21 +20,42 @@ const fakeDataUrl =
 const columns = [
   {
     title: "姓名",
-    dataIndex: "name"
+    dataIndex: "name",
+    key:"name"
   },
   {
     title: "照片",
     dataIndex: "tkey",
-    render:(tkey)=>{
-        console.log(tkey);
-        return(
-          <img src = {tkey} className="tea_img"/>
-        );
+    key: "tkey",
+    render: (tkey) => {
+      // console.log(tkey);
+      return (
+        <img src={tkey} style={{ width: 50, height: 50 }} />
+      );
     }
   },
   {
     title: "介绍",
-    dataIndex: "introduce"
+    dataIndex: "introduce",
+    key: "introduce"
+  },
+  {
+    title: "职称",
+    dataIndex: "tType",
+    key: "tType",
+  },
+  {
+    title: '操作',
+    key: 'action',
+    render: () => {
+      var that = this;
+      return (
+        <div>
+          <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
+          <Button style={{ background: "#43BB60", color: 'white' }}>删除</Button>
+        </div>
+      )
+    }
   }
 ];
 function getBase64(img, callback) {
@@ -54,7 +73,8 @@ export default class Add extends React.Component {
       loading: false,
       subject: "",
       introduceText: "",
-      teacherData: []
+      teacherData: [],
+      courses:[]
     };
   }
 
@@ -69,6 +89,7 @@ export default class Add extends React.Component {
     }
 
     let fileList = this.state.fileList;
+    
     fileList.push(file);
     this.setState({ fileList: fileList });
     return isJpgOrPng && isLt2M;
@@ -86,42 +107,27 @@ export default class Add extends React.Component {
   }
   upload = e => {
     //获得姓名
-
-    console.log(this.refs.inputIntroduce);
-    console.log(this.refs.inputIntroduce.props.value);
     let name = this.refs.inputName.state.value; //姓名
-    let sexValue = this.refs.inputSex.state.value; //性别
+    let t_type = this.refs.inputType.state.value; //性别
     let subject = this.state.subject; //科目
     let introduce = this.refs.inputIntroduce.props.value; //介绍
-
-    if (sexValue == 1) {
-      let sex = "男";
-    } else {
-      let sex = "女";
-    }
-
     let fileList = this.state.fileList;
-    console.log(fileList);
-    console.log("上传数据");
+    let that = this;
     net.uploadFile(
       "teacherAdd",
+      { name: name, introduce: introduce, files: fileList, tType: t_type },
 
-      // { name: name, introduce: introduce, files: fileList[0] },
-
-      { name: name, introduce: introduce, files: fileList },
-
-      function(ob) {
+      function (ob) {
         console.log(ob);
+        if (ob.code == -1) {
+          alert("上传失败");
+        } else {
+          alert("上传成功");
+          that.refs.addform.style.display = "none";
+          that.refs.opacity.style.display = "none";
+        }
       }
     );
-    // net.post(
-    //   "/teacherAdd",
-    //   { name: name, introduce: introduce },
-    //   function (ob) {
-    //     console.log("上传老师");
-    //     console.log(ob);
-    //   }
-    // )
   };
   componentDidMount() {
     let that = this;
@@ -130,11 +136,16 @@ export default class Add extends React.Component {
         data: res.results
       });
     });
-    net.get("teachers", {}, function(ob) {
+    net.get("teachers", {}, function (ob) {
       let teacherdata = ob.data.object;
-      console.log(teacherdata);
+      // console.log(teacherdata);
       that.setState({ teacherData: teacherdata });
     });
+    net.get("courses/and/chapters", {},function (params) {
+      that.setState({
+        courses:params.data.object
+      })
+    })
   }
 
   fetchData = callback => {
@@ -201,68 +212,65 @@ export default class Add extends React.Component {
 
     return (
       <div className="addView">
-        <div className="opacity" ref="opacity"></div>
-        <div className="box" ref="box">
-          <div className="pageHeader">
-            <h1 className="header_left">教师管理</h1>
-            <div
-              className="header_right"
+        <div className="addCourseList" ref="box">
+          <div className="opacity" ref="opacity"></div>
+          <div className="addCourseTitle teacherView">
+            <span>教师管理</span>
+            <Button
+              type="primary"
+              style={{ background: "#43BB60" }}
               onClick={this.displayAddForm.bind(this)}
-            >
-              添加老师
-            </div>
+            >添加老师</Button>
           </div>
-          {/* <div className="intro_title">
-        <div>老师信息</div><div className="right">修改</div>
-      </div> */}
-
           <Table
             columns={columns}
             dataSource={this.state.teacherData}
-            size="middle"
+            pagination={{
+              pageSize: 7
+            }}
+            scroll={{ y: 580 }}
             className="table"
           />
         </div>
         {/* 老师添加 ******************************/}
         <div className="addForm" ref="addform">
-          <h1>老师添加</h1>
-
+          <div className="addTeacherTitle">老师添加</div>
           <div className="flex">
             <div>姓名：</div>
             <Input placeholder="请输入姓名" className="input" ref="inputName" />
           </div>
           <div className="flex">
-            <div>性别：</div>{" "}
-            <Radio.Group name="radiogroup" defaultValue={1} ref="inputSex">
-              <Radio value={1}>男</Radio>
-              <Radio value={2}>女</Radio>
-            </Radio.Group>
+            <div>职称：</div>
+            <Input placeholder="请输入职称" className="input" ref="inputType" />
           </div>
           <div className="flex">
-            <div>选择科目：</div>
+            <div>选择课程：</div>
             <Select
-              defaultValue="java"
+              // defaultValue={this.state.courses[0].name}
+              value={this.state.subject}
               style={{ width: 120 }}
               onChange={this.handleChange.bind(this)}
               ref="subject"
             >
-              <Option value="c">c</Option>
-              <Option value="java">java</Option>
-              <Option value="python"> python</Option>
-              <Option value="PHP">PHP</Option>
-              <Option value="PHP">javaScript</Option>
+              {this.state.courses.map((item) => { 
+                return (
+                  <Option value={item.name} key={item.id}>{item.name}</Option>
+                )
+              })}
             </Select>
           </div>
-
-          <div>个人介绍：</div>
-          <TextArea
-            rows={2}
-            ref="inputIntroduce"
-            value={this.state.introduceText}
-            onChange={this.handleInfo}
-          />
-          <div className="uploadImg">
-            <div>请上传你的头像:</div>
+          <div className="flex">
+            <div>个人介绍：</div>
+            <TextArea
+              rows={2}
+              ref="inputIntroduce"
+              value={this.state.introduceText}
+              onChange={this.handleInfo}
+              style={{width:'80%',height:'100px'}}
+            />
+          </div>
+          <div className="flex">
+            <div style={{width:50}}>照片:</div>
             <Upload
               ref="uploadImg"
               name="avatar"
@@ -274,10 +282,10 @@ export default class Add extends React.Component {
               onChange={this.handleChangeimg}
             >
               {imageUrl ? (
-                <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+                <img src={imageUrl} alt="avatar" style={{ width:70 }} />
               ) : (
-                uploadButton
-              )}
+                  uploadButton
+                )}
             </Upload>
           </div>
 

@@ -70,8 +70,8 @@ export default class ExaminationQuery extends React.Component {
             var that = this;
             return (
               <div>
-                <Button style={{ marginRight: 10 }}>修改</Button>
-                <Button>删除</Button>
+                <Button style={{ background: "#43BB60",color:'white', marginRight: 10 }}>修改</Button>
+                <Button style={{ background: "#43BB60",color: 'white' }}>删除</Button>
               </div>
             )
           }
@@ -92,10 +92,10 @@ export default class ExaminationQuery extends React.Component {
       });
     });
 
-    net.post("questions/all", {}, function (ob) {
-      console.log(ob);
+    net.post("question/all", {}, function (params) {
+      console.log(params);
       that.setState({
-        allQuestions: ob.object
+        allQuestions: params.object
       })
     })
   };
@@ -106,11 +106,20 @@ export default class ExaminationQuery extends React.Component {
     this.setState({ value });
   };
   getId = (slectedKeys, e) => {
-    console.log(slectedKeys, e);
     this.setState({
       chapterId: slectedKeys
     })
   };
+  onSearch(chapterId) {
+    let that = this;
+    // console.log(this.state.chapterId);
+    net.post("question/chapterid", { chapterId: this.state.chapterId},function (params) {
+      console.log(params);
+      that.setState({
+        allQuestions:params.object
+      })
+    })
+  }
   render() {
     var treeNodeList = this.state.courses.map((item) => {
       return <TreeNode value={item.name} title={item.name} key={item.name}>
@@ -145,6 +154,7 @@ export default class ExaminationQuery extends React.Component {
           <Button
             value="small"
             type="primary"
+            onClick={this.onSearch.bind(this)}
             style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
           >
             搜索

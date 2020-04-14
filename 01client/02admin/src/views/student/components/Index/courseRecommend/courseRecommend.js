@@ -9,6 +9,7 @@ export default class courseRecommend extends React.Component {
         this.state = {
             data: [],
             coursesList: [],
+            booksList:[]
         }
     };
     componentDidMount() {
@@ -25,12 +26,18 @@ export default class courseRecommend extends React.Component {
             that.setState({
                 coursesList: ob.data.object
             })
+        });
+        net.get('commodity/All', {  }, function (ob) {
+            // console.log(ob);
+            that.setState({
+                booksList: ob.data.object
+            })
         })
     };
     render() {
         return (
             < div className="recommendBox">
-                <div className="selectTeacher">
+                <div className="selectTeacher teacher">
                     <div className="selectJingpin">
                         <h2>优质讲师</h2>
                         <p>特别甄选优质讲师</p>
@@ -89,7 +96,7 @@ export default class courseRecommend extends React.Component {
                     />
                 </div>
 
-                <div className="selectTeacher">
+                <div className="selectTeacher books">
                     <div className="selectJingpin">
                         <h2>好书推荐</h2>
                         <p>搭配课程学习效果更佳</p>
@@ -101,17 +108,21 @@ export default class courseRecommend extends React.Component {
                             column: 4
                         }}
                         itemLayout="horizontal"
-                        dataSource={this.state.coursesList}
+                        dataSource={this.state.booksList}
                         renderItem={item => (
-                            <List.Item>
+                            <List.Item style={{ border: 'red' }}>
                                 <Card
+                                    key={item.id}
                                     hoverable
-                                    style={{ height: 270, borderRadius: 5 }}
+                                    style={{ borderRadius: 5, color: '#f60', fontSize: 16 }}
+                                    // cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
                                     cover={<img alt="example" src={item.url} />}
                                 >
                                     <Meta
-                                        title={item.name}
-                                        description={item.introduce} />
+                                        title={item.commodityName}
+                                        style={{ marginBottom: 10 }}
+                                    ></Meta>
+                                    ￥{item.commodityPrice}元
                                 </Card>
                             </List.Item>
                         )}

@@ -12,7 +12,7 @@ export default class MyCourseCreate extends React.Component {
     super(props);
     this.state = {
       editorContent: '',
-      courseByChapter: [],
+      courses:[],
       allQuestions: [],
       value1: null,
       value2: null,
@@ -46,71 +46,22 @@ export default class MyCourseCreate extends React.Component {
           dataIndex: 'answer',
         }
       ],
-      chapterId: 1,
+      chapterId: -1,
       questionIds: []
     };
   };
 
-  componentDidMount() {
+  componentDidMount = e => {
     let that = this;
-    net.post("chapters/question", {}, function (ob) {
-      console.log(ob);
-      let courseByChapters = StringUtil.CascaderData(ob.object);
+    net.post("courses/and/chapters", {}, function (ob) {
       that.setState({
-        courseByChapter: courseByChapters
-        // courseByChapter:ob.object
+        courses: ob.object
       });
     });
-    // net.post("questions/all", {}, function (ob) {
-    //   // let allQuestions = StringUtil.CascaderData(ob.object);
-    //   // console.log(allQuestions);
-    //   that.setState({
-    //     allQuestions: ob.object
-    //     // allQuestions: allQuestions
-    //   })
-    // })
-  };
-  showTreeList = () => {
-    let allQuestions = this.state.allQuestions;
-    let length = allQuestions.length;
-    if (length < 1) {
-      return;
-    }
-    let allQuestion = allQuestions.map(function (item) {
-      return (
-        <TreeNode
-          value={item.name}
-          title={item.name}
-        // key={item.id}
-        >
-          {item.chapters.map(function (item1) {
-            return (
-              <TreeNode
-                value={item1.id}
-                title={item1.name}
-              // onChange={this.handleChange}
-              // key={item1.id}
-              >
-                {item1.questions.map(function (item2) {
-                  return (
-                    <TreeNode
-                      value={item2.id}
-                      title={item2.title}
-                    // key={item2.id}
-                    ></TreeNode>
-                  );
-                })}
-              </TreeNode>
-            );
-          })}
-        </TreeNode>
-      )
-    });
-    return allQuestion;
   };
   handleChange = value => {
     let that = this;
-    net.get("question/and/chapterid", {
+    net.get("question/chapterid", {
       id: value,
     },
       function (ob) {
@@ -118,13 +69,13 @@ export default class MyCourseCreate extends React.Component {
           questionData: ob.data.object,
           chapterId: value
         })
-        console.log(ob.data.object);
+        // console.log(ob.data.object);
       }
     )
   };
   upload =e=> {
     let chapterId = this.state.chapterId;
-    console.log(chapterId);
+    // console.log(chapterId);
     let questionData = this.state.questionData;
     let questionIds=[];
     questionData.map(function (item) {
@@ -139,7 +90,20 @@ export default class MyCourseCreate extends React.Component {
         chapterId: chapterId, questionIds: questionIds
       },
       function (ob) {
-        console.log(ob);
+        // console.log(ob);
+      }
+    )
+  };
+  onChange = value => {
+    this.setState({ value });
+  };
+  getId = (selectedKeys, e) => {
+    let that = this;
+    net.get("question/chapterid", {chapterId:selectedKeys},function (ob) {
+        that.setState({
+          questionData: ob.data.object,
+          chapterId: selectedKeys
+        })
       }
     )
   };
@@ -157,6 +121,13 @@ export default class MyCourseCreate extends React.Component {
         name: record.name
       })
     };
+    var treeNodeList = this.state.courses.map((item) => {
+      return <TreeNode value={item.name} title={item.name} key={item.name}>
+        {item.chapters.map((v) => {
+          return <TreeNode value={v.id} title={v.name} key={v.name} ></TreeNode>
+        })}
+      </TreeNode>
+    });
     return (
       <div className="courseTestBox">
         <div className="testHeader">
@@ -176,31 +147,20 @@ export default class MyCourseCreate extends React.Component {
             <div className="createHeaderLeft">
               <span className="leftVideo">课程章节</span>
               <TreeSelect
-                style={{ width: 300 }}
+                showSearch
+                style={{ width: '70%' }}
+                value={this.state.value}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={this.state.courseByChapter}
-                placeholder="请选择相应章节"
-                treeDefaultExpandAll
-                onChange={this.handleChange}
-                key="chapter"
+                placeholder="请选择课程章节"
+                allowClear
+                showSearch={false}
+                // treeDefaultExpandAll
+                onChange={this.onChange}
+                onSelect={this.getId.bind(this)}
               >
+                {treeNodeList}
               </TreeSelect>
             </div>
-            {/* <div className="createHeaderRight">
-              <span className="rightTest">课程章节试题</span>
-              <TreeSelect
-                style={{ width: 300 }}
-                value={this.state.value2}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                // treeData={this.state.allQuestions}
-                placeholder="请选择相应试题"
-                treeDefaultExpandAll
-                // onChange={this.testOnChange}
-                key="test"
-              >
-                {this.showTreeList()}
-              </TreeSelect>
-            </div> */}
           </div>
           <Table
             rowSelection={rowSelection}

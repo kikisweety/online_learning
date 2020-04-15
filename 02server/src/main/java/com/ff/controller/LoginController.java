@@ -27,11 +27,14 @@ public class LoginController {
     @RequestMapping("/login")
     @ResponseBody
     public Msg Login(String loginName,String password, HttpServletRequest req, HttpServletResponse resp){
+        Msg msg =new Msg();
         try {
             Subject subject = SecurityUtils.getSubject();
             password = MD5Utils.encrypt(loginName, password);
             UsernamePasswordToken token = new UsernamePasswordToken(loginName, password);
             subject.login(token);
+            msg.setObject(userService.queryUserRoles(loginName));
+            msg.setCode(1);
 
         }catch (Exception e){
 
@@ -39,7 +42,7 @@ public class LoginController {
 
         }
 
-        return userService.queryUserRoles(loginName);
+        return msg ;
     }
     @RequestMapping("/index")
     @ResponseBody

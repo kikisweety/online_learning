@@ -96,7 +96,7 @@ export default class LoginView extends React.Component {
                   </Button>
                 </Col>
                 <Col span={12} className="col">
-                  <Button id="test" onClick={this.toRegisterView.bind(this)} style={{ width: 150 }}>注册</Button>
+                  <Button id="test" onClick={this.toRegisterView.bind(this)} style={{ width: 150 }}>去注册<Icon type="double-right" /></Button>
                 </Col>
               </Row>
             </div>

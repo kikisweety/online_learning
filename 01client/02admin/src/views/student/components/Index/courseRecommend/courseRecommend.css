@@ -23,9 +23,9 @@
     /* background-color: #ffffff; */
 }
 .books{
-    height: 570px;
+    height: 550px;
     overflow: hidden;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 .list {
  width: 100%;

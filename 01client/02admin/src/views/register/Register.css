@@ -17,14 +17,14 @@
     display: flex;
     flex-direction: row;
 }
-.content {
+.registerContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
     left: 15%;
-    height: 35%;
+    height: 50%;
     width: 25%;
     background-color: white;
     border-radius: 5px;
@@ -43,5 +43,6 @@
     align-items: center;
 }
 #toLogin{
-    background-color:#DDDDDD ;
+    color: #1890ff;
+    /* background-color:#DDDDDD ; */
 }

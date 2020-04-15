@@ -74,7 +74,8 @@ export default class Add extends React.Component {
       subject: "",
       introduceText: "",
       teacherData: [],
-      courses:[]
+      courses: [],
+      isLoading:false
     };
   }
 
@@ -106,6 +107,9 @@ export default class Add extends React.Component {
     this.refs.opacity.style.display = "none";
   }
   upload = e => {
+    this.setState({
+      isLoading:true
+    })
     //获得姓名
     let name = this.refs.inputName.state.value; //姓名
     let t_type = this.refs.inputType.state.value; //性别
@@ -223,6 +227,7 @@ export default class Add extends React.Component {
             >添加老师</Button>
           </div>
           <Table
+            isLoading={this.state.isLoading}
             columns={columns}
             dataSource={this.state.teacherData}
             pagination={{

@@ -3,10 +3,12 @@ package com.ff.controller;
 
 import com.ff.pojo.Msg;
 import com.ff.pojo.User;
+import com.ff.service.UserService;
 import com.ff.util.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/noi")
 public class LoginController {
+    @Autowired
+    private UserService userService;
     @RequestMapping("/login")
     @ResponseBody
     public Msg Login(String loginName,String password, HttpServletRequest req, HttpServletResponse resp){
@@ -34,8 +38,8 @@ public class LoginController {
             msg.setMsg("登录失败");
             return msg;
         }
-        msg.setMsg("登录成功");
-        return msg;
+
+        return userService.queryUserRoles(loginName);
     }
     @RequestMapping("/index")
     @ResponseBody

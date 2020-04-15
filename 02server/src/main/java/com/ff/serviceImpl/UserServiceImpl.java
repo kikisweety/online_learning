@@ -88,5 +88,18 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public Msg queryUserRoles(String loginName) {
+        Msg msg = new Msg();
+        User user = userMapper.queryUserRoles(loginName);
+        if(user!=null){
+            msg.setCode(1);
+            msg.setMsg("操作成功!");
+            msg.setObject(user);
+        }
+
+        return msg;
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.ff.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class User  {
 
@@ -18,6 +19,8 @@ public class User  {
    private String password;
 
    private  Date createTime;
+
+  private List<Role> roles;
 
     public Integer getUserId() {
         return userId;

@@ -56,8 +56,7 @@ public class TeacherController {
 	public Msg delTeacher(Teacher teacher,HttpServletRequest respone,HttpServletRequest request){
 		System.out.println(teacher);
 
-		int teacherId = teacher.getId();
-		Integer id=teacherId;
-		return teacherService.delTeacher(id);
+
+		return teacherService.delTeacher(teacher);
 	}
 }

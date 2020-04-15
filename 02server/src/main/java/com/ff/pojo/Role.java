@@ -6,7 +6,7 @@ public class Role {
     private Integer roleId;
     private String roleName;
     private  String roleDesc;
-    private String Role_state;
+    private String roleState;
     private Date createTime;
 
     public Integer getRoleId() {
@@ -33,12 +33,12 @@ public class Role {
         this.roleDesc = roleDesc;
     }
 
-    public String getRole_state() {
-        return Role_state;
+    public String getRoleState() {
+        return roleState;
     }
 
-    public void setRole_state(String role_state) {
-        Role_state = role_state;
+    public void setRoleState(String roleState) {
+        this.roleState = roleState;
     }
 
     public Date getCreateTime() {

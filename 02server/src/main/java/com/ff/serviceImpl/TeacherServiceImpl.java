@@ -73,10 +73,13 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
     @Override
-    public Msg delTeacher(Integer id) {
+    public Msg delTeacher(Teacher teacher) {
 	    Msg msg =new Msg();
+		CosTool cosTool = new CosTool();
 
-        if (teacherMapper.delTeacher(id) == 1) {
+        if (teacherMapper.delTeacher(teacher.getId()) == 1) {
+        	cosTool.delete(CosTool.bucket,teacher.getTkey());
+
             msg.setCode(1);
             msg.setMsg("删除成功");
         }else {

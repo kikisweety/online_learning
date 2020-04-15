@@ -27,5 +27,5 @@ public interface TeacherService {
 	 * @param teacher
 	 * @return
 	 */
-	Msg delTeacher(Integer id);
+	Msg delTeacher(Teacher teacher);
 }

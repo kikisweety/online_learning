@@ -34,13 +34,12 @@ export default class LoginView extends React.Component {
     net.post("/login", { loginName: userName, password: inputPasswd }, function (
       data
     ) {
-      console.log(data);
       let code = data.code;
       //5，根据后台服务器返回的数据进行相关的操作
       if (code === 1) {
         //把用户的数据保存起来
-        localStorage.setItem("user", data.user);
-        console.log(localStorage);
+        window.localStorage.setItem("user", JSON.stringify(data.object));
+        // console.log(window.localStorage.getItem("user"));
         that.props.history.push({ pathname: "/home/courses/add", state: {} });
       } else {
         message.error(data.msg);

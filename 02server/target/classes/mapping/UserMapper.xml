@@ -10,6 +10,7 @@
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
+
     <sql id="Base_Column_List">
 		user_id, name, age, sex,  login_name, password, create_time
 	</sql>
@@ -129,5 +130,11 @@
 	</select>
     <select id="userAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select * from user ;
+    </select>
+    <select id="queryUserRoles" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select u.*,r.* from user u
+         left join user_role ur on(u.user_id=ur.user_id)
+         left join role r on(r.role_id=ur.role_id)
+         where login_name=#{loginName};
     </select>
 </mapper>

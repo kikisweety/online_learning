@@ -131,7 +131,7 @@
     <select id="userAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select * from user ;
     </select>
-    <select id="queryUserRoles" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="queryUserRoles" resultMap="BaseResultMap" parameterType="java.lang.String">
         select u.*,r.* from user u
          left join user_role ur on(u.user_id=ur.user_id)
          left join role r on(r.role_id=ur.role_id)

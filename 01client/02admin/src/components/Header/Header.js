@@ -8,9 +8,20 @@ const { Header } = Layout;
 class MyHeader extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      userName: '',
+      userList:{}
+    }
   }
-
-  eixtLogin = ()=>{
+  componentDidMount() { 
+    // console.log(JSON.parse(window.localStorage.getItem("user")));
+    let userList = JSON.parse(window.localStorage.getItem("user"));
+    this.setState({
+      userList: userList,
+      userName:userList.loginName
+    });
+  }
+  eixtLogin = () => {
     console.log(this);
   }
   render() {
@@ -23,15 +34,14 @@ class MyHeader extends React.Component {
             type={this.props.collapsed ? "menu-unfold" : "menu-fold"}
           />
         </div>
-        <div className = "titleBoxRight">
+        <div className="titleBoxRight">
+          <img src="/imgs/user.png"></img>
+          <span>您好，{this.state.userName}</span>
           <Link to = "/login">
             <div className = "eixtLogin" onClick = {this.eixtLogin}>
             退出登录<Icon type="logout" />
           </div>
           </Link>
-          {/* <div className = "headImag">
-            <img src = "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2420043518,103827907&fm=26&gp=0.jpg" />
-          </div> */}
         </div>
       </Header>
     );

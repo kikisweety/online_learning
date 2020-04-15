@@ -18,4 +18,6 @@ public interface UserMapper {
     int insertSelective(User user);
 
     User selectByPrimaryKey(Integer userId);
+
+    User queryUserRoles(String loginName);
 }

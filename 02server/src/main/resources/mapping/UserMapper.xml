@@ -10,6 +10,27 @@
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
+    <resultMap id="userRole" type="com.ff.pojo.User">
+        <id column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="age" property="age" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <association property="roles" javaType="com.ff.pojo.Role">
+            <id column="role_id" property="roleId" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+            <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+            <result column="role_state" property="roleState" jdbcType="VARCHAR" />
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        </association>
+        <association property="userRole" javaType="com.ff.pojo.UserRole">
+            <id column="user_role_id" property="userRoleId" jdbcType="INTEGER" />
+            <result column="user_id" property="userId" jdbcType="INTEGER" />
+            <result column="role_id" property="roleId" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
 
     <sql id="Base_Column_List">
 		user_id, name, age, sex,  login_name, password, create_time
@@ -131,7 +152,7 @@
     <select id="userAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select * from user ;
     </select>
-    <select id="queryUserRoles" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="queryUserRoles" resultMap="userRole" parameterType="java.lang.String">
         select u.*,r.* from user u
          left join user_role ur on(u.user_id=ur.user_id)
          left join role r on(r.role_id=ur.role_id)

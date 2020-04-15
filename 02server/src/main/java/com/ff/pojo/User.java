@@ -20,7 +20,8 @@ public class User  {
 
    private  Date createTime;
 
-  private List<Role> roles;
+    Role roles;
+    UserRole userRole;
 
     public Integer getUserId() {
         return userId;
@@ -76,5 +77,21 @@ public class User  {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Role getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Role roles) {
+        this.roles = roles;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 }

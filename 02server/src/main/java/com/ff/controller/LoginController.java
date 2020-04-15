@@ -27,16 +27,16 @@ public class LoginController {
     @RequestMapping("/login")
     @ResponseBody
     public Msg Login(String loginName,String password, HttpServletRequest req, HttpServletResponse resp){
-        Msg msg =new Msg();
         try {
             Subject subject = SecurityUtils.getSubject();
             password = MD5Utils.encrypt(loginName, password);
             UsernamePasswordToken token = new UsernamePasswordToken(loginName, password);
             subject.login(token);
+
         }catch (Exception e){
+
             e.printStackTrace();
-            msg.setMsg("登录失败");
-            return msg;
+
         }
 
         return userService.queryUserRoles(loginName);

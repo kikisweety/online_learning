@@ -26,11 +26,11 @@ import com.qcloud.cos.region.Region;
 
 public class CosTool {
 
+	public static String bucket= "noi-1259634096";
 	private final String accessKey = "AKIDwmOmxwOd7QYSdcPHRL1YqsdCXbQPJfut";
 
 	private final String secretKey = "umPlrkNk5RyINFvfAPNEpEWcuVtUMyLV";
 
-	private final String bucket = "noi-1259634096";
 	private final String Region = "ap-chengdu";
 	private final String path = "https://noi-1259634096.cos.ap-chengdu.myqcloud.com";
 	private final String tengxun = "noi";

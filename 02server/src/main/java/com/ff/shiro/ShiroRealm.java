@@ -6,6 +6,7 @@ import com.ff.dao.UserMapper;
 import com.ff.pojo.Admin;
 import com.ff.pojo.Permission;
 import com.ff.pojo.User;
+import com.ff.util.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -51,6 +52,7 @@ public class ShiroRealm extends AuthorizingRealm {
         // 获取用户输入的用户名和密码
         String userName = (String) token.getPrincipal();
         String password = new String((char[]) token.getCredentials());
+        //password= MD5Utils.encrypt(userName,password);
 
         System.out.println("用户" + userName + "认证-----ShiroRealm.doGetAuthenticationInfo");
 
@@ -58,10 +60,10 @@ public class ShiroRealm extends AuthorizingRealm {
         User user = userMapper.queryUserByloginName(userName);
 
         if (user == null) {
-            throw new UnknownAccountException("用户名或密码错误！");
+            throw new UnknownAccountException("用户名不存在！");
         }
         if (!password.equals(user.getPassword())) {
-            throw new IncorrectCredentialsException("用户名或密码错误！");
+            throw new IncorrectCredentialsException("用户名或密码错误！-----");
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
         return info;

@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Msg insert(User user) {
         Msg msg = new Msg();
-        user.setPassword(MD5Utils.encrypt(user.getPassword()));
+        user.setPassword(MD5Utils.encrypt(user.getLoginName(),user.getPassword()));
         int n =userMapper.insertSelective(user);
         if(n>=1){
             msg.setCode(1);

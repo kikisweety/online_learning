@@ -1,6 +1,6 @@
 import React from "react";
 import "./Login.css";
-import { Row, Col, Input, Button, message ,Icon} from "antd";
+import { Row, Col, Input, Button, message, Icon, Radio } from "antd";
 import net from "../../utils/net";
 export default class LoginView extends React.Component {
   constructor() {
@@ -30,16 +30,17 @@ export default class LoginView extends React.Component {
       message.error("请输入密码！");
       return;
     }
-    //2，提交数据到后台服务器
-    net.post("adminCheck", { name: userName, passwd: inputPasswd }, function (
+    //4，提交数据到后台服务器
+    net.post("/login", { loginName: userName, password: inputPasswd }, function (
       data
     ) {
-      // console.log(data);
+      console.log(data);
       let code = data.code;
-      //3，根据后台服务器返回的数据进行相关的操作
+      //5，根据后台服务器返回的数据进行相关的操作
       if (code === 1) {
         //把用户的数据保存起来
         localStorage.setItem("user", data.user);
+        console.log(localStorage);
         that.props.history.push({ pathname: "/home/courses/add", state: {} });
       } else {
         message.error(data.msg);
@@ -70,7 +71,7 @@ export default class LoginView extends React.Component {
                   <Input
                     id="input"
                     ref="inputUser"
-                    style={{ width: 300}}
+                    style={{ width: 300 }}
                     placeholder="输入用户名"
                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   />
@@ -90,8 +91,16 @@ export default class LoginView extends React.Component {
                 </Col>
               </Row>
               <Row className="row">
+                <Col span={20}>
+                  <Radio.Group defaultValue="0" buttonStyle="solid">
+                    <Radio.Button value="0">用户</Radio.Button>
+                    <Radio.Button value="1">管理员</Radio.Button>
+                  </Radio.Group>
+                </Col>
+              </Row>
+              <Row className="row">
                 <Col span={12} className="col">
-                  <Button type="primary" onClick={this.checkUser.bind(this)} style={{width:150,marginRight:2}}>
+                  <Button type="primary" onClick={this.checkUser.bind(this)} style={{ width: 150, marginRight: 2 }}>
                     登录
                   </Button>
                 </Col>
@@ -101,7 +110,7 @@ export default class LoginView extends React.Component {
               </Row>
             </div>
           </div>
-        </div>
+        </div >
       </div>
     );
   }

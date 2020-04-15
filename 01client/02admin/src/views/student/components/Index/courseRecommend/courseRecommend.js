@@ -68,7 +68,10 @@ export default class courseRecommend extends React.Component {
                         dataSource={this.state.data}
                         renderItem={item => (
                             <List.Item>
-                                <Card>
+                                <Card
+                                    hoverable
+                                    style={{ height: 150, borderRadius: 5 }}
+                                >
                                     <Meta
                                         avatar={
                                             <Avatar className="avatar" src={item.tkey} />

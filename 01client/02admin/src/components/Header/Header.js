@@ -22,7 +22,10 @@ class MyHeader extends React.Component {
     });
   }
   eixtLogin = () => {
-    console.log(this);
+    // console.log(this);
+    window.localStorage.clear();
+    console.log(window.localStorage.getItem("user"));
+    
   }
   render() {
     return (

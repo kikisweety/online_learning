@@ -7,9 +7,20 @@ const { Header, Footer } = Layout;
 export default class StudentView extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { SelectedKeys: "1" }
+        this.state = {
+            SelectedKeys: "1",
+            userList: {},
+            userName:''
+        }
     }
     componentWillMount() {
+        // console.log(JSON.parse(window.localStorage.getItem("user")));
+        let userList = JSON.parse(window.localStorage.getItem("user"));
+        this.setState({
+            userList: userList,
+            userName: userList.loginName
+        });
+
         if (this.props.history.location.pathname == "/student/index") {
             this.setState({ SelectedKeys: "1" })
         } else if (this.props.history.location.pathname == "/student/courses") {
@@ -18,8 +29,12 @@ export default class StudentView extends React.Component {
             this.setState({ SelectedKeys: "3" })
         } else if (this.props.history.location.pathname == "/student/books") {
             this.setState({ SelectedKeys: "4" })
-        } 
-        // console.log(this.state)
+        } else if (this.props.history.location.pathname == "/student/userCenter/userInfo") {
+            this.setState({ SelectedKeys: "5" })
+        }
+    };
+    eixtLogin = () => {
+        window.localStorage.clear();
     }
     render() {
         return (
@@ -58,19 +73,24 @@ export default class StudentView extends React.Component {
                                         <span>商城</span>
                                     </Link>
                                 </Menu.Item>
-                                {/* <Menu.Item key="5">
-                                    <Link to={"/student/user"}>
+                                <Menu.Item key="5">
+                                    <Link to={"/student/userCenter/userInfo"}>
                                         <span>个人中心</span>
                                     </Link>
-                                </Menu.Item> */}
+                                </Menu.Item>
                             </Menu>
                             <div className="userBox">
                                 <img src="/imgs/user.png"></img>
                                 <span className="userInfo">
-                                    <Link to={"/student/userCenter/userInfo"}>
-                                        <span style={{color:'black'}}>个人中心</span>
-                                    </Link>
+                                    {/* <Link to={"/student/userCenter/userInfo"}> */}
+                                        <span style={{ color: 'black' }}>{this.state.userName}</span>
+                                    {/* </Link> */}
                                 </span>
+                                <Link to="/login">
+                                    <div onClick={this.eixtLogin} style={{color:'#000000',marginLeft:10}}>
+                                        退出<Icon type="logout"  />
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </Header>

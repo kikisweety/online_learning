@@ -38,7 +38,7 @@ export default class LoginView extends React.Component {
       //5，根据后台服务器返回的数据进行相关的操作
       window.localStorage.setItem("user", JSON.stringify(data.object));
       let userList = JSON.parse(window.localStorage.getItem("user"));
-      console.log(userList);
+      // console.log(userList);
       
       if (code === 1) {
         //把用户的数据保存起来

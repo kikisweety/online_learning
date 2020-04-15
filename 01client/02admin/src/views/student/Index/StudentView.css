@@ -69,7 +69,7 @@ header {
 .userBox {
     position: absolute;
     right: 0;
-    width: 120px;
+    width: 180px;
     height: 100%;
     /* background-color: #1F9DFF; */
     display: flex;

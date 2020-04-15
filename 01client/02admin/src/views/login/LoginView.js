@@ -36,11 +36,17 @@ export default class LoginView extends React.Component {
     ) {
       let code = data.code;
       //5，根据后台服务器返回的数据进行相关的操作
+      window.localStorage.setItem("user", JSON.stringify(data.object));
+      let userList = JSON.parse(window.localStorage.getItem("user"));
+      console.log(userList);
+      
       if (code === 1) {
         //把用户的数据保存起来
-        window.localStorage.setItem("user", JSON.stringify(data.object));
-        // console.log(window.localStorage.getItem("user"));
-        that.props.history.push({ pathname: "/home/courses/add", state: {} });
+        if (userList.userRole.roleId == 1) {
+          that.props.history.push({ pathname: "/home/courses/add", state: {} });
+        } else { 
+          that.props.history.push({ pathname: "/student/index", state: {}})
+        }
       } else {
         message.error(data.msg);
       }

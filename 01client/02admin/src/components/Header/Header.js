@@ -14,7 +14,7 @@ class MyHeader extends React.Component {
     }
   }
   componentDidMount() { 
-    // console.log(JSON.parse(window.localStorage.getItem("user")));
+    console.log(JSON.parse(window.localStorage.getItem("user")));
     let userList = JSON.parse(window.localStorage.getItem("user"));
     this.setState({
       userList: userList,
@@ -36,10 +36,10 @@ class MyHeader extends React.Component {
         </div>
         <div className="titleBoxRight">
           <img src="/imgs/user.png"></img>
-          <span>您好，{this.state.userName}</span>
+          <span style={{color:'white',fontSize:'16px',margin:'0px 10px'}}>您好，{this.state.userName}</span>
           <Link to = "/login">
             <div className = "eixtLogin" onClick = {this.eixtLogin}>
-            退出登录<Icon type="logout" />
+              退出<Icon type="logout" style={{marginLeft:'10px'}}  />
           </div>
           </Link>
         </div>

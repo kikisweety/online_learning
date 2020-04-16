@@ -12,7 +12,7 @@ export default class MyUser extends React.Component {
         super(props);
         this.state = {
             collapsed: false,
-            role: 1
+            role: 2
         }
     }
     render() {
@@ -32,11 +32,6 @@ export default class MyUser extends React.Component {
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="3">
-                            <Link to={"/student/userCenter/dressManage"}>
-                                <span>地址管理</span>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item key="4">
                             <Link to={"/student/userCenter/courseInfo"}>
                                 <span>课程信息</span>
                             </Link>
@@ -53,10 +48,6 @@ export default class MyUser extends React.Component {
                         exact
                         path={"/student/userCenter/myOrder"}
                         component={MyOrder} />
-                    <Route
-                        exact
-                        path={"/student/userCenter/dressManage"}
-                        component={DressManage} />
                     <Route
                         exact
                         path={"/student/userCenter/courseInfo"}
@@ -79,11 +70,6 @@ export default class MyUser extends React.Component {
                                 <span>订单记录</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="3">
-                            <Link to={"/student/userCenter/dressManage"}>
-                                <span>地址管理</span>
-                            </Link>
-                        </Menu.Item>
                     </Menu>
                 </div>
                 <div className="userRight">
@@ -96,10 +82,6 @@ export default class MyUser extends React.Component {
                         exact
                         path={"/student/userCenter/myOrder"}
                         component={MyOrder} />
-                    <Route
-                        exact
-                        path={"/student/userCenter/dressManage"}
-                        component={DressManage} />
                 </div>
             </div>
         }

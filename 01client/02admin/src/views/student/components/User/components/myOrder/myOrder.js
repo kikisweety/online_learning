@@ -4,15 +4,15 @@ import { Table, Button } from 'antd';
 const dataSource = [
     {
         key: '1',
-        commodity_name: '胡彦斌',
-        commodity_price: 32,
-        amount: '西湖区湖底公园1号',
+        commodity_name: '【配套视频】python基础教程零基础学Python3.5',
+        commodity_price: 66.8,
+        amount: 20,
     },
     {
         key: '2',
-        commodity_name: '胡彦祖',
-        commodity_price: 42,
-        amount: '西湖区湖底公园1号',
+        commodity_name: 'PHP项目开发实战入门（全彩版）',
+        commodity_price: 54.4,
+        amount: 10,
     },
 ];
 
@@ -37,7 +37,10 @@ const columns = [
         key: 'action',
         render: () => {
             return (
-                <Button>删除</Button>
+                <div>
+                    <Button>修改</Button>
+                    <Button>删除</Button>
+                </div>
             )
         }
     }
@@ -67,12 +70,13 @@ export default class MyOrder extends React.Component {
                     <Table
                         pagination={false}
                         rowSelection={rowSelection}
-                        dataSource={dataSource} columns={columns} />
+                        dataSource={dataSource} columns={columns}
+                    />
                     <div className="paymentBox">
-                        <div style={{marginLeft:20}}>合计：500.00元</div>
+                        <div style={{ marginLeft: 20 }}>合计：121.10元</div>
                         <div className="paymentNowBox">
                             <div>支付方式：暂只支持微信支付</div>
-                            <Button type="primary" style={{ height: 60, width: 100, marginLeft: 20, backgroundColor:'#FF8000'}}>立即支付</Button>
+                            <Button type="primary" style={{ height: 60, width: 100, marginLeft: 20, backgroundColor: '#FF8000' }}>立即支付</Button>
                         </div>
                     </div>
                 </div>

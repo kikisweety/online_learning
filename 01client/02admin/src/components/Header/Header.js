@@ -14,15 +14,14 @@ class MyHeader extends React.Component {
     }
   }
   componentDidMount() { 
-    console.log(JSON.parse(window.localStorage.getItem("user")));
+    // console.log(JSON.parse(window.localStorage.getItem("user")));
     let userList = JSON.parse(window.localStorage.getItem("user"));
     this.setState({
       userList: userList,
-      userName:userList.loginName
+      userName:userList.object.name
     });
   }
   eixtLogin = () => {
-    // console.log(this);
     window.localStorage.clear();
     console.log(window.localStorage.getItem("user"));
     

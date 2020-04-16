@@ -168,7 +168,7 @@ export default class CouresInfo extends React.Component {
         const dataSource = [
             {
                 key: '1',
-                name: '胡彦斌',
+                name: 'Python',
                 introduce: 32,
                 url: 'https://edu-image.nosdn.127.net/AB92B7251E042B89360B9BA58D21F2CC.png?imageView&quality=100&thumbnail=225y125&type=webp',
             },

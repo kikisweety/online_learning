@@ -6,12 +6,21 @@ export default class LoginView extends React.Component {
   constructor() {
     super();
     this.state = {
-      inputPasswd: ""
+      inputPasswd: "",
+      value:""
     };
   }
 
   toRegisterView() {
     this.props.history.push({ pathname: "/register", state: {} });
+  }
+  onChange(e) {
+    console.log(e.target.value);
+    this.setState({
+      value:e.target.value
+    })
+    console.log(this.state.value);
+    
   }
 
   checkUser() {
@@ -38,17 +47,20 @@ export default class LoginView extends React.Component {
       //5，根据后台服务器返回的数据进行相关的操作
       window.localStorage.setItem("user", JSON.stringify(data.object));
       let userList = JSON.parse(window.localStorage.getItem("user"));
-      // console.log(userList);
-      
+      // let user = that.refs.user.value;
+      // console.log(user);
+      // let admin = that.refs.admin.value;
+      // console.log(admin);
+
       if (code === 1) {
         //把用户的数据保存起来
-        if (userList.userRole.roleId == 1) {
+        if (userList.object.userRole.roleId == 1) {
           that.props.history.push({ pathname: "/home/courses/add", state: {} });
-        } else { 
-          that.props.history.push({ pathname: "/student/index", state: {}})
+        } else {
+          that.props.history.push({ pathname: "/student/index", state: {} })
         }
       } else {
-        message.error(data.msg);
+        message.error('登录失败请重试！');
       }
     });
   }
@@ -61,7 +73,6 @@ export default class LoginView extends React.Component {
       inputPasswd: passwd
     });
   }
-
   render() {
     return (
       <div className="view">
@@ -97,8 +108,8 @@ export default class LoginView extends React.Component {
               </Row>
               <Row className="row">
                 <Col span={20}>
-                  <Radio.Group defaultValue="0" buttonStyle="solid">
-                    <Radio.Button value="0">用户</Radio.Button>
+                  <Radio.Group defaultValue="null" buttonStyle="solid" onChange={this.onChange.bind(this)}>
+                    <Radio.Button value="null">用户</Radio.Button>
                     <Radio.Button value="1">管理员</Radio.Button>
                   </Radio.Group>
                 </Col>

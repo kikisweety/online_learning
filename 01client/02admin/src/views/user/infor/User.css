@@ -1,3 +1,10 @@
 .userView{
     margin-top: 10px;
 }
+.addForm{
+    border: 1px solid gainsboro;
+}
+.formButton{
+    display: flex;
+    justify-content: space-around;
+}

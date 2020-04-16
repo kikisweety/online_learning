@@ -18,7 +18,7 @@ export default class StudentView extends React.Component {
         let userList = JSON.parse(window.localStorage.getItem("user"));
         this.setState({
             userList: userList,
-            userName: userList.loginName
+            userName: userList.object.name
         });
 
         if (this.props.history.location.pathname == "/student/index") {
@@ -83,7 +83,7 @@ export default class StudentView extends React.Component {
                                 <img src="/imgs/user.png"></img>
                                 <span className="userInfo">
                                     {/* <Link to={"/student/userCenter/userInfo"}> */}
-                                        <span style={{ color: 'black' }}>{this.state.userName}</span>
+                                        <span style={{ color: 'black' }}>您好，{this.state.userName}</span>
                                     {/* </Link> */}
                                 </span>
                                 <Link to="/login">

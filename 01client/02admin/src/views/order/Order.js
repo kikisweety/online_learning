@@ -11,48 +11,55 @@ export default class Order extends React.Component {
         this.state = {
             columns: [
                 {
-                    title: '姓名',
-                    dataIndex: 'name',
-                    key: 'name',
+                    title: '商品名称',
+                    dataIndex: 'commodity_name',
+                    key: 'commodity_name',
                     render: text => <a>{text}</a>,
                 },
                 {
-                    title: '年龄',
-                    dataIndex: 'age',
-                    key: 'age'
+                    title: '商品价格',
+                    dataIndex: 'commodity_price',
+                    key: 'commodity_price'
                 },
                 {
-                    title: '性别',
-                    dataIndex: 'sex',
-                    key: 'sex'
+                    title: '购买人',
+                    dataIndex: 'buy_user',
+                    key: 'buy_user'
                 },
                 {
-                    title: '昵称',
-                    dataIndex: 'login_name',
-                    key: 'login_name'
+                    title: '购买日期',
+                    dataIndex: 'bug_data',
+                    key: 'bug_data'
                 },
                 {
-                    title: '密码',
-                    dataIndex: 'password',
-                    key: 'password'
-                }
+                    title: '数量',
+                    dataIndex: 'amount',
+                    key: 'amount'
+                },
+                {
+                    title: '总价',
+                    dataIndex: 'total_price',
+                    key: 'total_price'
+                },
             ],
             allUser: [
                 {
                     id: 1,
-                    name: '杨欢',
-                    age: 23,
-                    sex: '男',
-                    login_name: '杨凡凡',
-                    password: '12456789'
+                    commodity_name: '【配套视频】python基础教程零基础学Python3.5',
+                    commodity_price: 66.8,
+                    buy_user: '杨欢',
+                    bug_data: '2020.4月5日',
+                    amount: 1,
+                    total_price:66.8,
                 },
                 {
                     id: 2,
-                    name: '阿田',
-                    age: 22,
-                    sex: '女',
-                    login_name: '阿田sweet',
-                    password: '12345879'
+                    commodity_name: '【配套视频】python基础教程零基础学Python3.5',
+                    commodity_price: 66.8,
+                    buy_user: '田震琪',
+                    bug_data: '2020.4月10日',
+                    amount: 2,
+                    total_price: 133.6,
                 }
             ]
         };

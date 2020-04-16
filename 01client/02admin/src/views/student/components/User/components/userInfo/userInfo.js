@@ -16,8 +16,6 @@ export default class UserInfo extends React.Component {
             <div className="setUpView" >
                 <div className="basicTitle">基本信息</div>
                 <div className="basicBox">
-                    {/* <div>姓名：</div>
-                    <Input placeholder="请输入姓名"></Input> */}
                     <Form
                         name="nest-messages"
                         {...layout}

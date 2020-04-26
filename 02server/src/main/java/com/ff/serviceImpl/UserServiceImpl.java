@@ -22,6 +22,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Msg insert(User user) {
         Msg msg = new Msg();
+        if(user.getPassword()==null){
+            user.setPassword("123456");
+        }
         user.setPassword(MD5Utils.encrypt(user.getLoginName(),user.getPassword()));
         int n =userMapper.insertSelective(user);
         if(n>=1){

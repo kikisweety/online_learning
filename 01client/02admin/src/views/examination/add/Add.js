@@ -33,7 +33,6 @@ class ExaminationAdd extends React.Component {
     let that = this;
     net.post("courses/and/chapters", {}, function (ob) {
       console.log(ob);
-      // let courses = StringUtil.CascaderData(ob.object);
       that.setState({
         courses: ob.object
       });
@@ -50,30 +49,19 @@ class ExaminationAdd extends React.Component {
     })
   };
   getId = (slectedKeys,e) => {
-    // console.log(slectedKeys,e);
     this.setState({
       chapterId: slectedKeys
     })
   };
   upload = e => {
-    let form = this.refs.form;
-    //获得题干
     let title = this.refs.title.state.value;
-    console.log(title);
-    //获得选项A
     let textA = this.refs.textA.state.value;
-    //获得选项B
     let textB = this.refs.textB.state.value;
-    //获得选项C
     let textC = this.refs.textC.state.value;
-    //获得选项D
     let textD = this.refs.textD.state.value;
-    //获得答案
     let answer =this.state.answer;
-    //章节id
     console.log(this.state.chapterId);
     let chapterId = this.state.chapterId;
-
     net.uploadFile(
       "question/add",
       {

@@ -4,9 +4,7 @@ import { Button,message } from "antd"
 class Detail extends Component {
     constructor(props, context) {
         super(props, context)
-        // console.info(props)
         this.booksList = props.location.state.booksList
-        // console.log(this.booksList);
     }
     toBooks() {
         this.props.history.push(`/student/books`);

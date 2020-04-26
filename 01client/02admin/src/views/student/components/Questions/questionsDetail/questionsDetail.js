@@ -9,7 +9,6 @@ class QuestionsDetail extends Component {
             value: '',
         };
         this.list = props.location.state.questions
-        // console.log(this.list);
     }
     toQuestions() {
         this.props.history.push(`/student/questions`);

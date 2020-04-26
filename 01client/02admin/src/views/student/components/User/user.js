@@ -12,7 +12,7 @@ export default class MyUser extends React.Component {
         super(props);
         this.state = {
             collapsed: false,
-            role: 2
+            role: 1
         }
     }
     render() {

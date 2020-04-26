@@ -58,6 +58,7 @@ export default class CourseDocument extends React.Component {
   }
 
   expandedRowRender = (record) => {
+    console.log(record);
     const columns = [
       { title: "视频名称", dataIndex: "name", key: "name" },
       {
@@ -116,13 +117,11 @@ export default class CourseDocument extends React.Component {
     let buffer = this.state.videoData;
     let length = allLeaf.length;
 
-    // return <Table  columns={columns} dataSource={data} pagination={false} />
     for (let i = 0; i < length; i++) {
       if (record.id === i + 1) {
         return <Table key={i} columns={columns} dataSource={buffer} pagination={false} />
       }
     }
-    // return <Table  columns={columns} dataSource={dataBuffer} pagination={false} />
 
   };
 

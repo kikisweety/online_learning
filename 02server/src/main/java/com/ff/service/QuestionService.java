@@ -33,7 +33,7 @@ public interface QuestionService {
 
     Msg questionResult(List<Question> result);
 
-    Msg questionDelete(Question question);
+    Msg questionDelete(Integer id);
 
 	Msg Questionbyid(int chapterId);
 

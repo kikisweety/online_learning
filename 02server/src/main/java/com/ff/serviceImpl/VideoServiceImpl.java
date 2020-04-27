@@ -108,4 +108,14 @@ public class VideoServiceImpl implements VideoService {
 		return msg;
 	}
 
+	@Override
+	public Msg delete(Integer id) {
+		Msg msg = new Msg();
+		if(videoMapper.delete(id)==1){
+			msg.setCode(1);
+			msg.setMsg("ok");
+		}
+		return msg;
+	}
+
 }

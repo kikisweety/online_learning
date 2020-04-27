@@ -82,11 +82,9 @@ export default class ExaminationQuery extends React.Component {
 
   };
   componentDidMount = e => {
-    // this.getId();
     let that = this;
     net.post("courses/and/chapters", {}, function (ob) {
       console.log(ob);
-      // let courses = StringUtil.CascaderData(ob.object);
       that.setState({
         courses: ob.object
       });
@@ -112,7 +110,6 @@ export default class ExaminationQuery extends React.Component {
   };
   onSearch(chapterId) {
     let that = this;
-    // console.log(this.state.chapterId);
     net.post("question/chapterid", { chapterId: this.state.chapterId},function (params) {
       console.log(params);
       that.setState({

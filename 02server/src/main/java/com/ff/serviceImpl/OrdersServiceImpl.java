@@ -1,12 +1,12 @@
 package com.ff.serviceImpl;
 
 import com.ff.dao.CommodityMapper;
-import com.ff.dao.OrderMapper;
+import com.ff.dao.OrdersMapper;
 import com.ff.pojo.Commodity;
 import com.ff.pojo.Msg;
-import com.ff.pojo.Order;
+import com.ff.pojo.Orders;
 import com.ff.pojo.User;
-import com.ff.service.OrderService;
+import com.ff.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +16,15 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrdersServiceImpl implements OrdersService {
     @Autowired
-    private OrderMapper orderMapper;
+    private OrdersMapper orderMapper;
     @Autowired
     CommodityMapper commodityMapper;
     @Override
     public Msg selectByUserName(String name) {
         Msg msg = new Msg();
-        List<Order> list = orderMapper.selectByUserName(name);
+        List<Orders> list = orderMapper.selectByUserName(name);
         if(list!=null&&list.size()>0){
             msg.setMsg("ok");
             msg.setObject(list);
@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Msg selectAll() {
         Msg msg = new Msg();
-        List<Order> list=orderMapper.selectAll();
+        List<Orders> list=orderMapper.selectAll();
         if(list!=null&&list.size()>0){
             msg.setMsg("ok");
             msg.setObject(list);
@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date= df.format(day);
-        Order order=new Order();
+        Orders order=new Orders();
         order.setBuyUser(user.getName());
         order.setCommodityName(commodity.getCommodityName());
         order.setCommodityPrice(commodity.getCommodityPrice());
@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Msg update(Order order) {
+    public Msg update(Orders order) {
         Msg msg = new Msg();
         if(orderMapper.updateByPrimaryKeySelective(order)==1){
             msg.setCode(1);

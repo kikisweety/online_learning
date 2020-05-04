@@ -2,9 +2,9 @@ package com.ff.controller;
 
 import com.ff.pojo.Commodity;
 import com.ff.pojo.Msg;
-import com.ff.pojo.Order;
+import com.ff.pojo.Orders;
 import com.ff.pojo.User;
-import com.ff.service.OrderService;
+import com.ff.service.OrdersService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +15,9 @@ import java.text.ParseException;
 
 @Controller
 @RequestMapping("/noi")
-public class OrderController {
+public class OrdersController {
     @Autowired
-    private OrderService orderService;
+    private OrdersService orderService;
     @RequestMapping("/order/selectByName")
     @ResponseBody
     public Msg selectByUserName(User user){
@@ -31,9 +31,9 @@ public class OrderController {
     }
     @RequestMapping("/order/delete")
     @ResponseBody
-    public Msg delete(Order order){
+    public Msg delete(@Param("id")Integer id){
 
-        return orderService.delete(order.getId());
+        return orderService.delete(id);
     }
     @RequestMapping("/order/insert")
     @ResponseBody
@@ -43,7 +43,7 @@ public class OrderController {
     }
     @RequestMapping("/order/update")
     @ResponseBody
-    private Msg update(Order order) throws ParseException {
+    private Msg update(Orders order) throws ParseException {
 
         return orderService.update(order);
     }

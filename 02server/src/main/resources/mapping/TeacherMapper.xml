@@ -37,5 +37,25 @@
 	where
 	id = #{id}
 	</delete>
+	<update id="update" parameterType="com.ff.pojo.Teacher">
+		update teachers
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="tkey != null">
+				tkey = #{tkey},
+			</if>
+			<if test="introduce != null">
+				introduce = #{introduce},
+			</if>
+
+			<if test="tType != null">
+				t_type = #{tType},
+			</if>
+
+		</set>
+		where id = #{id}
+	</update>
 
 </mapper>

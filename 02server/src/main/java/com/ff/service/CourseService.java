@@ -50,4 +50,6 @@ public interface CourseService {
     Msg selectTeacher(int teacherId);
 
     Msg selectQuestionByType(int courseType);
+
+    Msg update(Course course);
 }

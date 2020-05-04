@@ -65,16 +65,18 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		msg.setObject(achievement);
 		msg.setMsg("ok");
+		msg.setCode(1);
 		return msg;
 	}
 
 	@Override
-	public Msg questionDelete(Question question) {
+	public Msg questionDelete(Integer id) {
 		Msg msg = new Msg();
-		if(questionMapper.questionDelete(question.getId())==1){
+		if(questionMapper.questionDelete(id)==1){
 			msg.setMsg("ok");
+			msg.setCode(1);
 		}
-		return null;
+		return msg;
 	}
 
 	@Override
@@ -97,6 +99,17 @@ public class QuestionServiceImpl implements QuestionService {
 			msg.setMsg("操作成功");
 			msg.setCode(1);
 			msg.setObject(list);
+		}
+		return msg;
+	}
+
+	@Override
+	public Msg questionUpdate(Question question) {
+		Msg msg = new Msg();
+		if(questionMapper.update(question)==1){
+			msg.setMsg("操作成功");
+			msg.setCode(1);
+
 		}
 		return msg;
 	}

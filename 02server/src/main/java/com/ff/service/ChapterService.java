@@ -44,4 +44,8 @@ public interface ChapterService {
 	Msg selectChaptersByName(Chapter chapter);
 
     Msg selectChaptersQuestion(Chapter chapter);
+
+    Msg delete(Integer id);
+
+    Msg update(Chapter chapter);
 }

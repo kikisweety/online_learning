@@ -190,4 +190,15 @@ public class CourseServiceImpl implements CourseService {
 		return msg;
 	}
 
+	@Override
+	public Msg update(Course course) {
+		Msg msg = new Msg();
+		if(courseMapper.update(course)==1){
+			msg.setMsg("查询成功！！");
+			msg.setCode(1);
+
+		}
+		return msg;
+	}
+
 }

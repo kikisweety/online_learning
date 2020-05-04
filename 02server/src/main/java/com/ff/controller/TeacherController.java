@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,10 +55,18 @@ public class TeacherController {
 	}
 	@ResponseBody
 	@RequestMapping( value = "delTeacher")
-	public Msg delTeacher(Teacher teacher,HttpServletRequest respone,HttpServletRequest request){
-		System.out.println(teacher);
+	public Msg delTeacher(@Param("id")Integer id, HttpServletRequest respone, HttpServletRequest request){
+		//System.out.println(teacher);
 
 
-		return teacherService.delTeacher(teacher);
+		return teacherService.delTeacher(id);
+	}
+	@ResponseBody
+	@RequestMapping( value = "techerUpdate")
+	public Msg techerUpdate(Teacher teacher, HttpServletRequest respone, HttpServletRequest request){
+		//System.out.println(teacher);
+
+
+		return teacherService.techerUpdate(teacher);
 	}
 }

@@ -31,4 +31,5 @@ public interface VideoService {
 	 */
 	Msg updateVideoById(Video video, HttpServletRequest multipartRequest);
 
+    Msg delete(Integer id);
 }

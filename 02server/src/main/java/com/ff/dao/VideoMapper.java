@@ -51,4 +51,5 @@ public interface VideoMapper {
 	 */
 	List<Video> selectVideosByName(Video video);
 
+    int delete(Integer id);
 }

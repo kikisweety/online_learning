@@ -78,7 +78,9 @@
 		select * from chapters where
 		name = #{name}
 	</select>
-
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete form chapters where id=#{id}
+	</delete>
 
 
 

@@ -106,4 +106,25 @@ public class ChapterServiceImpl implements ChapterService {
 		return msg;
 	}
 
+	@Override
+	public Msg delete(Integer id) {
+		Msg msg =new Msg();
+		if(chapterMapper.delete(id)==1){
+			msg.setMsg("ok");
+			msg.setCode(1);
+		}
+		return msg;
+	}
+
+	@Override
+	public Msg update(Chapter chapter) {
+		Msg msg =new Msg();
+		if(chapterMapper.update(chapter)==1){
+			msg.setMsg("ok");
+			msg.setCode(1);
+		}
+		return msg;
+
+	}
+
 }

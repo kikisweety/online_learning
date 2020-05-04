@@ -43,19 +43,27 @@ public class QuestionController {
 	}
 	@RequestMapping(value = "question/delete")
 	@ResponseBody
-	public Msg delete(Question question, HttpServletResponse resp, HttpServletRequest request) {
+	public Msg delete(@Param("id")Integer id, HttpServletResponse resp, HttpServletRequest request) {
 
-		return questionService.questionDelete(question);
+		return questionService.questionDelete(id);
 	}
     @RequestMapping(value = "question/chapterid")
     @ResponseBody
     public Msg questionbyid(@Param("chapterId") int chapterId,HttpServletResponse resp, HttpServletRequest request) {
 
         return questionService.Questionbyid(chapterId);
-    }@RequestMapping(value = "question/all")
+    }
+    @RequestMapping(value = "question/all")
 	@ResponseBody
 	public Msg questionAll(HttpServletResponse resp, HttpServletRequest request) {
 
 		return questionService.questionAll();
 	}
+	@RequestMapping(value = "question/update")
+	@ResponseBody
+	public Msg questionUpdate(Question question,HttpServletResponse resp, HttpServletRequest request) {
+
+		return questionService.questionUpdate(question);
+	}
+
 }

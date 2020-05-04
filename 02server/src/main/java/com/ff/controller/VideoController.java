@@ -2,6 +2,8 @@ package com.ff.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,13 @@ public class VideoController {
 	public Msg updateVideo(Video video, HttpServletResponse resp, HttpServletRequest request) {
 
 		return videoService.updateVideoById(video, request);
+	}
+
+	@RequestMapping(value = "video/delete")
+	@ResponseBody
+	public Msg addVideo(@Param("id")Integer id, HttpServletResponse resp, HttpServletRequest request) {
+
+		return videoService.delete(id);
 	}
 
 }

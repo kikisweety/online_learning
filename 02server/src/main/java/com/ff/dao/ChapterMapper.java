@@ -46,6 +46,7 @@ public interface ChapterMapper {
 	List<Chapter> selectAllQuestionsOfChaptersByCoursesId(int id);
 
 
+    int delete(Integer id);
 
-
+    int update(Chapter chapter);
 }

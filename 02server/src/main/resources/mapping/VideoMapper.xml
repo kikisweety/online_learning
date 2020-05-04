@@ -82,6 +82,9 @@
 		</set>
 		where id = #{id}
 	</update>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from videos where id=#{id}
+	</delete>
 
 
 </mapper>

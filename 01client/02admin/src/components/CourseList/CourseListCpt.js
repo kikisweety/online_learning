@@ -13,7 +13,7 @@ export default class MyUserAdd extends React.Component {
     };
   }
   showProps() {
-    console.log(this.props.match.path);
+    // console.log(this.props.match.path);
   }
   deletUser(courseId) {
     let data = this.state.data;
@@ -117,7 +117,7 @@ export default class MyUserAdd extends React.Component {
         title: "操作",
         dataIndex: "action",
         key: "action",
-        render: text => {
+        render: (text,record) => {
           return (
             <div>
               <Button
@@ -127,7 +127,7 @@ export default class MyUserAdd extends React.Component {
                 管理
               </Button>
               <Divider type="vertical" />
-              <Button style={{ backgroundColor: "#43BB60" ,color:"white"}}>删除</Button>
+              <Button type="danger" style={{ color: "white" }}>删除</Button>
             </div>
           );
         }
@@ -156,6 +156,7 @@ export default class MyUserAdd extends React.Component {
         </div>
 
         <Table
+          rowKey={record => record.id}
           dataSource={this.state.courses}
           columns={columns}
           style={{

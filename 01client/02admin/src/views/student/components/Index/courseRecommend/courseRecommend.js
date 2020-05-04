@@ -44,7 +44,6 @@ export default class courseRecommend extends React.Component {
                     list.push(item);
                 }
             });
-            // console.log(list);
             that.setState({
                 newBooks: list
             })

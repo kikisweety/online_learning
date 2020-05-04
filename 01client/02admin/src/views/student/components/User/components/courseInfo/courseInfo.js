@@ -24,23 +24,6 @@ export default class CouresInfo extends React.Component {
                     title: "课程章节",
                     dataIndex: "chapters",
                     key: "chapters",
-                    // render: chapters => {
-                    //     if (chapters.length < 1) {
-                    //         return;
-                    //     }
-                    //     let temp = chapters[0].name;
-                    //     return (
-                    //         <Select
-                    //             defaultValue={temp}
-                    //             style={{ width: 120 }}
-                    //             onChange={this.handleChange}
-                    //         >
-                    //             {chapters.map(function (item) {
-                    //                 return <Option value={item.id}>{item.name}</Option>;
-                    //             })}
-                    //         </Select>
-                    //     );
-                    // }
                 },
                 {
                     title: '课程介绍',
@@ -64,7 +47,6 @@ export default class CouresInfo extends React.Component {
         }
     }
     showForm() {
-        // console.log(111);
         this.refs.form.style.display = "block"
     }
     closeForm() {

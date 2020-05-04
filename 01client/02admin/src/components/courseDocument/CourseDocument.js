@@ -27,7 +27,6 @@ export default class CourseDocument extends React.Component {
   }
 
   handleChange = (value) => {
-    // console.log(value);
     let id = value;
     let that = this;
     net.get(
@@ -36,8 +35,6 @@ export default class CourseDocument extends React.Component {
         id: id
       },
       function (ob) {
-        // console.log(ob);
-
         that.setState({
           videoData: ob.data.object
         });
@@ -48,8 +45,6 @@ export default class CourseDocument extends React.Component {
   componentDidMount() {
     let that = this;
     net.get("courses/and/chapters", {}, function (ob) {
-      // console.log(ob);
-      
       that.setState({
         allLeaf: ob.data.object
       });
@@ -58,7 +53,6 @@ export default class CourseDocument extends React.Component {
   }
 
   expandedRowRender = (record) => {
-    console.log(record);
     const columns = [
       { title: "视频名称", dataIndex: "name", key: "name" },
       {
@@ -91,12 +85,12 @@ export default class CourseDocument extends React.Component {
       {
         title: '操作',
         key: 'action',
-        render: () => {
+        render: (text,record) => {
           var that = this;
           return (
             <div>
               <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
-              <Button style={{ background: "#43BB60", color: 'white' }}>删除</Button>
+              <Button type="danger" style={{  color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
             </div>
           )
         }
@@ -116,7 +110,6 @@ export default class CourseDocument extends React.Component {
     let dataBuffer = [];
     let buffer = this.state.videoData;
     let length = allLeaf.length;
-
     for (let i = 0; i < length; i++) {
       if (record.id === i + 1) {
         return <Table key={i} columns={columns} dataSource={buffer} pagination={false} />
@@ -201,11 +194,12 @@ export default class CourseDocument extends React.Component {
         order: order
       },
       function (ob) {
-        console.log(ob);
         if (ob.code == -1) {
-          alert("课程文件上传失败");
+          alert("课程视频上传失败");
         } else {
-          alert("课程文件上传成功");
+          alert("课程视频上传成功");
+          that.refs.background.style.display = "none";
+          that.refs.addFiles.style.display = "none";
         }
         that.setState({
           uploadVideoState: false
@@ -213,6 +207,10 @@ export default class CourseDocument extends React.Component {
       }
     );
   };
+  delete(record) {
+    console.log(record);
+    
+   };
   removeFile = file => {
     //获得文件的数据
     let fileList = this.state.fileList;
@@ -362,7 +360,7 @@ export default class CourseDocument extends React.Component {
               className="components-table-demo-nested courseTable"
               columns={columns}
               expandedRowRender={this.expandedRowRender}
-              // expandedRowKeys={this.state.allLeaf.map(item => item.id)} //展开的行
+              rowKey={record => record.id}
               dataSource={this.state.allLeaf}
               pagination={{
                 pageSize: 8
@@ -427,7 +425,7 @@ export default class CourseDocument extends React.Component {
                   style={{ width: 300 }}
                   value={this.state.values}
                   dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-                  placeholder="c语言"
+                  // placeholder="c语言"
                   allowClear
                   treeDefaultExpandAll
                 >

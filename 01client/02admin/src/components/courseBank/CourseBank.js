@@ -242,7 +242,11 @@ export default class CourseBank extends React.Component {
           </div>
 
           <div className="BankTable">
-          <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+            <Table
+              rowKey={record => record.id}
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={data} />
           </div>
           <div className="BlankTableDel">
           <Radio className="b-butten">全选</Radio>

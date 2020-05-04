@@ -13,7 +13,6 @@ class CoursesDetail extends Component {
             source: ''
         }
     }
-    componentDidMount() { }
     toCourses() {
         this.props.history.push(`/student/courses`);
     }

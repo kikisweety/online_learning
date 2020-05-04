@@ -1,6 +1,6 @@
 import React from "react";
 import "./Query.css";
-import { List, Avatar, Input, Divider, Drawer, Col, Table, Tabs,Button } from "antd";
+import { List, Avatar, Tabs,Button } from "antd";
 import net from "../../../utils/net";
 const { TabPane } = Tabs;
 export default class Query extends React.Component {

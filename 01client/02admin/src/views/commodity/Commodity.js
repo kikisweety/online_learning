@@ -1,30 +1,50 @@
 import React from "react";
 import "./Commodity.css";
+import net from "../../utils/net";
 import {
-    Button, Table, Upload, Input, Select
+    Button, Table, Upload, Input, message, Icon, Form, InputNumber
 } from "antd";
-const { Option } = Select;
-const { TextArea } = Input;
+const layout = {
+    labelCol: { span: 5 },
+    wrapperCol: { span: 16 },
+};
+function getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+}
 export default class Commodity extends React.Component {
     constructor() {
         super();
         this.state = {
+            fileList1: [],
+            fileList2: [],
+            loading: false,
+            isLoading: false,
+            price: null,
+            amount:null,
             columns: [
                 {
                     title: '商品名称',
-                    dataIndex: 'commodity_name',
-                    key: 'commodity_name',
+                    dataIndex: 'commodityName',
+                    key: 'commodityName',
                     render: text => <a>{text}</a>,
                 },
                 {
                     title: '商品图片',
                     dataIndex: 'url',
-                    key: 'url'
+                    key: 'url',
+                    render: text => { 
+                        return <div style={{ overflow: 'hidden',whiteSpace: 'nowrap',textOverflow:'ellipsis'}}>{text}</div>
+                    }
                 },
                 {
                     title: '价格',
-                    dataIndex: 'commodity_price',
-                    key: 'commodity_price'
+                    dataIndex: 'commodityPrice',
+                    key: 'commodityPrice',
+                    render: text => {
+                        return <div>{text}元</div>
+                    }
                 },
                 {
                     title: '库存',
@@ -33,66 +53,112 @@ export default class Commodity extends React.Component {
                 },
                 {
                     title: '商品详情',
-                    dataIndex: 'commodity_detail',
-                    key: 'commodity_detail'
+                    dataIndex: 'commodityDetails',
+                    key: 'commodityDetails',
+                    render: text => {
+                        return <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{text}</div>
+                    }
+                },
+                {
+                    title: '操作',
+                    key: 'action',
+                    render: (text, record) => {
+                        return (
+                            <div>
+                                <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
+                                <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
+                            </div>
+                        )
+                    }
                 }
             ],
-            allUser: [
-                {
-                    id: 1,
-                    commodity_name: '【配套视频】python基础教程零基础学Python3.5',
-                    url: '/noi/image/2020-04-03-python详情.png',
-                    commodity_price: 66.8,
-                    amount: 20,
-                    commodity_detail: '/noi/image/2020-04-03-python商品.png'
-                },
-                {
-                    id: 2,
-                    commodity_name: 'PHP项目开发实战入门（全彩版）',
-                    url: '/noi/image/2020-04-03-php详情.png',
-                    commodity_price: 54.4,
-                    amount: 10,
-                    commodity_detail: '/noi/image/2020-04-03-php商品.png'
-                },
-                {
-                    id: 3,
-                    commodity_name: '【套装2本】java编程思想 第4版+数据结构与算法分析：Java语言描述 原书第3版 thinking in java计算机程序设计从入门到精通书籍',
-                    url: '/noi/image/2020-04-03-php详情.png',
-                    commodity_price: 54.4,
-                    amount: 10,
-                    commodity_detail: '/noi/image/2020-04-03-php商品.png'
-                },
-                {
-                    id: 4,
-                    commodity_name: '【清华】C语言从入门到精通 (第4版) c语言程序设计电脑编程入门零基础自学c ++primer plus计算机软件程序员开发教程教材书籍2019',
-                    url: '/noi/image/2020-04-03-php详情.png',
-                    commodity_price: 54.4,
-                    amount: 10,
-                    commodity_detail: '/noi/image/2020-04-03-php商品.png'
-                },
-                {
-                    id: 5,
-                    commodity_name: 'C++ Primer中文版 第5版 C++编程从入门到精通C++11标准 C++经典教程语言程序设计软件计算机开发书籍c primer plus',
-                    url: '/noi/image/2020-04-03-php详情.png',
-                    commodity_price: 54.4,
-                    amount: 10,
-                    commodity_detail: '/noi/image/2020-04-03-php商品.png'
-                },
-                {
-                    id: 6,
-                    commodity_name: 'JavaScript高级程序设计(第3版)JS入门到精通书籍JavaScript权威指南配套前端开发工程师书web开发HTML网站JavaScript实战工具书',
-                    url: '/noi/image/2020-04-03-php详情.png',
-                    commodity_price: 54.4,
-                    amount: 10,
-                    commodity_detail: '/noi/image/2020-04-03-php商品.png'
-                }
-            ]
+            allCommodity: []
         };
     }
-    showAddForm() {
-        this.refs.userForm.style.display = "block"
+    displayAddForm() {
+        this.refs.commodityForm.style.display = "block";
+        this.refs.opacity.style.display = "block";
     }
+    closeForm() {
+        this.refs.commodityForm.style.display = "none"
+        this.refs.opacity.style.display = "none";
+    }
+    beforeUpload(file) {
+        const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+        if (!isJpgOrPng) {
+            message.error("你只能传图片格式为JPG/PNG!");
+        }
+        let fileList1 = this.state.fileList1;
+        fileList1.push(file);
+        this.setState({ fileList1: fileList1 });
+        return isJpgOrPng;
+    }
+    handleChangeimg = info => {
+        if (info.file.status === "uploading") {
+            this.setState({ loading: true });
+            return;
+        }
+        if (info.file.status === "done") {
+            getBase64(info.file.originFileObj, imageUrl =>
+                this.setState({
+                    imageUrl,
+                    loading: false
+                })
+            );
+        }
+    };
+    uploadDetail(file) {
+        let fileList2 = this.state.fileList2;
+        fileList2.push(file);
+        this.setState({ fileList2: fileList2 });
+    };
+    handlePrice(e) { 
+        this.setState({
+            price:e
+        })
+    };
+    handleAmount(e) {
+        this.setState({
+            amount: e
+        })
+    };
+    upload() {
+        let commodityName = this.refs.inputName.state.value;
+        let url = this.state.fileList1;
+        let commodityPrice = this.state.price;
+        let amount = this.state.amount;
+        let commodityDetails = this.state.fileList2;
+        let that = this;
+        net.uploadFile("commodity/insert", { commodityName: commodityName, url: url, commodityPrice: commodityPrice, amount: amount, commodityDetails: commodityDetails },
+            function (ob) {
+                console.log(ob.data);
+                
+            // if (ob) {
+                
+            // }
+        })
+    };
+    componentDidMount() {
+        let that = this;
+        net.get("commodity/All", {},function (ob) {
+            let allCommodity = ob.data.object;
+            that.setState({ allCommodity: allCommodity });
+        })
+    };
+    delete(record) {
+        let that = this;
+        // net.
+     }
+
+
     render() {
+        const uploadButton = (
+            <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
+        const { imageUrl } = this.state;
         return (
             <div className="addView">
                 <div className="addCourseList" ref="box">
@@ -102,63 +168,72 @@ export default class Commodity extends React.Component {
                         <Button
                             type="primary"
                             style={{ background: "#43BB60" }}
-                        // onClick={this.displayAddForm.bind(this)}
+                            onClick={this.displayAddForm.bind(this)}
                         >添加商品</Button>
                     </div>
                     <Table
-                        // rowSelection={rowSelection}
+                        rowKey={record => record.id}
                         columns={this.state.columns}
-                        dataSource={this.state.allUser}
+                        dataSource={this.state.allCommodity}
                         style={{ width: "100%", height: 500, margin: "10px auto" }}
                         pagination={{ pageSize: 8 }}
                         scroll={{ y: 500 }}
                     ></Table>
                 </div>
-                {/* 用户添加 */}
-                <div className="addForm" ref="userForm">
-                    <div className="addTeacherTitle">老师添加</div>
-                    <div className="flex">
-                        <div>姓名：</div>
-                        <Input placeholder="请输入姓名" className="input" ref="inputName" />
-                    </div>
-                    <div className="flex">
-                        <div>职称：</div>
-                        <Input placeholder="请输入职称" className="input" ref="inputType" />
-                    </div>
-                    <div className="flex">
-                        <div>选择课程：</div>
-                        <Select
-                            // defaultValue={this.state.courses[0].name}
-                            // value={this.state.subject}
-                            style={{ width: 120 }}
-                            // onChange={this.handleChange.bind(this)}
-                            ref="subject"
-                        >
-                            {/* {this.state.courses.map((item) => {
-                return (
-                  <Option value={item.name} key={item.id}>{item.name}</Option>
-                )
-              })} */}
-                        </Select>
-                    </div>
-                    <div className="flex">
-                        <div>个人介绍：</div>
-                        <TextArea
-                            rows={2}
-                            ref="inputIntroduce"
-                            // value={this.state.introduceText}
-                            // onChange={this.handleInfo}
-                            style={{ width: '80%', height: '100px' }}
-                        />
-                    </div>
-
-                    <div className="button">
-                        <Button onClick={this.upload}>提交</Button>
-                        <Button type="primary"
-                            onClick={this.showAddForm.bind(this)}
-                        >
-                            取消
+                {/* 商品添加 */}
+                <div className="addForm" ref="commodityForm">
+                    <div className="addTeacherTitle">商品添加</div>
+                    <Form
+                        name="nest-messages"
+                        {...layout}
+                        style={{ width: '100%', marginTop: 20 }}>
+                        <Form.Item name={['commodity_name']} label="商品名称：" rules={[{ required: true }]}>
+                            <Input placeholder="请输入商品名称" ref="inputName" />
+                        </Form.Item>
+                        <Form.Item name={['url']} label="商品图片：">
+                            <Upload
+                                ref="uploadImg"
+                                name="avatar"
+                                listType="picture-card"
+                                className="avatar-uploader"
+                                showUploadList={false}
+                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                beforeUpload={this.beforeUpload.bind(this)}
+                                onChange={this.handleChangeimg}
+                            >
+                                {imageUrl ? (
+                                    <img src={imageUrl} alt="avatar" style={{ width: 70 }} />
+                                ) : (
+                                        uploadButton
+                                    )}
+                            </Upload>
+                        </Form.Item>
+                        <Form.Item name={['commodity_price']} label="价格：" rules={[{ type: 'number', min: 0, max: 99 }]}>
+                            <InputNumber onChange={this.handlePrice.bind(this)}/>
+                        </Form.Item>
+                        <Form.Item name={['amount']} label="库存：">
+                            <InputNumber onChange={this.handleAmount.bind(this)}/>
+                        </Form.Item>
+                        <Form.Item name={['commodity_detail']} label="商品详情：">
+                            <Upload name="logo"
+                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                listType="picture"
+                                beforeUpload={this.uploadDetail.bind(this)}>
+                                <Button>
+                                    <Icon type="upload" /> 点击选择图片
+              </Button>
+                            </Upload>
+                        </Form.Item>
+                        <Form.Item name="button" className="formButton" style={{ margin:'auto'}}>
+                            <Button type="primary" style={{ marginRight: 20 }} onClick={this.upload.bind(this)}>提交</Button>
+                            <Button type="primary"
+                                onClick={this.closeForm.bind(this)}
+                            >
+                                取消
             </Button>
+                        </Form.Item>
+                    </Form>
+                    <div className="button">
                     </div>
                 </div>
             </div>

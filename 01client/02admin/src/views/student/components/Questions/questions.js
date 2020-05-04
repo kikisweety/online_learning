@@ -42,7 +42,6 @@ export default class MyQuestions extends React.Component {
             currentStyle: true
         });
         net.get('courses/questionByType', { courseType: id }, function (ob) {
-            // console.log(ob);
             that.setState({
                 questions: ob.data.object
             })
@@ -51,7 +50,6 @@ export default class MyQuestions extends React.Component {
     componentDidMount() {
         var that = this;
         net.get('courses/questionByType', { courseType: 1 }, function (ob) {
-            // console.log(ob);
             that.setState({
                 questions: ob.data.object
             })

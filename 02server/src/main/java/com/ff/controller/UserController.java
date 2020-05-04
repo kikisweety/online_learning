@@ -4,6 +4,7 @@ import com.ff.pojo.Msg;
 import com.ff.pojo.User;
 import com.ff.service.UserService;
 import com.ff.util.MD5Utils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,8 @@ public class UserController {
     }
     @RequestMapping("user/delete")
     @ResponseBody
-    public Msg delete(User user,HttpServletResponse resp, HttpServletRequest request){
-        return userService.delete(user.getUserId());
+    public Msg delete(@Param("userId")Integer userId, HttpServletResponse resp, HttpServletRequest request){
+        return userService.delete(userId);
 
     }
     @RequestMapping("user/update")

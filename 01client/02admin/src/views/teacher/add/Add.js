@@ -17,47 +17,6 @@ const { Option } = Select;
 const { TextArea } = Input;
 const fakeDataUrl =
   "https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo";
-const columns = [
-  {
-    title: "姓名",
-    dataIndex: "name",
-    key:"name"
-  },
-  {
-    title: "照片",
-    dataIndex: "tkey",
-    key: "tkey",
-    render: (tkey) => {
-      // console.log(tkey);
-      return (
-        <img src={tkey} style={{ width: 50, height: 50 }} />
-      );
-    }
-  },
-  {
-    title: "介绍",
-    dataIndex: "introduce",
-    key: "introduce"
-  },
-  {
-    title: "职称",
-    dataIndex: "tType",
-    key: "tType",
-  },
-  {
-    title: '操作',
-    key: 'action',
-    render: () => {
-      var that = this;
-      return (
-        <div>
-          <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
-          <Button style={{ background: "#43BB60", color: 'white' }}>删除</Button>
-        </div>
-      )
-    }
-  }
-];
 function getBase64(img, callback) {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result));
@@ -75,7 +34,47 @@ export default class Add extends React.Component {
       introduceText: "",
       teacherData: [],
       courses: [],
-      isLoading:false
+      isLoading: false,
+      columns:[
+        {
+          title: "姓名",
+          dataIndex: "name",
+          key: "name"
+        },
+        {
+          title: "照片",
+          dataIndex: "tkey",
+          key: "tkey",
+          render: (tkey) => {
+            return (
+              <img src={tkey} style={{ width: 50, height: 50 }} />
+            );
+          }
+        },
+        {
+          title: "介绍",
+          dataIndex: "introduce",
+          key: "introduce"
+        },
+        {
+          title: "职称",
+          dataIndex: "tType",
+          key: "tType",
+        },
+        {
+          title: '操作',
+          key: 'action',
+          render: (text, record) => {
+            var that = this;
+            return (
+              <div>
+                <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
+                <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
+              </div>
+            )
+          }
+        }
+      ]
     };
   }
 
@@ -116,13 +115,13 @@ export default class Add extends React.Component {
     let subject = this.state.subject; //科目
     let introduce = this.refs.inputIntroduce.props.value; //介绍
     let fileList = this.state.fileList;
+    console.log(fileList);
+    
     let that = this;
     net.uploadFile(
       "teacherAdd",
       { name: name, introduce: introduce, files: fileList, tType: t_type },
-
       function (ob) {
-        console.log(ob);
         if (ob.code == -1) {
           alert("上传失败");
         } else {
@@ -142,7 +141,6 @@ export default class Add extends React.Component {
     });
     net.get("teachers", {}, function (ob) {
       let teacherdata = ob.data.object;
-      // console.log(teacherdata);
       that.setState({ teacherData: teacherdata });
     });
     net.get("courses/and/chapters", {},function (params) {
@@ -191,7 +189,6 @@ export default class Add extends React.Component {
       return;
     }
     if (info.file.status === "done") {
-      // Get this url from response in real world.
       getBase64(info.file.originFileObj, imageUrl =>
         this.setState({
           imageUrl,
@@ -205,6 +202,9 @@ export default class Add extends React.Component {
       introduceText: e.target.value
     });
   };
+  delete(record) { 
+    console.log(record);
+  }
   render() {
     const uploadButton = (
       <div>
@@ -227,8 +227,9 @@ export default class Add extends React.Component {
             >添加老师</Button>
           </div>
           <Table
+            rowKey={record => record.id}
             isLoading={this.state.isLoading}
-            columns={columns}
+            columns={this.state.columns}
             dataSource={this.state.teacherData}
             pagination={{
               pageSize: 7
@@ -251,7 +252,6 @@ export default class Add extends React.Component {
           <div className="flex">
             <div>选择课程：</div>
             <Select
-              // defaultValue={this.state.courses[0].name}
               value={this.state.subject}
               style={{ width: 120 }}
               onChange={this.handleChange.bind(this)}

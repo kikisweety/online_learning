@@ -50,11 +50,7 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public Msg insert(Commodity commodity, HttpServletRequest request) {
         Msg msg = new Msg();
-        if(commodityMapper.selectByName(commodity.getCommodityName())!=null){
-            msg.setCode(2);
-            msg.setMsg("已经存在(" + commodity.getCommodityName()+ ")商品");
-            return msg;
-        }
+
         CosTool cosTool = new CosTool();
         List<String> keyList = cosTool.uploadFile(CosTool.IMAGE_FOLDER, request);
 

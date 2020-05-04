@@ -6,7 +6,7 @@ import com.ff.pojo.User;
 
 import java.text.ParseException;
 
-public interface OrderService {
+public interface OrdersService {
     Msg selectByUserName(String name);
 
     Msg selectAll();

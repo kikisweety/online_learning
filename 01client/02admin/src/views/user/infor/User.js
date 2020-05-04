@@ -2,12 +2,13 @@ import React from "react";
 import "./User.css";
 import net from "../../../utils/net";
 import {
-  Button, Table, Select, Form, Input, InputNumber, Radio
+  Button, Table, Select, Form, Input, InputNumber, Radio,Modal
 } from "antd";
 const layout = {
   labelCol: { span: 5 },
   wrapperCol: { span: 16 },
 };
+const { confirm } = Modal;
 export default class User extends React.Component {
   constructor() {
     super();
@@ -52,7 +53,7 @@ export default class User extends React.Component {
             return (
               <div>
                 <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
-                <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this,record)}>删除</Button>
+                <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this,record.userId)}>删除</Button>
               </div>
             )
           }
@@ -99,14 +100,22 @@ export default class User extends React.Component {
       }
     )
   }
-  delete(record) {
-    console.log(record);
-    net.get(
-      "user/delete", { user:record },
-      function (res) {
-        console.log(res); 
-      }
-    )
+  delete(userId) {
+    confirm({
+      title: '提示',
+      content: '确定删除吗？',
+      onOk() {
+        return net.get(
+          "user/delete", { userId: userId },
+          function (res) {
+            console.log(res);
+          }
+        )
+      },
+      onCancel() { },
+      okText:'确定',
+      cancelText:'取消'
+    })
    }
   render() {
     return (
@@ -122,6 +131,7 @@ export default class User extends React.Component {
             >添加用户</Button>
           </div>
           <Table
+            rowKey={record => record.id}
             columns={this.state.columns}
             dataSource={this.state.allUser}
             style={{ width: "100%", height: 500, margin: "10px auto" }}

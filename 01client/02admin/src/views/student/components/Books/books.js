@@ -88,7 +88,6 @@ export default class MyBooks extends React.Component {
                                     onClick={() => this.routerTo(item)}
                                     hoverable
                                     style={{ borderRadius: 5, color:'#f60',fontSize:16 }}
-                                    // cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
                                     cover={<img alt="example" src={item.url}/>}
                                 >
                                     <Meta

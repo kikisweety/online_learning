@@ -66,7 +66,6 @@ export default class MyCourses extends React.Component {
             pathname: `/CoursesDetail/${item.id}`,
             state: { courses: item }
         })
-        // window.sessionStorage.setItem(item)
     }
     render() {
         var _this = this;
@@ -79,12 +78,8 @@ export default class MyCourses extends React.Component {
         var tabList = this.state.tabs.map(function (res, index) {
             // 遍历标签页，如果标签的id等于tabid，那么该标签就加多一个active的className
             var tabStyle = res.id == this.state.currentIndex ? 'subCtrl active' : 'subCtrl';
-
             return <li key={index} onClick={this.tabChoiced.bind(_this, res.id)} className={tabStyle}>{res.tabName}</li>
         }.bind(_this));
-        // var coursesList = this.state.courses.map(function (res) {
-        //     return <Panel header={res.name} key={res.id}>{res.introduce}</Panel>
-        // });
         return (
             <div className="coursesBox" >
                 <div className="coursesContainer">

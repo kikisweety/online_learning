@@ -14,14 +14,6 @@ export default class LoginView extends React.Component {
   toRegisterView() {
     this.props.history.push({ pathname: "/register", state: {} });
   }
-  onChange(e) {
-    console.log(e.target.value);
-    this.setState({
-      value:e.target.value
-    })
-    console.log(this.state.value);
-    
-  }
 
   checkUser() {
     let that = this;
@@ -100,14 +92,6 @@ export default class LoginView extends React.Component {
                     style={{ width: 300 }}
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   />
-                </Col>
-              </Row>
-              <Row className="row">
-                <Col span={20}>
-                  <Radio.Group defaultValue="null" buttonStyle="solid" onChange={this.onChange.bind(this)}>
-                    <Radio.Button value="null">用户</Radio.Button>
-                    <Radio.Button value="1">管理员</Radio.Button>
-                  </Radio.Group>
                 </Col>
               </Row>
               <Row className="row">

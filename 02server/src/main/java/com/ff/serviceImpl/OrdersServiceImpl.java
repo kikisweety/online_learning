@@ -82,7 +82,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public Msg update(Order order) {
+    public Msg update(Orders order) {
         Msg msg = new Msg();
         if(orderMapper.updateByPrimaryKeySelective(order)==1){
             msg.setCode(1);

@@ -31,9 +31,9 @@ public class OrdersController {
     }
     @RequestMapping("order/delete")
     @ResponseBody
-    public Msg delete(Orders order){
+    public Msg delete(@Param("id")Integer id){
 
-        return orderService.delete(order.getId());
+        return orderService.delete(id);
     }
     @RequestMapping("order/insert")
     @ResponseBody
@@ -43,7 +43,7 @@ public class OrdersController {
     }
     @RequestMapping("/order/update")
     @ResponseBody
-    private Msg update(Order order) throws ParseException {
+    private Msg update(Orders order) throws ParseException {
 
         return orderService.update(order);
     }

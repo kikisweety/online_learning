@@ -62,15 +62,16 @@ public class CommodityServiceImpl implements CommodityService {
             msg.setMsg("图片添加失败!");
             return msg;
         }
-        commodity.setUrl(keyList.get(0));
+        commodity.setCommodityDetails(keyList.get(0));
+        commodity.setUrl(keyList.get(1));
         Topic buffer = null;
         if (commodityMapper.insert(commodity) == 1) {
             msg.setCode(1);
             msg.setObject(buffer);
-            msg.setMsg("添加(" + commodity.getCommodityName() + ")老师成功!");
+            msg.setMsg("添加(" + commodity.getCommodityName() + ")商品成功!");
         } else {
             msg.setCode(-1);
-            msg.setMsg("添加(" + commodity.getCommodityName() + ")老师失败!");
+            msg.setMsg("添加(" + commodity.getCommodityName() + ")商品失败!");
         }
         return msg;
     }

@@ -95,17 +95,17 @@ public class CourseController {
         return courseService.selectQuestionByType(courseType);
     }
 
-
-
-
-
-
-
     @RequestMapping("courses/selectTeacher")
 	@ResponseBody
 	public Msg selectTeacher(Course course, HttpServletResponse resp, HttpServletRequest req){
 
 		return courseService.selectTeacher(course.getTeacherId());
+	}
+	@RequestMapping("courses/update")
+	@ResponseBody
+	public Msg update(Course course, HttpServletResponse resp, HttpServletRequest req){
+
+		return courseService.update(course);
 	}
 
 }

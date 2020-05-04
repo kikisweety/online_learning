@@ -59,5 +59,11 @@ public class QuestionController {
 
 		return questionService.questionAll();
 	}
+	@RequestMapping(value = "question/update")
+	@ResponseBody
+	public Msg questionUpdate(Question question,HttpServletResponse resp, HttpServletRequest request) {
+
+		return questionService.questionUpdate(question);
+	}
 
 }

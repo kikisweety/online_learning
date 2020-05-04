@@ -35,4 +35,6 @@ public interface TeacherMapper {
      Teacher selectTeacher(String name);
 
     Teacher selectTeacherById(int teacherId);
+
+    int update(Teacher teacher);
 }

@@ -61,4 +61,12 @@ public class TeacherController {
 
 		return teacherService.delTeacher(id);
 	}
+	@ResponseBody
+	@RequestMapping( value = "techerUpdate")
+	public Msg techerUpdate(Teacher teacher, HttpServletRequest respone, HttpServletRequest request){
+		//System.out.println(teacher);
+
+
+		return teacherService.techerUpdate(teacher);
+	}
 }

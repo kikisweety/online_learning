@@ -41,4 +41,10 @@ public class OrderController {
 
     return orderService.insert(user,commodity,number);
     }
+    @RequestMapping("/order/update")
+    @ResponseBody
+    private Msg update(Order order) throws ParseException {
+
+        return orderService.update(order);
+    }
 }

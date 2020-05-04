@@ -28,4 +28,6 @@ public interface TeacherService {
 	 * @return
 	 */
 	Msg delTeacher(Integer id);
+
+    Msg techerUpdate(Teacher teacher);
 }

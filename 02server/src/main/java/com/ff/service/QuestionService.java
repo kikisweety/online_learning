@@ -38,4 +38,6 @@ public interface QuestionService {
 	Msg Questionbyid(int chapterId);
 
 	Msg questionAll();
+
+    Msg questionUpdate(Question question);
 }

@@ -80,4 +80,14 @@ public class OrderServiceImpl implements OrderService {
 
         return msg;
     }
+
+    @Override
+    public Msg update(Order order) {
+        Msg msg = new Msg();
+        if(orderMapper.updateByPrimaryKeySelective(order)==1){
+            msg.setCode(1);
+            msg.setMsg("ok");
+        }
+        return msg;
+    }
 }

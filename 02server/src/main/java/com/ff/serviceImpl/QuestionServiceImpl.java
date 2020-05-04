@@ -103,4 +103,15 @@ public class QuestionServiceImpl implements QuestionService {
 		return msg;
 	}
 
+	@Override
+	public Msg questionUpdate(Question question) {
+		Msg msg = new Msg();
+		if(questionMapper.update(question)==1){
+			msg.setMsg("操作成功");
+			msg.setCode(1);
+
+		}
+		return msg;
+	}
+
 }

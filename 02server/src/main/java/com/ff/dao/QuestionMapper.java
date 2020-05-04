@@ -36,4 +36,6 @@ public interface QuestionMapper {
     List<Question> questionsAll();
 
 	List<Question> Questionbyid(int chapterId);
+
+    int update(Question question);
 }

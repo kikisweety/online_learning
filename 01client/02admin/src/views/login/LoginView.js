@@ -65,8 +65,8 @@ export default class LoginView extends React.Component {
     return (
       <div className="view">
         <div className="content">
-          <p>您好，欢迎来到在线教育系统</p>
-          <h4>登录界面</h4>
+          <div className="systemTitle">在线教育系统</div>
+          <h5 style={{ color:'#2730D3',fontWeight:"bold"}}>登录界面</h5>
           <div className="loginVeiw">
             <div className="content1">
               <Row className="row">

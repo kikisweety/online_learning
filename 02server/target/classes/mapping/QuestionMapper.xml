@@ -42,6 +42,33 @@
 		questions
 
 	</select>
+	<update id="update" parameterType="com.ff.pojo.Question">
+		update questions
+		<set>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="chapterId != null">
+				chapter_id = #{chapterId},
+			</if>
+			<if test="textA != null">
+				textA = #{textA},
+			</if>
 
+			<if test="textB != null">
+				textB = #{textB},
+			</if>
+			<if test="textC != null">
+				textC = #{textC},
+			</if>
+			<if test="textD != null">
+				textD= #{textD},
+			</if>
+			<if test="answer != null">
+				answer= #{answer},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
 
 </mapper>

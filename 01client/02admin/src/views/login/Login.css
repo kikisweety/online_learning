@@ -25,7 +25,17 @@
     border-radius: 5px;
     box-shadow:0px 0px 20px darkgrey;
 }
-
+.systemTitle{
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    font-size: 30px;
+    font-weight: 600;
+    background-image: -webkit-gradient(linear, left 0, right 0, from(#0A49CC), to(#6392EE));
+  /*必需加前缀 -webkit- 才支持这个text值 */
+  -webkit-background-clip: text;
+  /*text-fill-color会覆盖color所定义的字体颜色： */
+  -webkit-text-fill-color: transparent;
+}
 .loginVeiw {
     border-radius: 5px;
     display: flex;

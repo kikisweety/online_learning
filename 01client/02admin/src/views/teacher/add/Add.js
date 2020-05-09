@@ -8,11 +8,12 @@ import {
   message,
   Table,
   Radio,
-  Select
+  Select,
+  Modal
 } from "antd";
 import net from "../../../utils/net";
 import reqwest from "reqwest";
-
+const { confirm } = Modal;
 const { Option } = Select;
 const { TextArea } = Input;
 const fakeDataUrl =
@@ -65,7 +66,6 @@ export default class Add extends React.Component {
           title: '操作',
           key: 'action',
           render: (text, record) => {
-            var that = this;
             return (
               <div>
                 <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
@@ -134,22 +134,25 @@ export default class Add extends React.Component {
   };
   componentDidMount() {
     let that = this;
+    this.getTeachers();
     this.fetchData(res => {
       this.setState({
         data: res.results
       });
-    });
-    net.get("teachers", {}, function (ob) {
-      let teacherdata = ob.data.object;
-      that.setState({ teacherData: teacherdata });
     });
     net.get("courses/and/chapters", {},function (params) {
       that.setState({
         courses:params.data.object
       })
     })
-  }
-
+  };
+  getTeachers() { 
+    let that = this;
+    net.get("teachers", {}, function (ob) {
+      let teacherdata = ob.data.object;
+      that.setState({ teacherData: teacherdata });
+    });
+  };
   fetchData = callback => {
     reqwest({
       url: fakeDataUrl,
@@ -203,7 +206,27 @@ export default class Add extends React.Component {
     });
   };
   delete(record) { 
-    console.log(record);
+    let that = this;
+    let id = record.id;
+    confirm({
+      title: '提示',
+      content: '确定删除吗？',
+      onOk() {
+        return net.get(
+          "delTeacher", { id: id },
+          function (res) {
+            that.getTeachers();
+          }
+        )
+      },
+      onCancel() { },
+      okText: '确定',
+      cancelText: '取消'
+    })
+    net.get("teachers", {}, function (ob) {
+      let teacherdata = ob.data.object;
+      that.setState({ teacherData: teacherdata });
+    });
   }
   render() {
     const uploadButton = (

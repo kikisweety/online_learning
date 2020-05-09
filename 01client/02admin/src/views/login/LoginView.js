@@ -20,9 +20,9 @@ export default class LoginView extends React.Component {
     //1,获得用户提交的数据
     let userName = this.refs.inputUser.state.value;
 
-    //2,如果用户名是空，就提醒用户输入数据
+    //2,如果登录名是空，就提醒用户输入数据
     if (userName == null || userName.length < 1) {
-      message.error("请输入用户名！");
+      message.error("请输入登录名！");
       return;
     }
     //3,获得密码
@@ -76,7 +76,7 @@ export default class LoginView extends React.Component {
                     id="input"
                     ref="inputUser"
                     style={{ width: 300 }}
-                    placeholder="输入用户名"
+                    placeholder="输入登录名"
                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   />
                 </Col>

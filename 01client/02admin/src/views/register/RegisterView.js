@@ -74,7 +74,7 @@ export default class RegisterView extends React.Component {
                   <Input
                     className="input"
                     ref="login_name"
-                    placeholder="请输入用户名"
+                    placeholder="请输入登录名"
                     style={{width:300}}
                     prefix={
                       <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
@@ -87,7 +87,7 @@ export default class RegisterView extends React.Component {
                   <Input
                     className="input"
                     ref="name"
-                    placeholder="请输入昵称"
+                    placeholder="请输入用户名"
                     style={{ width: 300 }}
                     prefix={
                       <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />

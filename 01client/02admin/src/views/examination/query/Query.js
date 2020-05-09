@@ -1,11 +1,9 @@
 import React from "react";
 import "./Query.css";
 import net from "../../../utils/net";
-import { Button, Cascader, Table, Radio, TreeSelect } from "antd";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Button,  Table,  TreeSelect,Modal } from "antd";
 const { TreeNode } = TreeSelect;
-
-// rowSelection object indicates the need for row selection
+const { confirm } = Modal;
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(
@@ -23,7 +21,6 @@ const rowSelection = {
 export default class ExaminationQuery extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(this.props);
     this.state = {
       data: [],
       options: [],
@@ -66,12 +63,11 @@ export default class ExaminationQuery extends React.Component {
         {
           title: '操作',
           dataIndex: 'action',
-          render: () => {
-            var that = this;
+          render: (text, record) => {
             return (
               <div>
-                <Button style={{ background: "#43BB60",color:'white', marginRight: 10 }}>修改</Button>
-                <Button style={{ background: "#43BB60",color: 'white' }}>删除</Button>
+                <Button style={{ background: "#43BB60", color: 'white', marginRight: 10 }}>修改</Button>
+                <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
               </div>
             )
           }
@@ -89,7 +85,10 @@ export default class ExaminationQuery extends React.Component {
         courses: ob.object
       });
     });
-
+    this.getQuestions();
+  };
+  getQuestions() {
+    let that = this;
     net.post("question/all", {}, function (params) {
       console.log(params);
       that.setState({
@@ -110,11 +109,32 @@ export default class ExaminationQuery extends React.Component {
   };
   onSearch(chapterId) {
     let that = this;
-    net.post("question/chapterid", { chapterId: this.state.chapterId},function (params) {
-      console.log(params);
+    net.post("question/chapterid", { chapterId: this.state.chapterId }, function (params) {
       that.setState({
-        allQuestions:params.object
+        allQuestions: params.object
       })
+    })
+  };
+  onReset() {
+    this.getQuestions();
+   };
+  delete(record) {
+    let that = this;
+    let id = record.id;
+    confirm({
+      title: '提示',
+      content: '确定删除吗？',
+      onOk() {
+        return net.get(
+          "question/delete", { id: id },
+          function (res) {
+            that.getQuestions();
+          }
+        )
+      },
+      onCancel() { },
+      okText: '确定',
+      cancelText: '取消'
     })
   }
   render() {
@@ -156,6 +176,14 @@ export default class ExaminationQuery extends React.Component {
           >
             搜索
           </Button>
+          <Button
+            value="small"
+            type="primary"
+            onClick={this.onReset.bind(this)}
+            style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+          >
+            重置
+          </Button>
         </div>
         {/* 题库表单 */}
         <div className="table-Bank">
@@ -167,13 +195,6 @@ export default class ExaminationQuery extends React.Component {
             pagination={{ pageSize: 8 }}
             scroll={{ y: 500 }}
           ></Table>
-          {/* 删除按键 */}
-
-          {/* <div className="bank-button">
-            <Radio className="bk-butten">全选</Radio>
-            <Button type="primary" style={{ background: "#ECECEC", color: "black" }}>删除</Button>
-          </div> */}
-
         </div>
       </div>
     );

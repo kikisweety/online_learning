@@ -2,12 +2,13 @@ import React from "react";
 import "./Commodity.css";
 import net from "../../utils/net";
 import {
-    Button, Table, Upload, Input, message, Icon, Form, InputNumber
+    Button, Table, Upload, Input, message,Modal, Icon, Form, InputNumber
 } from "antd";
 const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 16 },
 };
+const { confirm } = Modal;
 function getBase64(img, callback) {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result));
@@ -17,8 +18,8 @@ export default class Commodity extends React.Component {
     constructor() {
         super();
         this.state = {
+            fileList: [],
             fileList1: [],
-            fileList2: [],
             loading: false,
             isLoading: false,
             price: null,
@@ -108,9 +109,9 @@ export default class Commodity extends React.Component {
         }
     };
     uploadDetail(file) {
-        let fileList2 = this.state.fileList2;
-        fileList2.push(file);
-        this.setState({ fileList2: fileList2 });
+        let fileList = this.state.fileList;
+        fileList.push(file);
+        this.setState({ fileList: fileList });
     };
     handlePrice(e) { 
         this.setState({
@@ -127,27 +128,44 @@ export default class Commodity extends React.Component {
         let url = this.state.fileList1;
         let commodityPrice = this.state.price;
         let amount = this.state.amount;
-        let commodityDetails = this.state.fileList2;
+        // let commodityDetails = this.state.fileList2;
+        let fileList = this.state.fileList;
+        // console.log(url, commodityDetails);
+        
         let that = this;
-        net.uploadFile("commodity/insert", { commodityName: commodityName, url: url, commodityPrice: commodityPrice, amount: amount, commodityDetails: commodityDetails },
+        net.uploadFile("commodity/insert", { files: fileList},
             function (ob) {
-                console.log(ob.data);
-                
-            // if (ob) {
-                
-            // }
+                console.log(ob);
         })
     };
     componentDidMount() {
+        this.getCommodity();
+    };
+    getCommodity() {
         let that = this;
         net.get("commodity/All", {},function (ob) {
             let allCommodity = ob.data.object;
             that.setState({ allCommodity: allCommodity });
         })
-    };
+     };
     delete(record) {
         let that = this;
-        // net.
+        let id = record.id;
+        confirm({
+            title: '提示',
+            content: '确定删除吗？',
+            onOk() {
+                return net.get(
+                    "commodity/delete", { id: id },
+                    function (res) {
+                        that.getCommodity();
+                    }
+                )
+            },
+            onCancel() { },
+            okText: '确定',
+            cancelText: '取消'
+        })
      }
 
 

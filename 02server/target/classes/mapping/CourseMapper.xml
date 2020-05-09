@@ -170,9 +170,5 @@
         select  * from courses
         where course_type=#{courseType}
     </select>
-	<delete id="deleteById" parameterType="java.lang.Integer">
-	delete from courses where id=#{id}
-
-	</delete>
 
 </mapper>

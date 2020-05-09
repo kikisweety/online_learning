@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./details.css"
-import { Button,message } from "antd"
+import { Button, message } from "antd"
+import net from "../../../../utils/net"
 class Detail extends Component {
     constructor(props, context) {
         super(props, context)
@@ -10,7 +11,16 @@ class Detail extends Component {
         this.props.history.push(`/student/books`);
     }
     toOrder = () => { 
-        message.success('成功加入购物车，请到个人中心支付！');
+        let that = this;
+        let userList = JSON.parse(window.localStorage.getItem("user"));
+        let user = userList.object;
+        console.log(JSON.stringify(user));
+        let commodity =this.booksList;
+        let number = 1;
+        net.post("order/insert", { user, commodity, number }, function (ob) {
+            console.log(ob);
+            message.success('成功加入购物车，请到个人中心支付！');
+        })
     }
     render() {
         var booksList = {}

@@ -63,10 +63,12 @@ export default class User extends React.Component {
     };
   }
   displayAddForm() {
-    this.refs.userForm.style.display = "block"
+    this.refs.userForm.style.display = "block";
+    this.refs.opacity.style.display = "block";
   }
   closeForm() {
-    this.refs.userForm.style.display = "none"
+    this.refs.userForm.style.display = "none";
+    this.refs.opacity.style.display = "none";
   }
   handleAge(e) { 
     this.setState({

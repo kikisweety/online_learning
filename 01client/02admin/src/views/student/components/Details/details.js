@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
 import "./details.css"
-import { Button, message } from "antd"
+import { Button, message, InputNumber } from "antd"
 import net from "../../../../utils/net"
 class Detail extends Component {
     constructor(props, context) {
         super(props, context)
-        this.booksList = props.location.state.booksList
-    }
+        this.booksList = props.location.state.booksList;
+        this.state=({
+            number:1
+        })
+    };
     toBooks() {
         this.props.history.push(`/student/books`);
-    }
-    toOrder = () => { 
-        let that = this;
+    };
+    handleAge(e) {
+        this.setState({
+            number: e
+        })
+    };
+    toOrder = () => {
         let userList = JSON.parse(window.localStorage.getItem("user"));
-        let user = userList.object;
-        console.log(JSON.stringify(user));
-        let commodity =this.booksList;
-        let number = 1;
-        net.post("order/insert", { user, commodity, number }, function (ob) {
-            console.log(ob);
+        let name = userList.object.name;
+        let amount = this.booksList.amount;
+        let commodityDetails = this.booksList.commodityDetails;
+        let commodityName = this.booksList.commodityName;
+        let commodityPrice = this.booksList.commodityPrice;
+        let url = this.booksList.url;
+        let number = this.state.number;
+        net.uploadFile("order/insert", { name, amount, commodityDetails, commodityName, commodityPrice, url, number }, function (ob) {
             message.success('成功加入购物车，请到个人中心支付！');
         })
     }
@@ -38,7 +47,7 @@ class Detail extends Component {
                         <div className="infoBox">
                             <h4 className="booksTitle">{this.booksList.commodityName}</h4>
                             <div className="booksPrice">￥{this.booksList.commodityPrice}</div>
-                            <div className="booksAmout">
+                            <div className="booksAmount">
                                 <div>
                                     <span>库存：</span>
                                     <span>{this.booksList.amount}件</span>
@@ -46,6 +55,10 @@ class Detail extends Component {
                                 <div>
                                     <span>运费：</span>
                                     <span>￥0.00</span>
+                                </div>
+                                <div>
+                                    <span>购买数量：</span>
+                                    <InputNumber onChange={this.handleAge.bind(this)} />
                                 </div>
                             </div>
                             <div className="booksCar">
@@ -57,7 +70,7 @@ class Detail extends Component {
                 <div className="booksContentDetail">
                     <div className="introBox">
                         <div className="detailTtile">商品介绍</div>
-                        <img src={this.booksList.commodityDetails} style={{ width: '100%',marginBottom:'10px'}}></img>
+                        <img src={this.booksList.commodityDetails} style={{ width: '100%', marginBottom: '10px' }}></img>
                     </div>
                 </div>
             </div>

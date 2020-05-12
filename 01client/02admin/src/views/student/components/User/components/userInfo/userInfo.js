@@ -20,8 +20,8 @@ export default class UserInfo extends React.Component {
                         name="nest-messages"
                         {...layout}
                         style={{ width: '50%' }}>
-                        <Form.Item name={['user', 'name']} label="姓名：" rules={[{ required: true }]}>
-                            <Input placeholder="请输入姓名" />
+                        <Form.Item name={['user', 'name']} label="用户名：" rules={[{ required: true }]}>
+                            <Input placeholder="请输入用户名" />
                         </Form.Item>
                         <Form.Item name={['user', 'age']} label="年龄" rules={[{ type: 'number', min: 0, max: 99 }]}>
                             <InputNumber />
@@ -37,7 +37,7 @@ export default class UserInfo extends React.Component {
                         </Form.Item>
                         <Form.Item wrapperCol={{ span: 12, offset:10}}>
                             <Button type="primary" htmlType="submit">
-                                提交更改
+                                提交
         </Button>
                         </Form.Item>
                     </Form>

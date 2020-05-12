@@ -149,4 +149,7 @@
   <select id="selectAll" resultMap="BaseResultMap">
     select * from orders
   </select>
+  <select id="selectByUserName" resultMap="BaseResultMap">
+    select * from orders where buy_user=#{name}
+  </select>
 </mapper>

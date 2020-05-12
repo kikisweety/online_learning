@@ -36,6 +36,7 @@ public class Question {
 	 * 第四个选项
 	 */
 	private String textD;
+	private String value;
 
 	/**
 	 * 答案

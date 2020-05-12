@@ -55,10 +55,10 @@ export default class MyQuestions extends React.Component {
             })
         });
     }
-    routerTo(v) { 
+    routerTo(v) {
         this.props.history.push({
             pathname: `/QuestionsDetail/${v.id}`,
-            state: {questions:v}
+            state: { questions: v }
         })
     }
     render() {
@@ -90,17 +90,19 @@ export default class MyQuestions extends React.Component {
                                         key={item.id}
                                     >
                                         {item.chapters.map((v) => {
-                                            return <div className="videoBox"
-                                                key={v.id}
-                                                style={{ display: 'flex', position: 'relative', padding: 20, alignItems: 'center' }}>
-                                                <span style={{ width: 5, height: 5, backgroundColor: '#1F9DFF',borderRadius:5,marginRight:20 }}></span>
-                                                <span>{v.name}</span>
-                                                <Button
-                                                    type="primary"
-                                                    shape="round"
-                                                    onClick={() => this.routerTo(v)}
-                                                    style={{ position: 'absolute', right: 0 }}>开始做题</Button>
-                                            </div>
+                                            if (v.questions.length>0) {
+                                                return <div className="videoBox"
+                                                    key={v.id}
+                                                    style={{ display: 'flex', position: 'relative', padding: 20, alignItems: 'center' }}>
+                                                    <span style={{ width: 5, height: 5, backgroundColor: '#1F9DFF', borderRadius: 5, marginRight: 20 }}></span>
+                                                    <span>{v.name}</span>
+                                                    <Button
+                                                        type="primary"
+                                                        shape="round"
+                                                        onClick={() => this.routerTo(v)}
+                                                        style={{ position: 'absolute', right: 0 }}>开始做题</Button>
+                                                </div>
+                                            }
                                         })}
                                     </Panel>
                                 })
@@ -131,7 +133,7 @@ export default class MyQuestions extends React.Component {
                                 })
                                 }
                             </Collapse>
-                                </div>
+                        </div>
                         <div style={{ "display": isBox3Show }}>
                             <Collapse accordion bordered={false} style={{ backgroundColor: 'white', fontSize: 16 }}>
                                 {this.state.questions.map((item) => {
@@ -154,7 +156,7 @@ export default class MyQuestions extends React.Component {
                                 })
                                 }
                             </Collapse>
-                                </div>
+                        </div>
                         <div style={{ "display": isBox4Show }}>
                             <Collapse accordion bordered={false} style={{ backgroundColor: 'white', fontSize: 16 }}>
                                 {this.state.questions.map((item) => {
@@ -177,7 +179,7 @@ export default class MyQuestions extends React.Component {
                                 })
                                 }
                             </Collapse>
-                                </div>
+                        </div>
                         <div style={{ "display": isBox5Show }}>
                             <Collapse accordion bordered={false} style={{ backgroundColor: 'white', fontSize: 16 }}>
                                 {this.state.questions.map((item) => {
@@ -200,7 +202,7 @@ export default class MyQuestions extends React.Component {
                                 })
                                 }
                             </Collapse>
-                                </div>
+                        </div>
                     </div>
                 </div>
                 <Footer></Footer>

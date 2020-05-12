@@ -215,6 +215,7 @@ export default class Add extends React.Component {
         return net.get(
           "delTeacher", { id: id },
           function (res) {
+            message.success("成功删除订单！")
             that.getTeachers();
           }
         )

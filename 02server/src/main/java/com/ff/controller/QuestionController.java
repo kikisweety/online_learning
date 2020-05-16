@@ -41,8 +41,8 @@ public class QuestionController {
 	}
 	@RequestMapping(value = "question/result")
 	@ResponseBody
-	public Msg result(  String jsonList, HttpServletResponse resp, HttpServletRequest request) {
-		List<Question> questionList= JSON.parseArray(jsonList,Question.class);
+	public Msg result( @RequestBody List<Question> questionList, HttpServletResponse resp, HttpServletRequest request) {
+		//List<Question> questionList= JSON.parseArray(jsonList,Question.class);
 
 		return questionService.questionResult(questionList);
 	}

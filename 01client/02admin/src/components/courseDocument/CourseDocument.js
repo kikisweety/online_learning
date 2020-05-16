@@ -126,7 +126,6 @@ export default class CourseDocument extends React.Component {
 
   playVideo = (url, id) => {
     let source = url;
-    console.log(source, id);
     if (source == 0) {
       this.setState({
         updataVideoId: id
@@ -151,8 +150,6 @@ export default class CourseDocument extends React.Component {
   uploadVideoById = () => {
     let id = this.state.updataVideoId;
     let fileList = this.state.fileList;
-    console.log(id, this.state.fileList);
-
     net.uploadFile(
       "video/update",
       {

@@ -84,6 +84,8 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Msg update(Orders order) {
         Msg msg = new Msg();
+
+        order.setTotalPrice(order.getAmount()*order.getCommodityPrice());
         if(orderMapper.updateByPrimaryKeySelective(order)==1){
             msg.setCode(1);
             msg.setMsg("ok");

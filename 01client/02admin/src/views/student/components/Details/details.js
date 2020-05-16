@@ -58,7 +58,7 @@ class Detail extends Component {
                                 </div>
                                 <div>
                                     <span>购买数量：</span>
-                                    <InputNumber onChange={this.handleAge.bind(this)} />
+                                    <InputNumber defaultValue="1"  onChange={this.handleAge.bind(this)} />
                                 </div>
                             </div>
                             <div className="booksCar">

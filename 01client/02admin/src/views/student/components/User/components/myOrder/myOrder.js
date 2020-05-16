@@ -1,6 +1,6 @@
 import React from "react";
 import "./myOrder.css";
-import { Table, Button, Modal, message } from 'antd';
+import { Table, Button, Modal, message, InputNumber } from 'antd';
 import net from "../../../../../../utils/net"
 const { confirm } = Modal;
 export default class MyOrder extends React.Component {
@@ -10,6 +10,8 @@ export default class MyOrder extends React.Component {
             selectedRowKeys: [],
             dataSource: [],
             totalPrice: 0,
+            currentData: {},
+            number: 0,
             columns: [
                 {
                     title: '商品名称',
@@ -40,7 +42,7 @@ export default class MyOrder extends React.Component {
                     render: (text, record) => {
                         return (
                             <div>
-                                <Button style={{ background: "#43BB60", color: 'white', marginRight: 10 }}>修改</Button>
+                                <Button style={{ background: "#43BB60", color: 'white', marginRight: 10 }} onClick={this.edit.bind(this, record)}>修改</Button>
                                 <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
                             </div>
                         )
@@ -73,6 +75,21 @@ export default class MyOrder extends React.Component {
             })
         })
     };
+    onChange(e) {
+        this.setState({
+            number:e
+        })
+    }
+    edit(record) {
+        let that = this;
+        let number = record.amount;
+        this.setState({
+            number: number,
+            currentData:record
+        })
+        this.refs.editForm.style.display = "block";
+        this.refs.opacity.style.display = "block";
+    };
     delete(record) {
         let that = this;
         let id = record.id;
@@ -92,6 +109,27 @@ export default class MyOrder extends React.Component {
             okText: '确定',
             cancelText: '取消'
         })
+    };
+    update() { 
+        let that = this;
+        let id = this.state.currentData.id;
+        let amount = this.state.number;
+        let buyUser = this.state.currentData.buyUser;
+        let commodityName = this.state.currentData.commodityName;
+        let commodityPrice = this.state.currentData.commodityPrice;
+        let totalPrice = this.state.currentData.totalPrice;
+        net.uploadFile("/order/update", { id,amount, buyUser, commodityName, commodityPrice, totalPrice }, function (ob) {
+            if (ob.msg=="ok") {
+                that.getOrder();
+                that.refs.editForm.style.display = "none";
+                that.refs.opacity.style.display = "none";
+                message.success("修改成功，请点击支付！")
+            }
+        })
+    };
+    addFormNone() {
+        this.refs.editForm.style.display = "none";
+        this.refs.opacity.style.display = "none";
     }
     render() {
         const { selectedRowKeys } = this.state;
@@ -116,6 +154,24 @@ export default class MyOrder extends React.Component {
                             <div>支付方式：暂只支持微信支付</div>
                             <Button type="primary" style={{ height: 60, width: 100, marginLeft: 20, backgroundColor: '#FF8000' }}>立即支付</Button>
                         </div>
+                    </div>
+                </div>
+                <div className="opacity" ref="opacity"></div>
+                <div className="editForm" ref="editForm">
+                    <div className="editTitle">修改订单</div>
+                    <div className="flex" style={{
+                        marginTop: '20px'
+                    }}>
+                        <div>购买数量：</div>
+                        <InputNumber ref="amount" value={this.state.number} onChange={this.onChange.bind(this)} />
+                    </div>
+                    <div className="button" style={{
+                        marginTop:'20px'
+                    }}>
+                        <Button onClick={this.update.bind(this)}>提交</Button>
+                        <Button type="primary" onClick={this.addFormNone.bind(this)}>
+                            取消
+            </Button>
                     </div>
                 </div>
             </div>

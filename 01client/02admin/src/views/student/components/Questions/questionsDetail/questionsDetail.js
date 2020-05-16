@@ -11,6 +11,10 @@ class QuestionsDetail extends Component {
             value2: '',
             value3: '',
             value4: '',
+            result: 0,
+            btnStatus: true,
+            disabled: false,
+            showAnswer:false
         };
         this.list = props.location.state.questions
     }
@@ -40,8 +44,7 @@ class QuestionsDetail extends Component {
         });
 
     };
-    // /确认框/ 
-    showConfirm() {
+    getResult() {
         let that = this;
         let value1 = this.state.value1;
         if (this.list.questions[0]) {
@@ -58,21 +61,40 @@ class QuestionsDetail extends Component {
         let value4 = this.state.value4;
         if (this.list.questions[3]) {
             var answer4 = this.list.questions[3].answer
+        };
+        let questionList = [value1, value2, value3, value4];
+        let answerList = [answer1, answer2, answer3, answer4];
+        let right = 0;
+        for (let i = 0; i < questionList.length; i++) {
+            if (questionList[i] == answerList[i]) {
+                right++;
+            }
         }
-        var jsonList = [
-            { value: value1, answer: answer1 },
-            { value: value2, answer: answer2 },
-            { value: value3, answer: answer3 },
-            { value: value4, answer: answer4 }
-        ]
+        let result = right * 25;
+        setTimeout(() => {
+            that.setState({
+                result: result
+            })
+        }, 0);
+    };
+    // /确认框/ 
+    showConfirm() {
+        let that = this;
         confirm({
             title: '您是否确定交卷？',
             onOk() {
-                net.post("question/result", { jsonList}, function (params) {
-                    console.log(params);
-                })
-                message.warning("请将所有试题完成！")
-                that.refs.resultBox.style.display = "block";
+                if (that.state.value1 != '' && that.state.value2 != '' && that.state.value3 != '' && that.state.value4 != '') { 
+                    that.setState({
+                        btnStatus: false,
+                        disabled: true,
+                        showAnswer:true
+                    })
+                    that.getResult();
+                    that.refs.resultBox.style.display = "block";
+                    that.refs.opacity.style.display = "block";
+                } else { 
+                    message.warning("请将所有试题完成！")
+                }
             },
             onCancel() { },
             okText: '确定',
@@ -81,6 +103,7 @@ class QuestionsDetail extends Component {
     };
     closeResultBox() {
         this.refs.resultBox.style.display = "none";
+        this.refs.opacity.style.display = "none"
     }
     render() {
         const radioStyle = {
@@ -100,7 +123,7 @@ class QuestionsDetail extends Component {
                     <div className="chaptersTitle">
                         <div className="questionsChapter">{this.list.name}</div>
                         <div style={{ fontSize: 16, padding: 10 }}>单项选择题</div>
-                        <div style={{ fontSize: 12, padding: 10 }}>每道题25分，总分100</div>
+                        <div style={{ fontSize: 12, padding: 10 }}>每道题25分,答错不计分</div>
                     </div>
                     {
                         this.list.questions[0] ? (
@@ -113,12 +136,15 @@ class QuestionsDetail extends Component {
                                             name="radio checked"
                                             onChange={this.onChange1.bind(this)}
                                         >
-                                            <Radio value={this.list.questions[0].textA} style={radioStyle}>A、{this.list.questions[0].textA}</Radio>
-                                            <Radio value={this.list.questions[0].textB} style={radioStyle}>B、{this.list.questions[0].textB}</Radio>
-                                            <Radio value={this.list.questions[0].textC} style={radioStyle}>C、{this.list.questions[0].textC}</Radio>
-                                            <Radio value={this.list.questions[0].textD} style={radioStyle}>D、{this.list.questions[0].textD}</Radio>
+                                            <Radio disabled={this.state.disabled}  value={this.list.questions[0].textA} style={radioStyle}>A、{this.list.questions[0].textA}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[0].textB} style={radioStyle}>B、{this.list.questions[0].textB}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[0].textC} style={radioStyle}>C、{this.list.questions[0].textC}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[0].textD} style={radioStyle}>D、{this.list.questions[0].textD}</Radio>
                                         </Radio.Group>
                                     </div>
+                                    {
+                                        this.state.showAnswer === false ? '' : <div style={{marginTop:'10px',fontSize:'16px'}}>正确答案：{this.list.questions[0].answer}</div>
+                                    }
                                 </div>
                             </div>
                         ) : null
@@ -134,12 +160,15 @@ class QuestionsDetail extends Component {
                                             name="radio checked"
                                             onChange={this.onChange2}
                                         >
-                                            <Radio value={this.list.questions[1].textA} style={radioStyle}>A、{this.list.questions[1].textA}</Radio>
-                                            <Radio value={this.list.questions[1].textB} style={radioStyle}>B、{this.list.questions[1].textB}</Radio>
-                                            <Radio value={this.list.questions[1].textC} style={radioStyle}>C、{this.list.questions[1].textC}</Radio>
-                                            <Radio value={this.list.questions[1].textD} style={radioStyle}>D、{this.list.questions[1].textD}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[1].textA} style={radioStyle}>A、{this.list.questions[1].textA}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[1].textB} style={radioStyle}>B、{this.list.questions[1].textB}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[1].textC} style={radioStyle}>C、{this.list.questions[1].textC}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[1].textD} style={radioStyle}>D、{this.list.questions[1].textD}</Radio>
                                         </Radio.Group>
                                     </div>
+                                    {
+                                        this.state.showAnswer === false ? '' : <div style={{ marginTop: '10px', fontSize: '16px' }}>正确答案：{this.list.questions[1].answer}</div>
+                                    }
                                 </div>
                             </div>
                         ) : null
@@ -155,12 +184,15 @@ class QuestionsDetail extends Component {
                                             name="radio checked"
                                             onChange={this.onChange3}
                                         >
-                                            <Radio value={this.list.questions[2].textA} style={radioStyle}>A、{this.list.questions[2].textA}</Radio>
-                                            <Radio value={this.list.questions[2].textB} style={radioStyle}>B、{this.list.questions[2].textB}</Radio>
-                                            <Radio value={this.list.questions[2].textC} style={radioStyle}>C、{this.list.questions[2].textC}</Radio>
-                                            <Radio value={this.list.questions[2].textD} style={radioStyle}>D、{this.list.questions[2].textD}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[2].textA} style={radioStyle}>A、{this.list.questions[2].textA}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[2].textB} style={radioStyle}>B、{this.list.questions[2].textB}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[2].textC} style={radioStyle}>C、{this.list.questions[2].textC}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[2].textD} style={radioStyle}>D、{this.list.questions[2].textD}</Radio>
                                         </Radio.Group>
                                     </div>
+                                    {
+                                        this.state.showAnswer === false ? '' : <div style={{ marginTop: '10px', fontSize: '16px' }}>正确答案：{this.list.questions[2].answer}</div>
+                                    }
                                 </div>
                             </div>
 
@@ -177,24 +209,30 @@ class QuestionsDetail extends Component {
                                             name="radio checked"
                                             onChange={this.onChange4}
                                         >
-                                            <Radio value={this.list.questions[3].textA} style={radioStyle}>A、{this.list.questions[3].textA}</Radio>
-                                            <Radio value={this.list.questions[3].textB} style={radioStyle}>B、{this.list.questions[3].textB}</Radio>
-                                            <Radio value={this.list.questions[3].textC} style={radioStyle}>C、{this.list.questions[3].textC}</Radio>
-                                            <Radio value={this.list.questions[3].textD} style={radioStyle}>D、{this.list.questions[3].textD}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[3].textA} style={radioStyle}>A、{this.list.questions[3].textA}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[3].textB} style={radioStyle}>B、{this.list.questions[3].textB}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[3].textC} style={radioStyle}>C、{this.list.questions[3].textC}</Radio>
+                                            <Radio disabled={this.state.disabled} value={this.list.questions[3].textD} style={radioStyle}>D、{this.list.questions[3].textD}</Radio>
                                         </Radio.Group>
                                     </div>
+                                    {
+                                        this.state.showAnswer === false ? '' : <div style={{ marginTop: '10px', fontSize: '16px' }}>正确答案：{this.list.questions[3].answer}</div>
+                                    }
                                 </div>
                             </div>
 
                         ) : null
                     }
                     <div className="submit">
-                        <Button type="primary" shape="round" onClick={this.showConfirm.bind(this)}>交卷</Button>
+                        <div className="opacity" ref="opacity"></div>
+                        {
+                            this.state.btnStatus===true?<Button type="primary" shape="round" onClick={this.showConfirm.bind(this)} className="submitBtn" ref="submitBtn">交卷</Button>:''
+                        }
                         <div className="resultBox" ref='resultBox'>
                             <img src="/imgs/取消.png" onClick={this.closeResultBox.bind(this)} style={{ position: 'absolute', right: 0, cursor: 'pointer' }}></img>
                             <div className="resultTitle">练习报告</div>
-                            <Progress type="circle" percent={75} />
-                            <div className="resultTotal">总分：</div>
+                            <Progress type="circle" percent={this.state.result} />
+                            <div className="resultTotal">总分：{this.state.result}</div>
                         </div>
                     </div>
                 </div>

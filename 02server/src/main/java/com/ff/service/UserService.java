@@ -9,7 +9,7 @@ public interface UserService {
 
      Msg delete(Integer userId);
 
-    Msg update(Integer userId);
+    Msg update(User user);
 
 
     Msg userUpdate(Integer userId);

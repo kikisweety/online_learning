@@ -170,5 +170,8 @@
         select  * from courses
         where course_type=#{courseType}
     </select>
-
+	<select id="techerCourses" resultMap="courseAndQuestionsMap">
+        select  * from courses
+        where teacher_id=#{teacherId}
+    </select>
 </mapper>

@@ -7,6 +7,7 @@ import com.ff.util.MD5Utils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,9 +32,11 @@ public class UserController {
     }
     @RequestMapping("user/update")
     @ResponseBody
-    public Msg userUpdate(User user,HttpServletResponse resp, HttpServletRequest request){
-        user.setPassword(MD5Utils.encrypt(user.getPassword()));
-        return userService.update(user.getUserId());
+    public Msg userUpdate(@RequestBody  User user, HttpServletResponse resp, HttpServletRequest request){
+        if(user.getPassword()!=null) {
+            user.setPassword(MD5Utils.encrypt(user.getPassword()));
+        }
+        return userService.update(user);
 
     }
     @RequestMapping("user/all")

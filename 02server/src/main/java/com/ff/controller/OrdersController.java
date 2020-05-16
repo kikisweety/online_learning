@@ -18,24 +18,24 @@ import java.text.ParseException;
 public class OrdersController {
     @Autowired
     private OrdersService orderService;
-    @RequestMapping("order/selectByName")
+    @RequestMapping("/order/selectByName")
     @ResponseBody
     public Msg selectByUserName(User user){
 
         return orderService.selectByUserName(user.getName());
     }
-    @RequestMapping("order/all")
+    @RequestMapping("/order/all")
     @ResponseBody
     public Msg selectAll(){
         return orderService.selectAll();
     }
-    @RequestMapping("order/delete")
+    @RequestMapping("/order/delete")
     @ResponseBody
     public Msg delete(@Param("id")Integer id){
 
         return orderService.delete(id);
     }
-    @RequestMapping("order/insert")
+    @RequestMapping("/order/insert")
     @ResponseBody
     private Msg insert(User user, Commodity commodity, @Param("number")int number) throws ParseException {
 

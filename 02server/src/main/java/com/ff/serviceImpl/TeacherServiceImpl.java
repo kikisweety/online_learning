@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ff.dao.CourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	TeacherMapper teacherMapper;
+	@Autowired
+	CourseMapper courseMapper;
 
 	@Override
 	public Msg selectTeachers() {
@@ -100,7 +103,18 @@ public class TeacherServiceImpl implements TeacherService {
 		return msg;
 	}
 
+	@Override
+	public Msg techerCourses(String teacherName) {
+		Msg msg=new Msg();
+		Teacher teacher = teacherMapper.selectTeacher(teacherName);
 
+		if(courseMapper.techerCourses(teacher.getId())!=null){
+			msg.setObject(courseMapper.techerCourses(teacher.getId()));
+			msg.setCode(1);
+			msg.setMsg("成功");
+		}
+		return msg;
+	}
 
 
 }

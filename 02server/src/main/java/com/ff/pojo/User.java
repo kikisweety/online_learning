@@ -20,8 +20,9 @@ public class User  {
 
    private  Date createTime;
 
-    Role roles;
-    UserRole userRole;
+   private Role roles;
+
+   private   UserRole userRole;
 
     public Integer getUserId() {
         return userId;

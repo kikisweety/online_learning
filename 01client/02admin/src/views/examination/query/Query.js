@@ -1,7 +1,7 @@
 import React from "react";
 import "./Query.css";
 import net from "../../../utils/net";
-import { Button,  Table,  TreeSelect,Modal } from "antd";
+import { Button, Table, TreeSelect, Modal } from "antd";
 const { TreeNode } = TreeSelect;
 const { confirm } = Modal;
 const rowSelection = {
@@ -66,7 +66,7 @@ export default class ExaminationQuery extends React.Component {
           render: (text, record) => {
             return (
               <div>
-                <Button style={{ background: "#43BB60", color: 'white', marginRight: 10 }}>修改</Button>
+                <Button style={{ background: "#43BB60", color: 'white', marginRight: 10 }} onClick={this.toBankAdd.bind(this, record)}>修改</Button>
                 <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
               </div>
             )
@@ -96,8 +96,8 @@ export default class ExaminationQuery extends React.Component {
       })
     })
   };
-  toBankAdd() {
-    this.props.history.push(`/home/examination/add`);
+  toBankAdd(record) {
+    this.props.history.push({ pathname: `/home/examination/add`, state: { examList: record } })
   };
   onChange = value => {
     this.setState({ value });
@@ -117,7 +117,7 @@ export default class ExaminationQuery extends React.Component {
   };
   onReset() {
     this.getQuestions();
-   };
+  };
   delete(record) {
     let that = this;
     let id = record.id;
@@ -188,6 +188,7 @@ export default class ExaminationQuery extends React.Component {
         {/* 题库表单 */}
         <div className="table-Bank">
           <Table
+            rowKey={record => record.id}
             rowSelection={rowSelection}
             columns={this.state.columns}
             dataSource={this.state.allQuestions}

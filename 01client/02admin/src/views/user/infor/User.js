@@ -2,7 +2,7 @@ import React from "react";
 import "./User.css";
 import net from "../../../utils/net";
 import {
-  Button, Table, Select, Form, Input, InputNumber, Radio,Modal
+  Button, Table, Select, Popconfirm, Form, Input, InputNumber, Radio, Modal
 } from "antd";
 const layout = {
   labelCol: { span: 5 },
@@ -14,23 +14,26 @@ export default class User extends React.Component {
     super();
     this.state = {
       age: null,
-      userId:"",
+      userId: "",
       columns: [
         {
-          title: '姓名',
+          title: '用户名',
           dataIndex: 'name',
           key: 'name',
+          editable: true,
           render: text => <a>{text}</a>,
         },
         {
           title: '年龄',
           dataIndex: 'age',
-          key: 'age'
+          key: 'age',
+          editable: true,
         },
         {
           title: '性别',
           dataIndex: 'sex',
           key: 'sex',
+          editable: true,
           render: text => {
             if (text == 'woman') {
               return "女";
@@ -40,20 +43,21 @@ export default class User extends React.Component {
           }
         },
         {
-          title: '昵称',
+          title: '登录名',
           dataIndex: 'loginName',
-          key: 'loginName'
+          key: 'loginName',
+          editable: true,
         },
         {
           title: '操作',
           dataIndex: 'action',
           key: 'action',
-          render: (text,record) => {
+          render: (text, record) => {
             var that = this;
             return (
-              <div>
-                <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
-                <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this,record.userId)}>删除</Button>
+                <div>
+                  <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} onClick={this.update.bind(this, record)} >修改</Button>
+                  <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record.userId)}>删除</Button>
               </div>
             )
           }
@@ -61,7 +65,7 @@ export default class User extends React.Component {
       ],
       allUser: []
     };
-  }
+  };
   displayAddForm() {
     this.refs.userForm.style.display = "block";
     this.refs.opacity.style.display = "block";
@@ -70,21 +74,21 @@ export default class User extends React.Component {
     this.refs.userForm.style.display = "none";
     this.refs.opacity.style.display = "none";
   }
-  handleAge(e) { 
+  handleAge(e) {
     this.setState({
-      age:e
+      age: e
     })
   }
-  componentDidMount() { 
+  componentDidMount() {
     let that = this;
-    net.get("user/all", {}, function (ob) { 
+    net.get("user/all", {}, function (ob) {
       let userList = ob.data.object;
       that.setState({
-        allUser:userList
+        allUser: userList
       })
     })
   }
-  upload() { 
+  upload() {
     let name = this.refs.inputName.state.value;
     let age = this.state.age;
     let sex = this.refs.sex.state.value;
@@ -102,6 +106,9 @@ export default class User extends React.Component {
       }
     )
   }
+  update(record) {
+
+   }
   delete(userId) {
     confirm({
       title: '提示',
@@ -115,10 +122,10 @@ export default class User extends React.Component {
         )
       },
       onCancel() { },
-      okText:'确定',
-      cancelText:'取消'
+      okText: '确定',
+      cancelText: '取消'
     })
-   }
+  }
   render() {
     return (
       <div className="addView">
@@ -164,7 +171,7 @@ export default class User extends React.Component {
               <Input placeholder="请输入昵称" ref="inputLoginName" />
             </Form.Item>
             <Form.Item name="button" className="formButton">
-              <Button onClick={this.upload.bind(this)} type="primary" style={{marginRight:20}}>提交</Button>
+              <Button onClick={this.upload.bind(this)} type="primary" style={{ marginRight: 20 }}>提交</Button>
               <Button type="primary"
                 onClick={this.closeForm.bind(this)}
               >

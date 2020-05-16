@@ -20,17 +20,18 @@ export default class UserInfo extends React.Component {
         };
     };
     componentDidMount() { 
-        var user = JSON.parse(window.localStorage.getItem("user"));
+        let user = JSON.parse(window.localStorage.getItem("user"));
         let userList = user.object;
         let name = user.object.name;
         let age = user.object.age;
         let sex = user.object.sex;
+        let password = user.object.password;
         this.setState({
             userList: userList,
             name: name,
             age: age,
             sex:sex,
-            password:'xxxxxxx'
+            password:password
         })
     };
     onChangeName(e) {
@@ -52,13 +53,11 @@ export default class UserInfo extends React.Component {
         let that = this;
         let user = JSON.parse(window.localStorage.getItem("user"));
         let userList = user.object;
-        console.log(userList);
         let userId = userList.userId;
         let name = this.state.name;
         let age = this.state.age;
         let sex = this.refs.sex.state.value;
         let password = this.state.password;
-        console.log(userId,name,age,sex,password);
         net.uploadFile("user/update", {  userId, name, age, sex, password }, function (ob) {
             console.log(ob);
         })

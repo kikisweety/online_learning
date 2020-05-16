@@ -12,12 +12,13 @@ export default class MyUser extends React.Component {
         super(props);
         this.state = {
             collapsed: false,
-            role: 1
         }
     }
     render() {
         let teacherDom = null;
-        if (this.state.role === 1 && this.state.role != 2) {
+        let userList = JSON.parse(window.localStorage.getItem("user"));
+        let user = userList.object;
+        if (user.userRole.roleId !=3 ) {
             teacherDom = <div className="userContainer">
                 <div className="userLeft">
                     <Menu theme="light" mode="inline" defaultSelectedKeys={['1']} style={{ height: '100%' }}>
@@ -56,7 +57,7 @@ export default class MyUser extends React.Component {
             </div>
         }
         let studentDom = null
-        if (this.state.role === 2 && this.state.role !== 1) {
+        if (user.userRole.roleId === 3 ) {
             studentDom = <div className="userContainer">
                 <div className="userLeft">
                     <Menu theme="light" mode="inline" defaultSelectedKeys={['1']} style={{ height: '100%' }}>

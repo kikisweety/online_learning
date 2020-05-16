@@ -36,7 +36,11 @@ export default class Add extends React.Component {
       teacherData: [],
       courses: [],
       isLoading: false,
-      columns:[
+      currentData: {},
+      isAdd:true,
+      name: '',
+      type: '',
+      columns: [
         {
           title: "姓名",
           dataIndex: "name",
@@ -68,7 +72,7 @@ export default class Add extends React.Component {
           render: (text, record) => {
             return (
               <div>
-                <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
+                <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} onClick={this.edit.bind(this, record)}>修改</Button>
                 <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
               </div>
             )
@@ -89,7 +93,7 @@ export default class Add extends React.Component {
     }
 
     let fileList = this.state.fileList;
-    
+
     fileList.push(file);
     this.setState({ fileList: fileList });
     return isJpgOrPng && isLt2M;
@@ -98,6 +102,9 @@ export default class Add extends React.Component {
     this.setState({ subject: value });
   }
   displayAddForm() {
+    this.setState({
+      isAdd: true
+    })
     this.refs.addform.style.display = "block";
     this.refs.opacity.style.display = "block";
   }
@@ -107,7 +114,7 @@ export default class Add extends React.Component {
   }
   upload = e => {
     this.setState({
-      isLoading:true
+      isLoading: true
     })
     //获得姓名
     let name = this.refs.inputName.state.value; //姓名
@@ -139,13 +146,13 @@ export default class Add extends React.Component {
         data: res.results
       });
     });
-    net.get("courses/and/chapters", {},function (params) {
+    net.get("courses/and/chapters", {}, function (params) {
       that.setState({
-        courses:params.data.object
+        courses: params.data.object
       })
     })
   };
-  getTeachers() { 
+  getTeachers() {
     let that = this;
     net.get("teachers", {}, function (ob) {
       let teacherdata = ob.data.object;
@@ -199,12 +206,44 @@ export default class Add extends React.Component {
       );
     }
   };
+  edit(record) {
+    let name = record.name;
+    let type = record.tType;
+    let introduceText = record.introduce;
+    let imageUrl = record.tkey;
+    this.setState({
+      isAdd:false,
+      name: name,
+      type: type,
+      introduceText: introduceText,
+      imageUrl:imageUrl,
+      currentData: record,
+    })
+    this.refs.addform.style.display = "block";
+    this.refs.opacity.style.display = "block"
+  };
+  changeName(e) {
+    this.setState({
+      name: e.target.value
+    })
+  };
+  changeType(e) {
+    this.setState({
+      type: e.target.value
+    })
+  };
   handleInfo = e => {
     this.setState({
       introduceText: e.target.value
     });
   };
-  delete(record) { 
+  update() { 
+    let that = this;
+    let id = this.state.currentData.id;
+    console.log(this.state.currentData);
+    
+  }
+  delete(record) {
     let that = this;
     let id = record.id;
     confirm({
@@ -263,14 +302,14 @@ export default class Add extends React.Component {
         </div>
         {/* 老师添加 ******************************/}
         <div className="addForm" ref="addform">
-          <div className="addTeacherTitle">老师添加</div>
+          {this.state.isAdd === true ? (<div className="addTeacherTitle">老师添加</div>) : (<div className="addTeacherTitle">老师修改</div>) }
           <div className="flex">
             <div>姓名：</div>
-            <Input placeholder="请输入姓名" className="input" ref="inputName" />
+            <Input value={this.state.name} onChange={this.changeName.bind(this)} placeholder="请输入姓名" className="input" ref="inputName" />
           </div>
           <div className="flex">
             <div>职称：</div>
-            <Input placeholder="请输入职称" className="input" ref="inputType" />
+            <Input value={this.state.type} onChange={this.changeType.bind(this)} placeholder="请输入职称" className="input" ref="inputType" />
           </div>
           <div className="flex">
             <div>选择课程：</div>
@@ -280,7 +319,7 @@ export default class Add extends React.Component {
               onChange={this.handleChange.bind(this)}
               ref="subject"
             >
-              {this.state.courses.map((item) => { 
+              {this.state.courses.map((item) => {
                 return (
                   <Option value={item.name} key={item.id}>{item.name}</Option>
                 )
@@ -294,11 +333,11 @@ export default class Add extends React.Component {
               ref="inputIntroduce"
               value={this.state.introduceText}
               onChange={this.handleInfo}
-              style={{width:'80%',height:'100px'}}
+              style={{ width: '80%', height: '100px' }}
             />
           </div>
           <div className="flex">
-            <div style={{width:50}}>照片:</div>
+            <div style={{ width: 50 }}>照片:</div>
             <Upload
               ref="uploadImg"
               name="avatar"
@@ -310,7 +349,7 @@ export default class Add extends React.Component {
               onChange={this.handleChangeimg}
             >
               {imageUrl ? (
-                <img src={imageUrl} alt="avatar" style={{ width:70 }} />
+                <img src={imageUrl} alt="avatar" style={{ width: 70 }} />
               ) : (
                   uploadButton
                 )}
@@ -318,7 +357,7 @@ export default class Add extends React.Component {
           </div>
 
           <div className="button">
-            <Button onClick={this.upload}>提交</Button>
+            {this.state.isAdd === true ? (<Button onClick={this.upload.bind(this)}>提交</Button>) : (<Button onClick={this.update.bind(this)}>保存</Button>)}
             <Button type="primary" onClick={this.addFormNone.bind(this)}>
               取消
             </Button>

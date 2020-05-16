@@ -15,7 +15,7 @@ function displayRender(label) {
 class ExaminationAdd extends React.Component {
   constructor(props) {
     super(props);
-    // this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    // this.examList = props.location.state.examList;
     this.state = {
       data: [],
       chapterId: -1,
@@ -132,20 +132,15 @@ class ExaminationAdd extends React.Component {
               </TreeSelect>
             </Form.Item>
             <Form.Item label="题目">
-
               <Input ref="title" placeholder="" />
-
             </Form.Item>
-
             <Radio.Group
               name="radiogroup"
               defaultValue={1}
               className="bankSelectcontent"
             >
               <Form.Item label="选项A" >
-
                 <Input ref="textA" placeholder="" />
-
               </Form.Item>
               <div className="readySelect">
                 <Radio value="textA" onChange={(e) => this.getValue(e)}>正确答案</Radio>

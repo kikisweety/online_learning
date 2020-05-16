@@ -1,4 +1,5 @@
 import React from "react";
+import './courseInfo.css';
 import net from "../../../../../../utils/net";
 import { Form, Input, Button, Table, Upload, message, Icon, Select } from 'antd';
 const { Option } = Select;
@@ -14,6 +15,7 @@ export default class CouresInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            dataSource:[],
             columns :[
                 {
                     title: '课程名称',
@@ -47,11 +49,24 @@ export default class CouresInfo extends React.Component {
         }
     }
     showForm() {
-        this.refs.form.style.display = "block"
-    }
+        this.refs.addForm.style.display = "block"
+    };
     closeForm() {
-        this.refs.form.style.display = "none"
-    }
+        this.refs.addForm.style.display = "none"
+    };
+    componentDidMount() { 
+        this.getCourses();
+    };
+    getCourses() { 
+        let that = this;
+        let user = JSON.parse(window.localStorage.getItem("user"));
+        let name = user.object.name;
+        net.get("courses/selectTeacher", {name},function (ob) {
+            that.setState({
+                dataSource:ob.object
+            })
+        })
+    };
     expandedRowRender = record => {
         const expendColumns = [
             { title: "视频名称", dataIndex: "name", key: "name" },
@@ -186,17 +201,19 @@ export default class CouresInfo extends React.Component {
                 <div className="basicTitle">课程信息</div>
                 <div className="basicBox">
                     <Table
-                        dataSource={dataSource}
+                        dataSource={this.state.dataSource}
                         columns={this.state.columns}
                         pagination={false}
                         scroll={{ y: 800 }}
                         expandedRowRender={this.expandedRowRender}
                     />
                     <Button onClick={this.showForm.bind(this)} style={{ margin: '20px' }}>添加</Button>
-                    <div className="form" ref="form">
+                    <div className="addForm teacherForm" ref="addForm">
+                        <div className="addTeacherTitle">老师添加</div>
                         <Form
                             name="nest-messages"
                             {...layout}
+                            style={{ marginTop: '10px' }}
                         >
                             <Form.Item name='name' label="课程名称" rules={[{ required: true }]}>
                                 <Input />

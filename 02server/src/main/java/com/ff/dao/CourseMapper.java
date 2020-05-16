@@ -70,4 +70,6 @@ public interface CourseMapper {
     int deleteById(int id);
 
     int update(Course course);
+
+	List<Course> techerCourses(int teacherId);
 }

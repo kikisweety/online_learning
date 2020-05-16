@@ -2,6 +2,7 @@ package com.ff.dao;
 
 import java.util.List;
 
+import com.ff.pojo.Course;
 import com.ff.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import com.ff.pojo.Teacher;
@@ -37,4 +38,6 @@ public interface TeacherMapper {
     Teacher selectTeacherById(int teacherId);
 
     int update(Teacher teacher);
+
+    Course techerCourses(String teacherName);
 }

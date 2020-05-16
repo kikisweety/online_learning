@@ -49,10 +49,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Msg update(Integer userId) {
+    public Msg update(User user) {
         Msg msg = new Msg();
 
-        int n =userMapper.updateByPrimaryKeySelective(userId);
+        int n =userMapper.updateByPrimaryKeySelective(user);
         if(n>=1){
             msg.setCode(1);
             msg.setMsg("操作成功!");

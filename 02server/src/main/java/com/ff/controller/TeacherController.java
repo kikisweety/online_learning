@@ -69,4 +69,12 @@ public class TeacherController {
 
 		return teacherService.techerUpdate(teacher);
 	}
+	@ResponseBody
+	@RequestMapping( value = "techerCourse")
+	public Msg techerCourses(@Param("name") String name, HttpServletRequest respone, HttpServletRequest request){
+		//System.out.println(teacher);
+
+
+		return teacherService.techerCourses(name);
+	}
 }

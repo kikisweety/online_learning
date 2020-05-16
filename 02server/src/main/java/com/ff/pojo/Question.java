@@ -48,9 +48,7 @@ public class Question {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Question(int id, String title, int chapterId, String textA, String textB, String textC, String textD,
-			String answer) {
-		super();
+	public Question(int id, String title, int chapterId, String textA, String textB, String textC, String textD, String value, String answer) {
 		this.id = id;
 		this.title = title;
 		this.chapterId = chapterId;
@@ -58,6 +56,7 @@ public class Question {
 		this.textB = textB;
 		this.textC = textC;
 		this.textD = textD;
+		this.value = value;
 		this.answer = answer;
 	}
 
@@ -125,4 +124,11 @@ public class Question {
 		this.answer = answer;
 	}
 
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

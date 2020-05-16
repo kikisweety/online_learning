@@ -13,7 +13,7 @@ public interface UserMapper {
 
     int deleteByPrimaryKey(Integer userId);
 
-    int updateByPrimaryKeySelective(Integer userId);
+    int updateByPrimaryKeySelective(User user);
 
     int insertSelective(User user);
 

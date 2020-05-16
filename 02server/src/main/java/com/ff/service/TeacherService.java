@@ -30,4 +30,6 @@ public interface TeacherService {
 	Msg delTeacher(Integer id);
 
     Msg techerUpdate(Teacher teacher);
+
+    Msg techerCourses(String teacherName);
 }

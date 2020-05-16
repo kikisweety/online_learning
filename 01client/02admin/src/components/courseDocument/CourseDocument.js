@@ -1,11 +1,11 @@
 import React from "react";
 import "./CourseDocument.css";
-import { Icon, Button, Table, Select, Input, Upload, TreeSelect, Badge, Menu, Dropdown } from "antd";
+import { Icon, Button, Table, Select, Input, Upload, TreeSelect,Modal, message } from "antd";
 import net from "../../utils/net";
 import { Player } from "video-react";
 const { Option } = Select;
 const { TreeNode } = TreeSelect;
-
+const { confirm } = Modal;
 export default class CourseDocument extends React.Component {
   constructor() {
     super();
@@ -43,15 +43,17 @@ export default class CourseDocument extends React.Component {
   };
 
   componentDidMount() {
+    this.getCourses();
+    this.handleChange();
+  }
+  getCourses() { 
     let that = this;
     net.get("courses/and/chapters", {}, function (ob) {
       that.setState({
         allLeaf: ob.data.object
       });
     });
-    this.handleChange();
   }
-
   expandedRowRender = (record) => {
     const columns = [
       { title: "视频名称", dataIndex: "name", key: "name" },
@@ -160,7 +162,6 @@ export default class CourseDocument extends React.Component {
         console.log(ob);
       }
     );
-
   }
   onChange = e => {
     this.setState({
@@ -192,9 +193,9 @@ export default class CourseDocument extends React.Component {
       },
       function (ob) {
         if (ob.code == -1) {
-          alert("课程视频上传失败");
+          message.warning("课程视频上传失败");
         } else {
-          alert("课程视频上传成功");
+          message.warning("课程视频上传成功");
           that.refs.background.style.display = "none";
           that.refs.addFiles.style.display = "none";
         }
@@ -205,8 +206,24 @@ export default class CourseDocument extends React.Component {
     );
   };
   delete(record) {
-    console.log(record);
-    
+    let that = this;
+    let id = record.id;
+    confirm({
+      title: '提示',
+      content: '确定删除吗？',
+      onOk() {
+        return net.get(
+          "video/delete", { id: id },
+          function (res) {
+            message.success("成功删除视频！");
+            // that.getOrder();
+          }
+        )
+      },
+      onCancel() { },
+      okText: '确定',
+      cancelText: '取消'
+    })
    };
   removeFile = file => {
     //获得文件的数据
@@ -317,7 +334,6 @@ export default class CourseDocument extends React.Component {
         dataIndex: "chapters",
         key: "chapters",
         render: chapters => {
-          // console.log(chapters);
           if (chapters.length < 1) {
             return;
           }

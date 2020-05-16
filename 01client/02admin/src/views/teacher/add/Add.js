@@ -115,19 +115,18 @@ export default class Add extends React.Component {
     let subject = this.state.subject; //科目
     let introduce = this.refs.inputIntroduce.props.value; //介绍
     let fileList = this.state.fileList;
-    console.log(fileList);
-    
     let that = this;
     net.uploadFile(
       "teacherAdd",
       { name: name, introduce: introduce, files: fileList, tType: t_type },
       function (ob) {
         if (ob.code == -1) {
-          alert("上传失败");
+          message.warning("上传失败");
         } else {
-          alert("上传成功");
+          message.success("上传成功");
           that.refs.addform.style.display = "none";
           that.refs.opacity.style.display = "none";
+          that.getTeachers();
         }
       }
     );

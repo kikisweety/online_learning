@@ -89,9 +89,9 @@ export default class Commodity extends React.Component {
         if (!isJpgOrPng) {
             message.error("你只能传图片格式为JPG/PNG!");
         }
-        let fileList1 = this.state.fileList1;
-        fileList1.push(file);
-        this.setState({ fileList1: fileList1 });
+        let fileList = this.state.fileList;
+        fileList.push(file);
+        this.setState({ fileList: fileList });
         return isJpgOrPng;
     }
     handleChangeimg = info => {
@@ -125,17 +125,18 @@ export default class Commodity extends React.Component {
     };
     upload() {
         let commodityName = this.refs.inputName.state.value;
-        let url = this.state.fileList1;
         let commodityPrice = this.state.price;
         let amount = this.state.amount;
-        // let commodityDetails = this.state.fileList2;
         let fileList = this.state.fileList;
-        // console.log(url, commodityDetails);
-        
         let that = this;
-        net.uploadFile("commodity/insert", { files: fileList},
+        net.uploadFile("commodity/insert", { commodityName: commodityName , commodityPrice:commodityPrice, amount:amount, files: fileList},
             function (ob) {
-                console.log(ob);
+                if (ob.code==1) {
+                    that.refs.commodityForm.style.display = "none";
+                    that.refs.opacity.style.display = "none";
+                    message.success("添加商品成功！！");
+                    that.getCommodity();
+                }
         })
     };
     componentDidMount() {

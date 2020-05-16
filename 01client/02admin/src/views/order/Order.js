@@ -1,7 +1,7 @@
 import React from "react";
 import "./Order.css";
 import {
-    Button, Table, Upload, Input, Select,Modal
+    Button, Table, Upload, Input, Select,Modal, message
 } from "antd";
 import net from "../../utils/net";
 const { confirm } = Modal;
@@ -62,6 +62,9 @@ export default class Order extends React.Component {
         this.refs.userForm.style.display = "block"
     }
     componentDidMount() {
+        this.getOrder();
+    };
+    getOrder() {
         let that = this;
         net.get("order/all", {},function (ob) {
             let allOrder = ob.data.object;
@@ -70,11 +73,10 @@ export default class Order extends React.Component {
             })
             
         })
-    };
+     };
     delete(record) {
         let that = this;
         let id = record.id;
-        console.log(id);
         confirm({
             title: '提示',
             content: '确定删除吗？',
@@ -82,7 +84,8 @@ export default class Order extends React.Component {
                 return net.get(
                     "order/delete", { id: id },
                     function (res) {
-                        console.log(res);
+                        message.success("删除订单成功！");
+                        that.getOrder();
                     }
                 )
             },

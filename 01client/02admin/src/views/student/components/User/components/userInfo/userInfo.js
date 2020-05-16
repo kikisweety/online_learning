@@ -1,6 +1,7 @@
 import React from 'react'
 import "./userInfo.css";
 import { Form, Input, Button, Checkbox, InputNumber, Radio } from 'antd';
+import net from '../../../../../../utils/net';
 const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 16 },
@@ -15,16 +16,15 @@ export default class UserInfo extends React.Component {
             name: '',
             age: 0,
             sex: 'man',
-            password:''
-        }
+            password: ''
+        };
     };
     componentDidMount() { 
-        let user = JSON.parse(window.localStorage.getItem("user"));
+        var user = JSON.parse(window.localStorage.getItem("user"));
         let userList = user.object;
         let name = user.object.name;
         let age = user.object.age;
         let sex = user.object.sex;
-        let password = user.object.password;
         this.setState({
             userList: userList,
             name: name,
@@ -32,28 +32,35 @@ export default class UserInfo extends React.Component {
             sex:sex,
             password:'xxxxxxx'
         })
-        console.log(userList);
-        
     };
     onChangeName(e) {
         this.setState({
             name:e.target.value
         })
-        console.log(this.refs.name.state.value);
     };
     onChangeAge(value) { 
         this.setState({
             age:value
         })
     };
-    onChangeSex(value) { 
-        this.setState({
-            sex:value
-        })
-    };
     onChangePassword(e) { 
         this.setState({
             password:e.target.value
+        })
+    };
+    update() { 
+        let that = this;
+        let user = JSON.parse(window.localStorage.getItem("user"));
+        let userList = user.object;
+        console.log(userList);
+        let userId = userList.userId;
+        let name = this.state.name;
+        let age = this.state.age;
+        let sex = this.refs.sex.state.value;
+        let password = this.state.password;
+        console.log(userId,name,age,sex,password);
+        net.uploadFile("user/update", {  userId, name, age, sex, password }, function (ob) {
+            console.log(ob);
         })
     }
     render() {
@@ -72,7 +79,7 @@ export default class UserInfo extends React.Component {
                             <InputNumber value={this.state.age} onChange={this.onChangeAge.bind(this)}/>
                         </Form.Item>
                         <Form.Item name="radio-button" label="性别">
-                            <Radio.Group value={this.state.sex} onChange={this.onChangeSex.bind(this)}>
+                            <Radio.Group defaultValue={this.state.sex} ref="sex">
                                 <Radio.Button value="man">男</Radio.Button>
                                 <Radio.Button value="woman">女</Radio.Button>
                             </Radio.Group>
@@ -81,7 +88,7 @@ export default class UserInfo extends React.Component {
                             <Input.Password value={this.state.password} onChange={this.onChangePassword.bind(this)}/>
                         </Form.Item>
                         <Form.Item wrapperCol={{ span: 12, offset:10}}>
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" onClick={this.update.bind(this)}>
                                 提交
         </Button>
                         </Form.Item>

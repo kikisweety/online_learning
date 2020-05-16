@@ -8,10 +8,10 @@ export default class Index extends React.Component {
       // <Redirect to="/student/index" />
     ) : (
 
-      <Redirect to="/login" />
+      // <Redirect to="/login" />
 
         // <Redirect to="/home/courses/add" />
-        // <Redirect to="/student/index" />
+        <Redirect to="/student/index" />
     ) 
   }
 }

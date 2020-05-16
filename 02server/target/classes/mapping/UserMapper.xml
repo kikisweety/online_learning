@@ -109,7 +109,7 @@
         update user
         <set>
             <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
+                name = #{name},
             </if>
             <if test="age != null">
                 age = #{age,jdbcType=VARCHAR},

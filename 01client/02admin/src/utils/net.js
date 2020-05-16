@@ -26,17 +26,13 @@ net.get = function(api, object, call) {
     });
 };
 
-var config = {
-  headers: {
-    "Content-Type": "application/json"
-  }
-};
+
 net.post = function(api, object, call) {
   // console.log(qs.stringify(object));
   //1,封装请求地址
   let url = serverUrl + api;
   axios
-    .post(url, JSON.stringify(object),config)
+    .post(url, qs.stringify(object))
     .then(function(response) {
       if (response.status === 200) {
         call(response.data);

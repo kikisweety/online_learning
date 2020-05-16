@@ -25,7 +25,7 @@ public class CommodityController {
     @RequestMapping("commodity/update")
     @ResponseBody
     public Msg update(Commodity commodity,HttpServletResponse resp, HttpServletRequest request){
-        return commodityService.updateByPrimaryKey(commodity);
+        return commodityService.updateByPrimaryKey(commodity,request);
     }
 
     @RequestMapping("commodity/insert")

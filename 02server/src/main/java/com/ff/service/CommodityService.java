@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface CommodityService {
     Msg selectAll();
 
-    Msg updateByPrimaryKey(Commodity commodity);
+    Msg updateByPrimaryKey(Commodity commodity,HttpServletRequest request);
 
     Msg insert(Commodity commodity, HttpServletRequest request);
 

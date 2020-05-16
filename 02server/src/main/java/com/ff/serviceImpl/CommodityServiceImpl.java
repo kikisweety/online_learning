@@ -35,8 +35,16 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
-    public Msg updateByPrimaryKey(Commodity commodity) {
+    public Msg updateByPrimaryKey(Commodity commodity,HttpServletRequest request) {
         Msg msg = new Msg();
+        CosTool cosTool = new CosTool();
+        List<String> keyList = cosTool.uploadFile(CosTool.IMAGE_FOLDER, request);
+        if (keyList.size() == 0) {
+            msg.setMsg("图片添加失败!");
+            return msg;
+        }
+        commodity.setCommodityDetails(keyList.get(0));
+        commodity.setUrl(keyList.get(1));
         int n = commodityMapper.updateByPrimaryKeySelective(commodity);
         if (n > 0) {
             msg.setCode(1);

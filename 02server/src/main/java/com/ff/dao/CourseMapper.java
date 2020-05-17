@@ -72,4 +72,6 @@ public interface CourseMapper {
     int update(Course course);
 
 	List<Course> techerCourses(int teacherId);
+
+    List<Course> selectCourseName(String name);
 }

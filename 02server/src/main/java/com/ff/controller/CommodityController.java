@@ -3,6 +3,7 @@ package com.ff.controller;
 import com.ff.pojo.Commodity;
 import com.ff.pojo.Msg;
 import com.ff.service.CommodityService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,11 @@ public class CommodityController {
     @ResponseBody
     public Msg delete(Commodity commodity,HttpServletResponse resp, HttpServletRequest request){
         return commodityService.delete(commodity.getId());
+    }
+    @RequestMapping("commodity/byName")
+    @ResponseBody
+    public Msg selectByName(@Param("commodityName")String commodityName, HttpServletResponse resp, HttpServletRequest request){
+        return commodityService.selectByName(commodityName);
     }
 
 }

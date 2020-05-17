@@ -49,4 +49,6 @@ public interface ChapterMapper {
     int delete(Integer id);
 
     int update(Chapter chapter);
+
+    List<Chapter> selectchapterName(String name);
 }

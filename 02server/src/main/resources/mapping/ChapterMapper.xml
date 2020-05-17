@@ -74,9 +74,9 @@
 
 
 	<!-- 根据姓名查询数据 -->
-	<select id="selectByName" resultMap="chapterMap">
+	<select id="selectchapterName" resultMap="chapterMap">
 		select * from chapters where
-		name = #{name}
+		name like CONCAT('%',#{name},'%')
 	</select>
 
 

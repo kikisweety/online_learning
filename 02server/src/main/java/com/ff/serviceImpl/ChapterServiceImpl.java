@@ -127,4 +127,16 @@ public class ChapterServiceImpl implements ChapterService {
 
 	}
 
+	@Override
+	public Msg selectchapterName(String name) {
+		Msg msg =new Msg();
+		List<Chapter> list = chapterMapper.selectchapterName(name);
+		if(list!=null) {
+
+			msg.setCode(1);
+			msg.setObject(list);
+		}
+		return msg;
+	}
+
 }

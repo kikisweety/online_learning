@@ -32,4 +32,6 @@ public interface TeacherService {
     Msg techerUpdate(Teacher teacher);
 
     Msg techerCourses(String teacherName);
+
+    Msg selectTeacher(String teacherName);
 }

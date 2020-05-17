@@ -57,5 +57,5 @@ public interface CommodityMapper {
 
     List<Commodity> selectAll();
 
-    Commodity selectByName(String commodityName);
+    List<Commodity> selectByName(String commodityName);
 }

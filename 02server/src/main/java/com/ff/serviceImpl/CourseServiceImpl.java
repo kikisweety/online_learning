@@ -201,4 +201,20 @@ public class CourseServiceImpl implements CourseService {
 		return msg;
 	}
 
+	@Override
+	public Msg courseName(String name) {
+		Msg msg = new Msg();
+
+		// 获得课程数据
+		List<Course> list = courseMapper.selectCourseName(name);
+		if (list != null && list.size() >= 1) {
+			msg.setCode(1);
+			msg.setMsg("操作成功!");
+			msg.setObject(list);
+		}
+
+		return msg;
+
+	}
+
 }

@@ -77,4 +77,12 @@ public class TeacherController {
 
 		return teacherService.techerCourses(name);
 	}
+	@ResponseBody
+	@RequestMapping( value = "selectTeacher")
+	public Msg selectTeacher(@Param("name") String name, HttpServletRequest respone, HttpServletRequest request){
+		//System.out.println(teacher);
+
+
+		return teacherService.selectTeacher(name);
+	}
 }

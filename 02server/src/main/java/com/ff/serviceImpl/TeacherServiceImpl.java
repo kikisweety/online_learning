@@ -116,5 +116,18 @@ public class TeacherServiceImpl implements TeacherService {
 		return msg;
 	}
 
+	@Override
+	public Msg selectTeacher(String teacherName) {
+		Msg msg=new Msg();
+		List<Teacher> teacher = teacherMapper.selecBytTeacher(teacherName);
+
+		if(teacher!=null){
+			msg.setObject(teacher);
+			msg.setCode(1);
+			msg.setMsg("成功");
+		}
+		return msg;
+	}
+
 
 }

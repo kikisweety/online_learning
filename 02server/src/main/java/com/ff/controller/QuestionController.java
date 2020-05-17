@@ -70,5 +70,11 @@ public class QuestionController {
 
 		return questionService.questionUpdate(question);
 	}
+	@RequestMapping(value = "question/questionName")
+	@ResponseBody
+	public Msg questionName(@Param("title")String title,HttpServletResponse resp, HttpServletRequest request) {
+
+		return questionService.questionName(title);
+	}
 
 }

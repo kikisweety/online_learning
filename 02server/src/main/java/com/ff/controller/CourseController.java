@@ -107,5 +107,11 @@ public class CourseController {
 
 		return courseService.update(course);
 	}
+	@RequestMapping("courses/courseName")
+	@ResponseBody
+	public Msg courseName(@Param("name") String name, HttpServletResponse resp, HttpServletRequest req){
+
+		return courseService.courseName(name);
+	}
 
 }

@@ -50,6 +50,11 @@ public class UserController {
     public Msg selectUserById(User user,HttpServletResponse resp, HttpServletRequest request){
         return userService.selectUserById(user.getUserId());
     }
+    @RequestMapping("user/selectByName")
+    @ResponseBody
+    public Msg selectUserByName(@Param("name")String name,HttpServletResponse resp, HttpServletRequest request){
+        return userService.selectUserByName(name);
+    }
 
 
 }

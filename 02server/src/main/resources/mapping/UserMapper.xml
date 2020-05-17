@@ -45,6 +45,11 @@
 		delete from user
 		where user_id = #{userId,jdbcType=INTEGER}
 	</delete>
+    <select id="selectUserByName" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select *
+        from user
+		where name like CONCAT('%',#{name},'%')
+	</select>
     <insert id="insert" parameterType="com.ff.pojo.User">
 		insert into user (user_id, name, age,
 		sex, hobby, login_name,

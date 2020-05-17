@@ -20,4 +20,6 @@ public interface UserService {
     Msg selectUserById(Integer userId);
 
     Msg queryUserRoles(String loginName);
+
+    Msg selectUserByName(String name);
 }

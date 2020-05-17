@@ -20,4 +20,6 @@ public interface UserMapper {
     User selectByPrimaryKey(Integer userId);
 
     User queryUserRoles(String loginName);
+
+    List<User> selectUserByName(String name);
 }

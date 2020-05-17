@@ -38,4 +38,6 @@ public interface QuestionMapper {
 	List<Question> Questionbyid(int chapterId);
 
     int update(Question question);
+
+    List<Question> questionName(String title);
 }

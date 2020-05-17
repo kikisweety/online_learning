@@ -25,6 +25,12 @@
 		where
 		name = #{name}
 	</select>
+	<select id="selecBytTeacher" resultMap="BaseResultMap">
+		select * from
+		teachers
+		where
+		name like CONCAT('%',#{name},'%')
+	</select>
 	<select id="selectTeacherById" resultMap="BaseResultMap">
 		select * from
 		teachers

@@ -40,4 +40,6 @@ public interface TeacherMapper {
     int update(Teacher teacher);
 
     Course techerCourses(String teacherName);
+
+    List<Teacher> selecBytTeacher(String teacherName);
 }

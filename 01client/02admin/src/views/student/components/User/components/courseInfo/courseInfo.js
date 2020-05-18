@@ -61,7 +61,9 @@ export default class CouresInfo extends React.Component {
         let that = this;
         let user = JSON.parse(window.localStorage.getItem("user"));
         let name = user.object.name;
-        net.get("courses/selectTeacher", {name},function (ob) {
+        net.get("courses/selectTeacher", { name }, function (ob) {
+            console.log(ob);
+            
             that.setState({
                 dataSource:ob.object
             })
@@ -162,22 +164,6 @@ export default class CouresInfo extends React.Component {
         player.load();
     }
     render() {
-        const dataSource = [
-            {
-                key: '1',
-                name: 'Python',
-                introduce: 32,
-                url: 'https://edu-image.nosdn.127.net/AB92B7251E042B89360B9BA58D21F2CC.png?imageView&quality=100&thumbnail=225y125&type=webp',
-            },
-            {
-                key: '2',
-                name: '胡彦祖',
-                introduce: 42,
-                url: 'https://edu-image.nosdn.127.net/AB92B7251E042B89360B9BA58D21F2CC.png?imageView&quality=100&thumbnail=225y125&type=webp',
-            },
-        ];
-
-
         const props = {
             name: 'file',
             action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',

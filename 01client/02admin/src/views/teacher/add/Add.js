@@ -37,9 +37,11 @@ export default class Add extends React.Component {
       courses: [],
       isLoading: false,
       currentData: {},
+      currentFile: {},
       isAdd:true,
       name: '',
       type: '',
+      searchName:'',
       columns: [
         {
           title: "姓名",
@@ -94,7 +96,11 @@ export default class Add extends React.Component {
 
     let fileList = this.state.fileList;
 
-    fileList.push(file);
+    if (fileList.length >= 1) {
+      fileList.splice(0, 1, file);
+    } else if (fileList.length == 0) { 
+      fileList.push(file)
+    }
     this.setState({ fileList: fileList });
     return isJpgOrPng && isLt2M;
   }
@@ -103,7 +109,11 @@ export default class Add extends React.Component {
   }
   displayAddForm() {
     this.setState({
-      isAdd: true
+      isAdd: true,
+        name: '',
+        introduceText: '',
+        type: '',
+        imageUrl: ''
     })
     this.refs.addform.style.display = "block";
     this.refs.opacity.style.display = "block";
@@ -207,6 +217,7 @@ export default class Add extends React.Component {
     }
   };
   edit(record) {
+    
     let name = record.name;
     let type = record.tType;
     let introduceText = record.introduce;
@@ -232,17 +243,46 @@ export default class Add extends React.Component {
       type: e.target.value
     })
   };
+  changeSearch(e) {
+    this.setState({
+      searchName: e.target.value
+    })
+   };
   handleInfo = e => {
     this.setState({
       introduceText: e.target.value
     });
   };
+  onSearch() {
+    let that = this;
+    let name = this.state.searchName;
+    console.log(name);
+    
+    // net.post("question/chapterid", { chapterId: this.state.chapterId }, function (params) {
+    //   that.setState({
+    //     allQuestions: params.object
+    //   })
+    // })
+  };
+  onReset() {
+    this.getTeachers();
+  };
   update() { 
     let that = this;
     let id = this.state.currentData.id;
-    console.log(this.state.currentData);
-    
-  }
+    let introduce = this.state.introduceText;
+    let name = this.state.name;
+    let type = this.state.type;
+    let fileList = this.state.fileList;
+    net.uploadFile("techerUpdate", { id: id, introduce: introduce, name: name, tType: type, files: fileList }, function (ob) {
+      if (ob.code==1) {
+        message.success('修改老师信息成功！');
+        that.getTeachers();
+        that.refs.addform.style.display = "none";
+        that.refs.opacity.style.display = "none";
+      }
+    })
+  };
   delete(record) {
     let that = this;
     let id = record.id;
@@ -281,12 +321,36 @@ export default class Add extends React.Component {
         <div className="addCourseList" ref="box">
           <div className="opacity" ref="opacity"></div>
           <div className="addCourseTitle teacherView">
-            <span>教师管理</span>
+            <span>老师管理</span>
             <Button
               type="primary"
               style={{ background: "#43BB60" }}
               onClick={this.displayAddForm.bind(this)}
             >添加老师</Button>
+          </div>
+          <div className="BankSeletBox" style={{margin:'10px',padding:'0px'}}>
+            <div className="left-Select">
+              <div style={{fontSize:'14px'}}>老师查询</div>
+              <input
+                value={this.state.searchName} onChange={this.changeSearch.bind(this)}
+                style={{ width: '70%', marginRight: '5px' }} size="large"></input>
+            </div>
+            <Button
+              value="small"
+              type="primary"
+              onClick={this.onSearch.bind(this)}
+              style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+            >
+              搜索
+          </Button>
+            <Button
+              value="small"
+              type="primary"
+              // onClick={this.onReset.bind(this)}
+              style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+            >
+              重置
+          </Button>
           </div>
           <Table
             rowKey={record => record.id}
@@ -294,7 +358,7 @@ export default class Add extends React.Component {
             columns={this.state.columns}
             dataSource={this.state.teacherData}
             pagination={{
-              pageSize: 7
+              pageSize: 6
             }}
             scroll={{ y: 580 }}
             className="table"

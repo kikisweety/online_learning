@@ -15,10 +15,13 @@ export default class StudentView extends React.Component {
     }
     componentWillMount() {
         let userList = JSON.parse(window.localStorage.getItem("user"));
-        this.setState({
-            userList: userList,
-            userName: userList.object.name
-        });
+        let that = this;
+        if (userList) {
+            that.setState({
+                userList: userList,
+                userName: userList.object.name
+            });
+        };
         if (this.props.history.location.pathname == "/student/index") {
             this.setState({ SelectedKeys: "1" })
         } else if (this.props.history.location.pathname == "/student/courses") {

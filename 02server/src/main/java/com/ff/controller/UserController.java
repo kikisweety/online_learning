@@ -32,10 +32,11 @@ public class UserController {
     }
     @RequestMapping("user/update")
     @ResponseBody
-    public Msg userUpdate(@RequestBody  User user, HttpServletResponse resp, HttpServletRequest request){
+    public Msg userUpdate(  User user, HttpServletResponse resp, HttpServletRequest request){
         if(user.getPassword()!=null) {
-            user.setPassword(MD5Utils.encrypt(user.getPassword()));
+            user.setPassword(MD5Utils.encrypt(user.getLoginName(),user.getPassword()));
         }
+
         return userService.update(user);
 
     }

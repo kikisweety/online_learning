@@ -53,12 +53,13 @@ export default class UserInfo extends React.Component {
         let that = this;
         let user = JSON.parse(window.localStorage.getItem("user"));
         let userList = user.object;
+        let loginName = userList.loginName;
         let userId = userList.userId;
         let name = this.state.name;
         let age = this.state.age;
         let sex = this.refs.sex.state.value;
         let password = this.state.password;
-        net.uploadFile("user/update", {  userId, name, age, sex, password }, function (ob) {
+        net.uploadFile("user/update", {  userId, loginName,name, age, sex, password }, function (ob) {
             console.log(ob);
         })
     }

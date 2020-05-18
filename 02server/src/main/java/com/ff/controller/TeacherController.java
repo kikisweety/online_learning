@@ -67,7 +67,7 @@ public class TeacherController {
 		//System.out.println(teacher);
 
 
-		return teacherService.techerUpdate(teacher);
+		return teacherService.techerUpdate(teacher,request);
 	}
 	@ResponseBody
 	@RequestMapping( value = "techerCourse")

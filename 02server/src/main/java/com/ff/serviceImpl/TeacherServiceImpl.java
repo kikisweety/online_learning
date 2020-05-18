@@ -94,8 +94,17 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
 	@Override
-	public Msg techerUpdate(Teacher teacher) {
+	public Msg techerUpdate(Teacher teacher, HttpServletRequest request) {
 		Msg msg=new Msg();
+		CosTool cosTool = new CosTool();
+		List<String> keyList = cosTool.uploadFile(CosTool.IMAGE_FOLDER, request);
+
+		if (keyList.size() == 0) {
+			msg.setMsg("图片添加失败!");
+			return msg;
+		}
+
+		teacher.setTkey(keyList.get(0));
 		if(teacherMapper.update(teacher)==1){
 			msg.setCode(1);
 			msg.setMsg("成功");

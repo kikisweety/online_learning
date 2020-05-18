@@ -29,7 +29,7 @@ public interface TeacherService {
 	 */
 	Msg delTeacher(Integer id);
 
-    Msg techerUpdate(Teacher teacher);
+    Msg techerUpdate(Teacher teacher, HttpServletRequest request);
 
     Msg techerCourses(String teacherName);
 }

@@ -104,5 +104,17 @@ public class UserServiceImpl implements UserService {
         return msg;
     }
 
+    @Override
+    public Msg selectUserByName(String name) {
+        Msg msg = new Msg();
+        List<User> userList = userMapper.selectUserByName(name);
+        if (userList != null && userList.size() >= 1) {
+            msg.setCode(1);
+            msg.setMsg("操作成功!");
+            msg.setObject(userList);
+        }
+        return msg;
+    }
+
 
 }

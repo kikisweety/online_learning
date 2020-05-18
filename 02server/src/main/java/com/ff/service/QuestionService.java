@@ -40,4 +40,6 @@ public interface QuestionService {
 	Msg questionAll();
 
     Msg questionUpdate(Question question);
+
+    Msg questionName(String title);
 }

@@ -90,4 +90,18 @@ public class CommodityServiceImpl implements CommodityService {
         }
         return msg;
     }
-}
+
+    @Override
+    public Msg selectByName(String commodityName) {
+
+        Msg msg = new Msg();
+        List<Commodity> commodity = commodityMapper.selectByName(commodityName);
+        if (commodity!=null) {
+            msg.setCode(1);
+            msg.setObject(commodity);
+            msg.setMsg("ok");
+        }
+        return msg;
+
+    }
+    }

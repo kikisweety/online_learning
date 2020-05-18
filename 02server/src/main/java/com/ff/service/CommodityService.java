@@ -13,4 +13,6 @@ public interface CommodityService {
     Msg insert(Commodity commodity, HttpServletRequest request);
 
     Msg delete(Integer id);
+
+    Msg selectByName(String commodityName);
 }

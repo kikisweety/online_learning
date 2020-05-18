@@ -52,4 +52,6 @@ public interface CourseService {
     Msg selectQuestionByType(int courseType);
 
     Msg update(Course course);
+
+    Msg courseName(String name);
 }

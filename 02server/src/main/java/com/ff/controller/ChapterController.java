@@ -2,6 +2,8 @@ package com.ff.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,5 +60,11 @@ public class ChapterController {
 	public Msg selectChaptersQuestion(Chapter chapter, HttpServletResponse resp, HttpServletRequest req) {
 
 		return chapterService.selectChaptersQuestion(chapter);
+	}
+	@RequestMapping(value = "chapters/chapterName")
+	@ResponseBody
+	public Msg selectchapterName(@Param("name") String name, HttpServletResponse resp, HttpServletRequest req) {
+
+		return chapterService.selectchapterName(name);
 	}
 }

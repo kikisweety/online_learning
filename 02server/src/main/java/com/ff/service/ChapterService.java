@@ -48,4 +48,6 @@ public interface ChapterService {
     Msg delete(Integer id);
 
     Msg update(Chapter chapter);
+
+    Msg selectchapterName(String name);
 }

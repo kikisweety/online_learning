@@ -114,4 +114,16 @@ public class QuestionServiceImpl implements QuestionService {
 		return msg;
 	}
 
+	@Override
+	public Msg questionName(String title) {
+		Msg msg = new Msg();
+		List<Question> list = questionMapper.questionName(title);
+		if (list.size() >= 1) {
+			msg.setMsg("操作成功");
+			msg.setCode(1);
+			msg.setObject(list);
+		}
+		return msg;
+	}
+
 }

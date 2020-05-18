@@ -27,6 +27,11 @@
 		questions
 		where chapter_id = #{id}
 	</select>
+	<select id="questionName" resultMap="questionMap">
+		select *from
+		questions
+		where title like CONCAT('%',#{title},'%')
+	</select>
 	<delete id="questionDelete" parameterType="java.lang.Integer">
 		delete from
 		 questions

@@ -15,6 +15,7 @@ export default class User extends React.Component {
     this.state = {
       age: null,
       userId: "",
+      searchName:'',
       columns: [
         {
           title: '用户名',
@@ -66,6 +67,26 @@ export default class User extends React.Component {
       allUser: []
     };
   };
+  changeSearch(e) {
+    this.setState({
+      searchName: e.target.value
+    })
+  };
+  onSearch() {
+    let that = this;
+    let name = this.state.searchName;
+    net.post("user/selectByName", { name }, function (ob) {
+      that.setState({
+        allUser: ob.object
+      })
+    })
+  };
+  onReset() {
+    this.setState({
+      searchName: ''
+    })
+    this.getUser();
+  };
   displayAddForm() {
     this.refs.userForm.style.display = "block";
     this.refs.opacity.style.display = "block";
@@ -80,6 +101,9 @@ export default class User extends React.Component {
     })
   }
   componentDidMount() {
+    this.getUser();
+  };
+  getUser() { 
     let that = this;
     net.get("user/all", {}, function (ob) {
       let userList = ob.data.object;
@@ -87,7 +111,7 @@ export default class User extends React.Component {
         allUser: userList
       })
     })
-  }
+  };
   upload() {
     let name = this.refs.inputName.state.value;
     let age = this.state.age;
@@ -138,6 +162,33 @@ export default class User extends React.Component {
               style={{ background: "#43BB60" }}
               onClick={this.displayAddForm.bind(this)}
             >添加用户</Button>
+          </div>
+          <div className="BankSeletBox" style={{ margin: '10px', padding: '0px' }}>
+            <div className="left-Select">
+              <div style={{ fontSize: '14px' }}>用户查询</div>
+              <Input
+                placeholder="请输入用户名关键字"
+                allowClear
+                value={this.state.searchName} onChange={this.changeSearch.bind(this)}
+                style={{ width: '70%', marginRight: '5px' }}
+              />
+            </div>
+            <Button
+              value="small"
+              type="primary"
+              onClick={this.onSearch.bind(this)}
+              style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+            >
+              搜索
+          </Button>
+            <Button
+              value="small"
+              type="primary"
+              onClick={this.onReset.bind(this)}
+              style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+            >
+              重置
+          </Button>
           </div>
           <Table
             rowKey={record => record.id}

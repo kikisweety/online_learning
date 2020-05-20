@@ -66,7 +66,7 @@ export default class RegisterView extends React.Component {
       <div className="view">
         <div className="registerContent">
           <div className="systemTitle">在线教育系统</div>
-          <h5 style={{ color: '#2730D3', fontWeight: "bold" }}>登录界面</h5>
+          <h5 style={{ color: '#2730D3', fontWeight: "bold" }}>注册界面</h5>
           <div className="loginVeiw">
             <div className="content1">
               <Row className="row">

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Order.css";
 import {
-    Button, Table, Upload, Input, Select,Modal, message
+    Button, Table, Upload, Input, Select, Modal, message
 } from "antd";
 import net from "../../utils/net";
 const { confirm } = Modal;
@@ -48,13 +48,13 @@ export default class Order extends React.Component {
                         var that = this;
                         return (
                             <div>
-                                <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
                                 <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
                             </div>
                         )
                     }
                 }
             ],
+            searchName: '',
             allOrder: []
         };
     }
@@ -66,14 +66,34 @@ export default class Order extends React.Component {
     };
     getOrder() {
         let that = this;
-        net.get("order/all", {},function (ob) {
+        net.get("order/all", {}, function (ob) {
             let allOrder = ob.data.object;
             that.setState({
-                allOrder:allOrder
+                allOrder: allOrder
             })
-            
+
         })
-     };
+    };
+    changeSearch(e) {
+        this.setState({
+            searchName: e.target.value
+        })
+    };
+    onSearch() {
+        let that = this;
+        let name = this.state.searchName;
+        net.post("/order/selectByName", { name }, function (ob) {
+            that.setState({
+                allOrder: ob.object
+            })
+        })
+    };
+    onReset() {
+        this.setState({
+            searchName: ''
+        })
+        this.getOrder();
+    };
     delete(record) {
         let that = this;
         let id = record.id;
@@ -93,7 +113,7 @@ export default class Order extends React.Component {
             okText: '确定',
             cancelText: '取消'
         })
-     }
+    }
     render() {
         return (
             <div className="addView">
@@ -101,6 +121,33 @@ export default class Order extends React.Component {
                     <div className="opacity" ref="opacity"></div>
                     <div className="addCourseTitle">
                         <span>订单信息</span>
+                    </div>
+                    <div className="BankSeletBox" style={{ margin: '10px', padding: '0px' }}>
+                        <div className="left-Select">
+                            <div style={{ fontSize: '14px' }}>订单查询</div>
+                            <Input
+                                placeholder="请输入订购人"
+                                allowClear
+                                value={this.state.searchName} onChange={this.changeSearch.bind(this)}
+                                style={{ width: '70%', marginRight: '5px' }}
+                            />
+                        </div>
+                        <Button
+                            value="small"
+                            type="primary"
+                            onClick={this.onSearch.bind(this)}
+                            style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+                        >
+                            搜索
+          </Button>
+                        <Button
+                            value="small"
+                            type="primary"
+                            onClick={this.onReset.bind(this)}
+                            style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+                        >
+                            重置
+          </Button>
                     </div>
                     <Table
                         rowKey={record => record.id}

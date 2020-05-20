@@ -23,7 +23,8 @@ export default class Commodity extends React.Component {
             loading: false,
             isLoading: false,
             price: null,
-            amount:null,
+            amount: null,
+            searchName:'',
             columns: [
                 {
                     title: '商品名称',
@@ -167,8 +168,27 @@ export default class Commodity extends React.Component {
             okText: '确定',
             cancelText: '取消'
         })
-     }
-
+    };
+    changeSearch(e) {
+        this.setState({
+            searchName: e.target.value
+        })
+    };
+    onSearch() {
+        let that = this;
+        let name = this.state.searchName;
+        net.post("commodity/byName", { commodityName:name }, function (ob) {
+            that.setState({
+                allCommodity: ob.object
+            })
+        })
+    };
+    onReset() {
+        this.setState({
+            searchName: ''
+        })
+        this.getCommodity();
+    };
 
     render() {
         const uploadButton = (
@@ -189,6 +209,33 @@ export default class Commodity extends React.Component {
                             style={{ background: "#43BB60" }}
                             onClick={this.displayAddForm.bind(this)}
                         >添加商品</Button>
+                    </div>
+                    <div className="BankSeletBox" style={{ margin: '10px', padding: '0px' }}>
+                        <div className="left-Select">
+                            <div style={{ fontSize: '14px' }}>用户查询</div>
+                            <Input
+                                placeholder="请输入用户名关键字"
+                                allowClear
+                                value={this.state.searchName} onChange={this.changeSearch.bind(this)}
+                                style={{ width: '70%', marginRight: '5px' }}
+                            />
+                        </div>
+                        <Button
+                            value="small"
+                            type="primary"
+                            onClick={this.onSearch.bind(this)}
+                            style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+                        >
+                            搜索
+          </Button>
+                        <Button
+                            value="small"
+                            type="primary"
+                            onClick={this.onReset.bind(this)}
+                            style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
+                        >
+                            重置
+          </Button>
                     </div>
                     <Table
                         rowKey={record => record.id}

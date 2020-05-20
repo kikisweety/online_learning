@@ -80,7 +80,6 @@ export default class ExaminationQuery extends React.Component {
   componentDidMount = e => {
     let that = this;
     net.post("courses/and/chapters", {}, function (ob) {
-      console.log(ob);
       that.setState({
         courses: ob.object
       });
@@ -90,7 +89,6 @@ export default class ExaminationQuery extends React.Component {
   getQuestions() {
     let that = this;
     net.post("question/all", {}, function (params) {
-      console.log(params);
       that.setState({
         allQuestions: params.object
       })

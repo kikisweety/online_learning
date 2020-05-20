@@ -129,6 +129,12 @@ public class TeacherServiceImpl implements TeacherService {
 	public Msg selectTeacher(String teacherName) {
 		Msg msg=new Msg();
 		List<Teacher> teacher = teacherMapper.selecBytTeacher(teacherName);
+		int length = teacher.size();
+		CosTool cosTool = new CosTool();
+		for (int i = 0; i < length; i++) {
+			String key = teacher.get(i).getTkey();
+			teacher.get(i).setTkey(cosTool.getUrl(key));
+		}
 
 		if(teacher!=null){
 			msg.setObject(teacher);

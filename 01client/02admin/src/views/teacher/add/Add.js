@@ -256,15 +256,16 @@ export default class Add extends React.Component {
   onSearch() {
     let that = this;
     let name = this.state.searchName;
-    console.log(name);
-    
-    // net.post("question/chapterid", { chapterId: this.state.chapterId }, function (params) {
-    //   that.setState({
-    //     allQuestions: params.object
-    //   })
-    // })
+    net.post("selectTeacher", { name }, function (ob) {
+      that.setState({
+        teacherData: ob.object
+      })
+    })
   };
   onReset() {
+    this.setState({
+      searchName:''
+    })
     this.getTeachers();
   };
   update() { 
@@ -331,9 +332,12 @@ export default class Add extends React.Component {
           <div className="BankSeletBox" style={{margin:'10px',padding:'0px'}}>
             <div className="left-Select">
               <div style={{fontSize:'14px'}}>老师查询</div>
-              <input
+              <Input
+                placeholder="请输入姓名关键字"
+                allowClear
                 value={this.state.searchName} onChange={this.changeSearch.bind(this)}
-                style={{ width: '70%', marginRight: '5px' }} size="large"></input>
+                style={{ width: '70%', marginRight: '5px' }}
+              />
             </div>
             <Button
               value="small"
@@ -346,7 +350,7 @@ export default class Add extends React.Component {
             <Button
               value="small"
               type="primary"
-              // onClick={this.onReset.bind(this)}
+              onClick={this.onReset.bind(this)}
               style={{ background: "#43BB60", margin: "0px 8px 0px 0px" }}
             >
               重置

@@ -67,4 +67,16 @@ public class ChapterController {
 
 		return chapterService.selectchapterName(name);
 	}
+	@RequestMapping(value = "chapters/delete")
+	@ResponseBody
+	public Msg delete(@Param("id") Integer id, HttpServletResponse resp, HttpServletRequest req) {
+
+		return chapterService.delete(id);
+	}
+	@RequestMapping(value = "chapters/update")
+	@ResponseBody
+	public Msg update(Chapter chapter, HttpServletResponse resp, HttpServletRequest req) {
+
+		return chapterService.update(chapter);
+	}
 }

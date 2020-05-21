@@ -123,7 +123,14 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Msg deleteById() {
+	public Msg deleteById(int id) {
+		Msg msg = new Msg();
+		if(courseMapper.deleteById(id)==1){
+			msg.setCode(1);
+			msg.setMsg("删除成功");
+		}
+
+
 		return null ;
 	}
 
@@ -191,8 +198,20 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Msg update(Course course) {
+	public Msg update(Course course,HttpServletRequest req) {
 		Msg msg = new Msg();
+
+
+		CosTool cosTool = new CosTool();
+		List<String> keyList = cosTool.uploadFile(CosTool.IMAGE_FOLDER, req);
+
+		if (keyList.size() == 0) {
+			msg.setMsg("图片添加失败!");
+			return msg;
+		}
+
+		// 设置图片
+		course.setUrl(keyList.get(0));
 		if(courseMapper.update(course)==1){
 			msg.setMsg("查询成功！！");
 			msg.setCode(1);

@@ -82,7 +82,24 @@
 		select * from chapters where
 		name=#{nmae}
 	</select>
+<delete id="delete" parameterType="java.lang.Integer">
+	delete from chapters
+	where id=#{id}
+</delete>
 
+	<update id="update" parameterType="com.ff.pojo.Chapter" >
+		update courses
+		<set >
+			<if test="name != null" >
+				name = #{name},
+			</if>
+			<if test="courseId != 0" >
+				course_id = #{courseId},
+			</if>
+
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 
 
 

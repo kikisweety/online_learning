@@ -28,7 +28,33 @@
 			select="com.ff.dao.ChapterMapper.getChaptersByCourseId">
 		</collection>
 	</resultMap>
-
+	<update id="update" parameterType="com.ff.pojo.Course" >
+		update courses
+		<set >
+			<if test="name != null" >
+				name = #{name},
+			</if>
+			<if test="state != null" >
+				state = #{state},
+			</if>
+			<if test="introduce != null" >
+				introduce = #{introduce,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null" >
+				url = #{url},
+			</if>
+			<if test="teacherId != 0" >
+				teacher_id = #{teacherId},
+			</if>
+			<if test="ctype != null" >
+				ctype = #{ctype},
+			</if>
+			<if test="courseType != null" >
+				course_type = #{courseType},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 	<resultMap id="courseAndQuestionsMap"
 		type="com.ff.pojo.Course">
 		<id column="id" property="id" />
@@ -184,4 +210,8 @@
         select  * from courses
         where name like CONCAT('%',#{name},'%')
     </select>
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from courses
+		where id=#{id}
+	</delete>
 </mapper>

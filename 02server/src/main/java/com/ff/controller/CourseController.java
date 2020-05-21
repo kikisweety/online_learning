@@ -89,7 +89,7 @@ public class CourseController {
 	@ResponseBody
 	@RequestMapping(value = "courses/delete")
 	public Msg deleteById(Course course, HttpServletResponse resp, HttpServletRequest req){
-		return courseService.deleteById();
+		return courseService.deleteById(course.getId());
 	}
 	@RequestMapping("courses/type")
 	@ResponseBody
@@ -112,7 +112,7 @@ public class CourseController {
 	@ResponseBody
 	public Msg update(Course course, HttpServletResponse resp, HttpServletRequest req){
 
-		return courseService.update(course);
+		return courseService.update(course,req);
 	}
 	@RequestMapping("courses/courseName")
 	@ResponseBody

@@ -43,7 +43,7 @@ public interface CourseService {
 	 */
 	Msg selectAllQuestionsOfCourses();
 
-    Msg deleteById();
+    Msg deleteById(int id);
 
     Msg selectByType(int courseType);
 
@@ -51,7 +51,7 @@ public interface CourseService {
 
     Msg selectQuestionByType(int courseType);
 
-    Msg update(Course course);
+    Msg update(Course course,HttpServletRequest req);
 
     Msg courseName(String name);
 }

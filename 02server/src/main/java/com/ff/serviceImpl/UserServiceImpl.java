@@ -25,12 +25,17 @@ public class UserServiceImpl implements UserService {
         if(user.getPassword()==null){
             user.setPassword("123456");
         }
-        user.setPassword(MD5Utils.encrypt(user.getLoginName(),user.getPassword()));
-        int n =userMapper.insertSelective(user);
-        if(n>=1){
-            msg.setCode(1);
-            msg.setMsg("操作成功!");
+        List<User> list=userMapper.selectUserByName(user.getName());
+        if(list.size()!=0){
+            msg.setMsg("用户已存在");
+            return msg;
         }
+            user.setPassword(MD5Utils.encrypt(user.getLoginName(), user.getPassword()));
+            int n = userMapper.insertSelective(user);
+            if (n >= 1) {
+                msg.setCode(1);
+                msg.setMsg("操作成功!");
+            }
 
         return msg;
     }

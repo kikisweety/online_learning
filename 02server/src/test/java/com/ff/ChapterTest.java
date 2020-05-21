@@ -36,16 +36,7 @@ public class ChapterTest {
 
 	}
 
-	@Test
-	public void selectChaptersByName() {
 
-		Chapter chapter = new Chapter();
-		chapter.setName("继承");
-		Msg msg = chapterService.selectChaptersByName(chapter);
-
-		System.out.println(msg);
-
-	}
 
 	@Test
 	public void addChapter() {

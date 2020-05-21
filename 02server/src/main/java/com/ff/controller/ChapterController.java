@@ -46,7 +46,7 @@ public class ChapterController {
 	@ResponseBody
 	public Msg selectChaptersByName(Chapter chapter, HttpServletResponse resp, HttpServletRequest req) {
 
-		return chapterService.selectChaptersByName(chapter);
+		return chapterService.selectChaptersByName(chapter.getName());
 	}
 
 	@RequestMapping(value = "chapter/add")

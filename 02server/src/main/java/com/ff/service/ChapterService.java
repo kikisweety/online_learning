@@ -41,7 +41,7 @@ public interface ChapterService {
 	 * @param course 课程对象
 	 * @return
 	 */
-	Msg selectChaptersByName(Chapter chapter);
+	Msg selectChaptersByName(String name);
 
     Msg selectChaptersQuestion(Chapter chapter);
 

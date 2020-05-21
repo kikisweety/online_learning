@@ -1,6 +1,6 @@
 import React from 'react'
 import "./userInfo.css";
-import { Form, Input, Button, Checkbox, InputNumber, Radio } from 'antd';
+import { Form, Input, Button, Checkbox, InputNumber, Radio, message } from 'antd';
 import net from '../../../../../../utils/net';
 const layout = {
     labelCol: { span: 5 },
@@ -20,6 +20,9 @@ export default class UserInfo extends React.Component {
         };
     };
     componentDidMount() { 
+        this.getUser();
+    };
+    getUser() { 
         let user = JSON.parse(window.localStorage.getItem("user"));
         let userList = user.object;
         let name = user.object.name;
@@ -33,7 +36,7 @@ export default class UserInfo extends React.Component {
             sex:sex,
             password:password
         })
-    };
+    }
     onChangeName(e) {
         this.setState({
             name:e.target.value
@@ -44,6 +47,11 @@ export default class UserInfo extends React.Component {
             age:value
         })
     };
+    changeSex(e) {
+        this.setState({
+            sex:e.target.value
+        })
+     }
     onChangePassword(e) { 
         this.setState({
             password:e.target.value
@@ -60,7 +68,11 @@ export default class UserInfo extends React.Component {
         let sex = this.refs.sex.state.value;
         let password = this.state.password;
         net.uploadFile("user/update", {  userId, loginName,name, age, sex, password }, function (ob) {
-            console.log(ob);
+            if (ob.code==1) {
+                message.success(ob.msg+"请刷新页面");
+                that.getUser();
+                window.localStorage.clear();
+            }
         })
     }
     render() {
@@ -79,7 +91,7 @@ export default class UserInfo extends React.Component {
                             <InputNumber value={this.state.age} onChange={this.onChangeAge.bind(this)}/>
                         </Form.Item>
                         <Form.Item name="radio-button" label="性别">
-                            <Radio.Group defaultValue={this.state.sex} ref="sex">
+                            <Radio.Group buttonStyle="solid" value={this.state.sex} onChange={this.changeSex.bind(this)} ref="sex">
                                 <Radio.Button value="man">男</Radio.Button>
                                 <Radio.Button value="woman">女</Radio.Button>
                             </Radio.Group>

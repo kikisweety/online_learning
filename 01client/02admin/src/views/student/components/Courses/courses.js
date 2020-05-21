@@ -104,7 +104,7 @@ export default class MyCourses extends React.Component {
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
                                                 style={{ height: 270, borderRadius: 5 }}
-                                                cover={<img alt="example" src={item.url} />}
+                                                cover={<img style={{ width: 295, height: 170}} alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}
@@ -130,7 +130,7 @@ export default class MyCourses extends React.Component {
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
                                                 style={{ height: 270, borderRadius: 5 }}
-                                                cover={<img alt="example" src={item.url} />}
+                                                cover={<img style={{ width: 295, height: 170 }} alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}
@@ -156,7 +156,7 @@ export default class MyCourses extends React.Component {
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
                                                 style={{ height: 270, borderRadius: 5 }}
-                                                cover={<img alt="example" src={item.url} />}
+                                                cover={<img style={{ width: 295, height: 170 }} alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}
@@ -182,7 +182,7 @@ export default class MyCourses extends React.Component {
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
                                                 style={{ height: 270, borderRadius: 5 }}
-                                                cover={<img alt="example" src={item.url} />}
+                                                cover={<img style={{ width: 295, height: 170 }} alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}
@@ -208,7 +208,7 @@ export default class MyCourses extends React.Component {
                                                 onClick={() => this.routerTo(item)}
                                                 hoverable
                                                 style={{ height: 270, borderRadius: 5 }}
-                                                cover={<img alt="example" src={item.url} />}
+                                                cover={<img style={{ width: 295, height: 170 }} alt="example" src={item.url} />}
                                             >
                                                 <Meta
                                                     title={item.name}

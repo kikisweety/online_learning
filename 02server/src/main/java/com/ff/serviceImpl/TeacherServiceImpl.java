@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ff.dao.CourseMapper;
+import com.ff.pojo.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -116,9 +117,15 @@ public class TeacherServiceImpl implements TeacherService {
 	public Msg techerCourses(String teacherName) {
 		Msg msg=new Msg();
 		Teacher teacher = teacherMapper.selectTeacher(teacherName);
-
-		if(courseMapper.techerCourses(teacher.getId())!=null){
-			msg.setObject(courseMapper.techerCourses(teacher.getId()));
+		List<Course> list =courseMapper.techerCourses(teacher.getId());
+		if(list!=null){
+			CosTool cosTool = new CosTool();
+			for (int i = 0; i < list.size(); i++) {
+				// 到腾讯云服务器换图片地址
+				String url = cosTool.getUrl(list.get(i).getUrl());
+				list.get(i).setUrl(url);
+			}
+			msg.setObject(list);
 			msg.setCode(1);
 			msg.setMsg("成功");
 		}

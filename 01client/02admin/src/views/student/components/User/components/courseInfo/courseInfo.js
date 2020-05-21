@@ -1,31 +1,61 @@
 import React from "react";
 import './courseInfo.css';
 import net from "../../../../../../utils/net";
-import { Form, Input, Button, Table, Upload, message, Icon, Select } from 'antd';
+import { Form, Input, Button, Table, Upload, message, Icon, Select, Radio,Modal } from 'antd';
 const { Option } = Select;
+const { confirm } = Modal;
 const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 16 },
 };
-const options = [];
-function onChange(value) {
-    console.log(value);
+function getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
 }
 export default class CouresInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSource:[],
-            columns :[
+            dataSource: [],
+            imageUrl: '',
+            name: '',
+            introduce: '',
+            type: '',
+            fileList: [],
+            chapterName: '',
+            currentCourse: [],
+            isAdd: true,
+            columns: [
                 {
                     title: '课程名称',
                     dataIndex: 'name',
                     key: 'name',
+                    // render: (text) => {
+                    //     return <div style={{ width: "50px" }}>{text}</div>
+                    // }
                 },
                 {
                     title: "课程章节",
                     dataIndex: "chapters",
                     key: "chapters",
+                    render: chapters => {
+                        if (chapters.length < 1) {
+                            return;
+                        }
+                        let temp = chapters[0].name;
+                        return (
+                            <Select
+                                defaultValue={temp}
+                                style={{ width: 120 }}
+                                onSelect={this.handleChange}
+                            >
+                                {chapters.map(function (item) {
+                                    return <Option value={item.id} key={item.id}>{item.name}</Option>;
+                                })}
+                            </Select>
+                        )
+                    }
                 },
                 {
                     title: '课程介绍',
@@ -33,191 +63,295 @@ export default class CouresInfo extends React.Component {
                     key: 'introduce',
                 },
                 {
-                    title: '操作',
-                    key: 'action',
-                    render: () => {
-                        var that = this;
+                    title: "课程图片",
+                    dataIndex: "url",
+                    key: "url",
+                    render: (url) => {
                         return (
                             <div>
-                                <Button style={{ marginRight: 10 }} onClick={that.showForm.bind(this)}>修改</Button>
-                                <Button>删除</Button>
+                                <img src={url} style={{ width: 150, height: 100 }}></img>
                             </div>
                         )
                     }
+                },
+                {
+                    title: '操作',
+                    key: 'action',
+                    render: (record) => (
+                        <span>
+                            <a style={{ marginRight: 20 }} onClick={this.showChaper.bind(this, record)}>添加章节</a>
+                            <a style={{ marginRight: 20 }} onClick={this.edit.bind(this, record)}>修改</a>
+                            <a onClick={this.delete.bind(this,record)}>删除</a>
+                        </span>
+                    )
                 }
             ]
         }
-    }
+    };
     showForm() {
-        this.refs.addForm.style.display = "block"
+        this.refs.addForm.style.display = "block";
+        this.refs.opacity.style.display = "block";
     };
+    addForm() {
+        this.setState({
+            isAdd: true,
+            name: '',
+            introduce: '',
+            type: '',
+            imageUrl: ''
+        })
+        this.refs.addForm.style.display = "block";
+        this.refs.opacity.style.display = "block";
+    }
+    showChaper(record) {
+        this.refs.addChapters.style.display = "block";
+        this.refs.opacity.style.display = "block";
+        this.setState({
+            currentCourse: record
+        })
+    };
+    add() {
+        let user = JSON.parse(window.localStorage.getItem("user"));
+        let teacherName = user.object.name;
+        let that = this;
+        let name = this.state.name;
+        let introduce = this.state.introduce;
+        let fileList = this.state.fileList;
+        let type = this.state.type;
+        net.uploadFile("courses/add", { name: name, introduce: introduce, files: fileList, teacherName: teacherName, courseType: type }, function (ob) {
+            if (ob.code == 1) {
+                message.success(ob.msg);
+                that.refs.addForm.style.display = "none";
+                that.refs.opacity.style.display = "none";
+                that.getCourses();
+            }
+        })
+    };
+    addChaper() {
+        let that = this;
+        let chapterName = this.state.chapterName;
+        let id = this.state.currentCourse.id;
+        net.uploadFile("chapter/add", { name: chapterName, courseId: id }, function (ob) {
+            that.refs.addChapters.style.display = "none";
+            that.refs.opacity.style.display = "none";
+            that.getCourses();
+        })
+    };
+    edit(record) {
+        let name = record.name;
+        let introduce = record.introduce;
+        let type = record.courseType;
+        let imageUrl = record.url;
+        this.setState({
+            isAdd: false,
+            name: name,
+            type: type,
+            introduce: introduce,
+            imageUrl: imageUrl,
+            currentCourse: record
+        })
+        this.refs.addForm.style.display = "block";
+        this.refs.opacity.style.display = "block";
+    };
+    onChangeName(e) {
+        this.setState({
+            name: e.target.value
+        })
+    };
+    onChangeIntro(e) {
+        this.setState({
+            introduce: e.target.value
+        })
+    };
+    onChangeType(e) {
+        this.setState({
+            type: e.target.value
+        })
+    };
+    onChangeChapters(e) {
+        this.setState({
+            chapterName: e.target.value
+        })
+    }
     closeForm() {
-        this.refs.addForm.style.display = "none"
+        this.refs.addForm.style.display = "none";
+        this.refs.opacity.style.display = "none";
     };
-    componentDidMount() { 
+    closeChaper() {
+        this.refs.addChapters.style.display = "none";
+        this.refs.opacity.style.display = "none";
+    }
+    componentDidMount() {
         this.getCourses();
     };
-    getCourses() { 
+    getCourses() {
         let that = this;
         let user = JSON.parse(window.localStorage.getItem("user"));
         let name = user.object.name;
-        net.get("courses/selectTeacher", { name }, function (ob) {
-            console.log(ob);
-            
+        net.get("techerCourse", { name }, function (ob) {
+            let dataSource = ob.data.object;
             that.setState({
-                dataSource:ob.object
+                dataSource: dataSource
             })
         })
     };
-    expandedRowRender = record => {
-        const expendColumns = [
-            { title: "视频名称", dataIndex: "name", key: "name" },
-            {
-                title: "视频链接",
-                render: ob => {
-                    let url = ob.url;
-                    let id = ob.id;
-                    if (url == 0) {
-                        return (
-                            <Upload
-                                onRemove={this.removeFile}
-                                beforeUpload={this.beforeUpload}
-                                onChange={this.beforeUpload2.bind(null, id)}
-                            >
-                                <Button style={{ background: "#43BB60", color: "white", width: "120px" }}>
-                                    <Icon type="upload" /> 上传视频
-                  </Button>
-                            </Upload>
-                        );
-                    } else {
-                        return (
-                            <Button
-                                onClick={this.playVideo.bind(null, url)}
-                                style={{ background: "#43BB60", color: "white", width: "120px" }}>播放视频</Button>
-                        );
-                    }
-                }
-            }
-        ]
-    };
-    removeFile = file => {
-        //获得文件的数据
-        let fileList = this.state.fileList;
-        //获得文件的下标
-        const index = fileList.indexOf(file);
-        //删除文件
-        fileList.splice(index, 1);
-        //覆盖数据
-        this.setState({
-            fileList: fileList
-        });
-    };
-    beforeUpload = file => {
-        //获得文件的数据
-        let fileList = this.state.fileList;
-        //添加文件
-        fileList.push(file);
-        //覆盖数据
-        this.setState({
-            fileList: fileList
-        });
-    };
-    beforeUpload2 = (num) => {
-        let id = num;
-        let fileList = this.state.fileList
-        let that = this;
-        net.uploadFile(
-            "video/update",
-            {
-                id: id,
-                files: fileList
-            },
-            function (ob) {
-                if (ob.msg == "更新成功！") {
-                    console.log(ob);
-                }
-            }
-        );
+    beforeUpload(file) {
+        const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+        if (!isJpgOrPng) {
+            message.error("You can only upload JPG/PNG file!");
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            message.error("Image must smaller than 2MB!");
+        }
 
+        let fileList = this.state.fileList;
+
+        if (fileList.length >= 1) {
+            fileList.splice(0, 1, file);
+        } else if (fileList.length == 0) {
+            fileList.push(file)
+        }
+        this.setState({ fileList: fileList });
+        return isJpgOrPng && isLt2M;
     };
-    playVideo = (url, id) => {
-        let source = url;
-        console.log(source, id);
-        if (source == 0) {
-            this.setState({
-                updataVideoId: id
-            });
-            alert("视频无效，请上传视频");
-            this.refs.coursePlayVideo.style.display = "block";
-            this.refs.uploadVideo.style.display = "block";
+    handleChangeimg = info => {
+        if (info.file.status === "uploading") {
+            this.setState({ loading: true });
             return;
         }
-        this.setState({
-            source: source,
-        });
-        this.refs.source.src = source;
-        let coursePlayVideo = this.refs.coursePlayVideo;
-        let coursePlayVideoBox = this.refs.coursePlayVideoBox;
-        let player = this.refs.player;
-        coursePlayVideo.style.display = "block";
-        coursePlayVideoBox.style.display = "block";
-        player.load();
+        if (info.file.status === "done") {
+            getBase64(info.file.originFileObj, imageUrl =>
+                this.setState({
+                    imageUrl,
+                    loading: false
+                })
+            );
+        }
+    };
+    update() {
+        let that = this;
+        let id = this.state.currentCourse.id;
+        let introduce = this.state.introduce;
+        let name = this.state.name;
+        let type = this.state.type;
+        let fileList = this.state.fileList;
+        net.uploadFile("courses/update", { id: id, introduce: introduce, name: name, files: fileList, courseType: type }, function (ob) {
+            if (ob.code == 1) {
+                message.success(ob.msg);
+                that.getCourses();
+                that.refs.addForm.style.display = "none";
+                that.refs.opacity.style.display = "none";
+            }
+        })
+    };
+    delete(record) { 
+        let that = this;
+        let id = record.id;
+        confirm({
+            title: '提示',
+            content: '确定删除吗？',
+            onOk() {
+                return net.get(
+                    "courses/delete", { id: id },
+                    function (res) {
+                        console.log(res);
+                        
+                        message.success(res.msg);
+                        that.getCourses();
+                    }
+                )
+            },
+            onCancel() { },
+            okText: '确定',
+            cancelText: '取消'
+        })
     }
     render() {
-        const props = {
-            name: 'file',
-            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-            headers: {
-                authorization: 'authorization-text',
-            },
-            onChange(info) {
-                if (info.file.status !== 'uploading') {
-                    console.log(info.file, info.fileList);
-                }
-                if (info.file.status === 'done') {
-                    message.success(`${info.file.name} 图片上传成功`);
-                } else if (info.file.status === 'error') {
-                    message.error(`${info.file.name} 图片上传失败`);
-                }
-            },
-        };
+        const uploadButton = (
+            <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
+        const { imageUrl } = this.state;
 
         return (
             <div className="setUpView">
-                <div className="basicTitle">课程信息</div>
+                <div className="coursesAdd1">
+                    <div className="basicTitle">课程信息</div>
+                    <Button onClick={this.addForm.bind(this)} style={{ margin: '20px' }}>添加</Button>
+                </div>
                 <div className="basicBox">
                     <Table
+                        rowKey={record => record.id}
+                        className="table"
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                         pagination={false}
                         scroll={{ y: 800 }}
-                        expandedRowRender={this.expandedRowRender}
                     />
-                    <Button onClick={this.showForm.bind(this)} style={{ margin: '20px' }}>添加</Button>
+                    <div className="opacity" ref="opacity"></div>
+                    <div className="addChapters" ref="addChapters">
+                        <div className="addTeacherTitle">课程章节添加</div>
+                        <div className="flex">
+                            <div>章节名称：</div>
+                            <Input value={this.state.chapterName} onChange={this.onChangeChapters.bind(this)} className="input" />
+                        </div>
+                        <div className="button">
+                            <Button onClick={this.addChaper.bind(this)}>提交</Button>
+                            <Button type="primary" onClick={this.closeChaper.bind(this)}>
+                                取消
+            </Button>
+                        </div>
+                    </div>
                     <div className="addForm teacherForm" ref="addForm">
-                        <div className="addTeacherTitle">老师添加</div>
+                        {
+                            this.state.isAdd === true ? (<div className="addTeacherTitle">课程添加</div>) : (<div className="addTeacherTitle">课程修改</div>)
+                        }
                         <Form
                             name="nest-messages"
                             {...layout}
                             style={{ marginTop: '10px' }}
                         >
                             <Form.Item name='name' label="课程名称" rules={[{ required: true }]}>
-                                <Input />
+                                <Input ref="name" value={this.state.name} onChange={this.onChangeName.bind(this)} />
                             </Form.Item>
                             <Form.Item name='introduce' label="课程介绍" >
-                                <Input />
+                                <Input ref="introduce" value={this.state.introduce} onChange={this.onChangeIntro.bind(this)} />
+                            </Form.Item>
+                            <Form.Item name="radio-button" label="课程类型">
+                                <Radio.Group buttonStyle="solid" value={this.state.type} onChange={this.onChangeType.bind(this)}>
+                                    <Radio.Button value={1}>编程语言</Radio.Button>
+                                    <Radio.Button value={2}>前端开发</Radio.Button>
+                                    <Radio.Button value={3}>后端开发</Radio.Button>
+                                    <Radio.Button value={4}>移动开发</Radio.Button>
+                                    <Radio.Button value={5}>网络安全</Radio.Button>
+                                </Radio.Group>
                             </Form.Item>
                             <Form.Item name="url" label="课程图片">
-                                <Upload {...props}>
-                                    <Button>
-                                        上传图片
-                                    </Button>
+                                <Upload
+                                    ref="uploadImg"
+                                    name="avatar"
+                                    listType="picture-card"
+                                    className="avatar-uploader"
+                                    showUploadList={false}
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    beforeUpload={this.beforeUpload.bind(this)}
+                                    onChange={this.handleChangeimg}
+                                >
+                                    {imageUrl ? (
+                                        <img src={imageUrl} alt="avatar" style={{ width: 70 }} />
+                                    ) : (
+                                            uploadButton
+                                        )}
                                 </Upload>
                             </Form.Item>
                             <Form.Item wrapperCol={{ span: 24, offset: 6 }}>
-                                <Button type="primary" htmlType="submit" style={{ marginRight: 20 }}>
+                                {this.state.isAdd === true ? (<Button type="primary" htmlType="submit" style={{ marginRight: 20 }} onClick={this.add.bind(this)}>
                                     保存
-                            </Button>
+                                </Button>) : (<Button onClick={this.update.bind(this)}>提交更改</Button>)}
+
                                 <Button type="primary" onClick={this.closeForm.bind(this)}>
                                     取消
                             </Button>

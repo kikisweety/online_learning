@@ -3,6 +3,8 @@ package com.ff.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ff.dao.TeacherMapper;
+import com.ff.pojo.Teacher;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import com.ff.service.CourseService;
 public class CourseController {
 	@Autowired
 	private CourseService courseService;
+	@Autowired
+	private TeacherMapper teacherMapper;
 
 	/**
 	 * 根据科目的ID查询对应的课程
@@ -61,8 +65,11 @@ public class CourseController {
 	 */
 	@RequestMapping(value = "courses/add")
 	@ResponseBody
-	public Msg addCourses(Course course, HttpServletResponse resp, HttpServletRequest req) {
-
+	public Msg addCourses(Course course,@Param("teacherName")String teacherName, HttpServletResponse resp, HttpServletRequest req) {
+		if (teacherName!=null){
+			Teacher teacher=teacherMapper.selectTeacher(teacherName);
+			course.setTeacherId(teacher.getId());
+		}
 		return courseService.insertCourses(course, req);
 	}
 

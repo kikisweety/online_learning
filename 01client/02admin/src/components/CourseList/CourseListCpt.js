@@ -28,7 +28,9 @@ export default class MyUserAdd extends React.Component {
   }
   componentDidMount() {
     let that = this;
-    net.get("courses/all", {}, function(ob) {
+    net.get("courses/all", {}, function (ob) {
+      console.log(ob);
+      
       that.setState({
         courses: ob.data.object
       });
@@ -164,7 +166,7 @@ export default class MyUserAdd extends React.Component {
             margin: "0 auto",
             position: "relative"
           }}
-          pagination={{ pageSize: 12, position: "right" }}
+          pagination={{ pageSize: 5 }}
         />
       </div>
     );

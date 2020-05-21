@@ -217,7 +217,6 @@ export default class Add extends React.Component {
     }
   };
   edit(record) {
-    
     let name = record.name;
     let type = record.tType;
     let introduceText = record.introduce;
@@ -425,7 +424,7 @@ export default class Add extends React.Component {
           </div>
 
           <div className="button">
-            {this.state.isAdd === true ? (<Button onClick={this.upload.bind(this)}>提交</Button>) : (<Button onClick={this.update.bind(this)}>保存</Button>)}
+            {this.state.isAdd === true ? (<Button onClick={this.upload.bind(this)}>保存</Button>) : (<Button onClick={this.update.bind(this)}>提交更改</Button>)}
             <Button type="primary" onClick={this.addFormNone.bind(this)}>
               取消
             </Button>

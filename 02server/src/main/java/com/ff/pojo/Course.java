@@ -49,9 +49,7 @@ public class Course {
 		super();
 	}
 
-	public Course(int id, String name, int state, String introduce, String url, int teacherId, int ctype,
-			List<Chapter> chapters) {
-		super();
+	public Course(int id, String name, int state, String introduce, String url, int teacherId, int ctype, int courseType, List<Chapter> chapters) {
 		this.id = id;
 		this.name = name;
 		this.state = state;
@@ -59,6 +57,7 @@ public class Course {
 		this.url = url;
 		this.teacherId = teacherId;
 		this.ctype = ctype;
+		this.courseType = courseType;
 		this.chapters = chapters;
 	}
 

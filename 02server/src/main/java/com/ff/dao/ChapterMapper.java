@@ -41,7 +41,7 @@ public interface ChapterMapper {
 	 * 
 	 * @return 课程列表
 	 */
-	List<Chapter> selectByName(Chapter chapter);
+	List<Chapter> selectByName(String name);
 
 	List<Chapter> selectAllQuestionsOfChaptersByCoursesId(int id);
 

@@ -59,7 +59,7 @@ public class ChapterServiceImpl implements ChapterService {
 
 		// 查询章节
 
-		Msg msg = selectChaptersByName(chapter);
+		Msg msg = selectChaptersByName(chapter.getName());
 		if (msg.getCode() == 1) {
 
 			msg.setCode(0);
@@ -81,9 +81,9 @@ public class ChapterServiceImpl implements ChapterService {
 	}
 
 	@Override
-	public Msg selectChaptersByName(Chapter chapter) {
+	public Msg selectChaptersByName(String name) {
 		Msg msg = new Msg();
-		List<Chapter> list = chapterMapper.selectByName(chapter);
+		List<Chapter> list = chapterMapper.selectByName(name);
 		if (list != null && list.size() >= 1) {
 			msg.setCode(1);
 			msg.setMsg("查询数据成功！");

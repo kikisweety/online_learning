@@ -35,10 +35,6 @@ export default class CoursesAdd extends React.Component {
     return (
       <div className="coursesAdd">
         <Tabs
-          // className="tabs"
-          // activeKey={this.state.activeKey}
-          // defaultActiveKey="1"
-          // onChange={this.onTabsChange.bind(this)}
           className="tabs" defaultActiveKey="1" onChange={this.callback.bind(this)}
         >
           <TabPane className="courseTabs" tab="课程视频" key="1">
@@ -47,7 +43,7 @@ export default class CoursesAdd extends React.Component {
           <TabPane tab="课程信息" key="2">
             <CourseInformation></CourseInformation>
           </TabPane>
-          <TabPane tab="课程试卷" key="3">
+          <TabPane tab="课程章节" key="3">
             {/* <CourseCreate></CourseCreate> */}
             <Switch>
               <Route

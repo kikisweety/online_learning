@@ -1,7 +1,7 @@
 import React from "react";
 import './courseInfo.css';
 import net from "../../../../../../utils/net";
-import { Form, Input, Button, Table, Upload, message, Icon, Select, Radio,Modal } from 'antd';
+import { Form, Input, Button, Table, Upload, message, Icon, Select, Radio, Modal, Divider } from 'antd';
 const { Option } = Select;
 const { confirm } = Modal;
 const layout = {
@@ -31,14 +31,13 @@ export default class CouresInfo extends React.Component {
                     title: '课程名称',
                     dataIndex: 'name',
                     key: 'name',
-                    // render: (text) => {
-                    //     return <div style={{ width: "50px" }}>{text}</div>
-                    // }
+                    width: 100
                 },
                 {
                     title: "课程章节",
                     dataIndex: "chapters",
                     key: "chapters",
+                    width: 150,
                     render: chapters => {
                         if (chapters.length < 1) {
                             return;
@@ -61,11 +60,13 @@ export default class CouresInfo extends React.Component {
                     title: '课程介绍',
                     dataIndex: 'introduce',
                     key: 'introduce',
+                    width: 200,
                 },
                 {
                     title: "课程图片",
                     dataIndex: "url",
                     key: "url",
+                    width: 200,
                     render: (url) => {
                         return (
                             <div>
@@ -77,10 +78,13 @@ export default class CouresInfo extends React.Component {
                 {
                     title: '操作',
                     key: 'action',
+                    width: 200,
                     render: (record) => (
                         <span>
                             <a style={{ marginRight: 20 }} onClick={this.showChaper.bind(this, record)}>添加章节</a>
+                            <Divider type="vertical" />
                             <a style={{ marginRight: 20 }} onClick={this.edit.bind(this, record)}>修改</a>
+                            <Divider type="vertical" />
                             <a onClick={this.delete.bind(this,record)}>删除</a>
                         </span>
                     )
@@ -284,6 +288,7 @@ export default class CouresInfo extends React.Component {
                 </div>
                 <div className="basicBox">
                     <Table
+                        bordered
                         rowKey={record => record.id}
                         className="table"
                         dataSource={this.state.dataSource}

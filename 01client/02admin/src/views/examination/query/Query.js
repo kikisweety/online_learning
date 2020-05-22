@@ -44,36 +44,43 @@ export default class ExaminationQuery extends React.Component {
           title: '题目',
           dataIndex: 'title',
           key: 'title',
+          width:200,
           render: text => <a>{text}</a>,
         },
         {
           title: '选项A',
           dataIndex: 'textA',
-          key: 'textA'
+          key: 'textA',
+          width:200
         },
         {
           title: '选项B',
           dataIndex: 'textB',
-          key: 'textB'
+          key: 'textB',
+          width:200
         },
         {
           title: '选项C',
           dataIndex: 'textC',
-          key: 'textC'
+          key: 'textC',
+          width:200
         },
         {
           title: '选项D',
           dataIndex: 'textD',
-          key: 'textD'
+          key: 'textD',
+          width:200
         },
         {
           title: '答案',
           dataIndex: 'answer',
-          key: 'answer'
+          key: 'answer',
+          width:200
         },
         {
           title: '操作',
           dataIndex: 'action',
+          width:200,
           render: (text, record) => {
             return (
               <div>
@@ -267,6 +274,7 @@ export default class ExaminationQuery extends React.Component {
         {/* 题库表单 */}
         <div className="table-Bank">
           <Table
+            bordered
             rowKey={record => record.id}
             rowSelection={rowSelection}
             columns={this.state.columns}

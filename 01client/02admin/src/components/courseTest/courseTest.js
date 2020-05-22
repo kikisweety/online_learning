@@ -15,11 +15,12 @@ export default class MyCourseTest extends React.Component {
       currentCourse: [],
       isAdd:true,
       newColumns:[
-        { title: '课程名称', dataIndex: 'name', key: 'name' },
-        { title: '课程介绍', dataIndex: 'introduce', key: 'introduce' },
+        { title: '课程名称', dataIndex: 'name', key: 'name',width:200 },
+        { title: '课程介绍', dataIndex: 'introduce', key: 'introduce',width:200 },
         {
           title: '操作',
           dataIndex: 'action',
+          width:200,
           render: (text,record) => (
             <span>
               <Button style={{ backgroundColor: "#43BB60", color: "white", marginRight: 10 }} onClick={this.showChaper.bind(this, record)}>添加章节</Button>
@@ -125,10 +126,11 @@ export default class MyCourseTest extends React.Component {
   }
   expandedRowRender = (record) => {
     const columns = [
-      { title: "章节名称", dataIndex: "name", key: "name" },
+      { title: "章节名称", dataIndex: "name", key: "name",width:100 },
       {
         title: '操作',
         key: 'action',
+        width:200,
         render: (record) => (
           <span>
             <Button style={{ backgroundColor: "#43BB60", color: "white", marginRight: 10 }} onClick={this.edit.bind(this,record)}>修改</Button>
@@ -136,7 +138,9 @@ export default class MyCourseTest extends React.Component {
           </span>
         ) }
     ];
-    return <Table columns={columns}
+    return <Table
+      bordered
+      columns={columns}
       dataSource={record.chapters}
       pagination={false} />;
   };
@@ -164,6 +168,7 @@ export default class MyCourseTest extends React.Component {
         </div>
         <Table
           rowKey={record => record.id}
+          bordered
           className="components-table-demo-nested courseTable"
           columns={this.state.newColumns}
           style={{ width: "98.5%",height:500, margin: "0 auto", margin: "10px" }}

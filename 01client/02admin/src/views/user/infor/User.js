@@ -255,6 +255,7 @@ export default class User extends React.Component {
             style={{ width: "100%", height: 500, margin: "10px auto" }}
             pagination={{ pageSize: 8 }}
             scroll={{ y: 500 }}
+            bordered
           ></Table>
         </div>
         {/* 用户添加 */}

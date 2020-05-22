@@ -17,6 +17,7 @@ export default class MyOrder extends React.Component {
                     title: '商品名称',
                     dataIndex: 'commodityName',
                     key: 'commodityName',
+                    width:200,
                     render: (text) => {
                         return <div style={{ width: "200px" }}>{text}</div>
                     }
@@ -25,20 +26,24 @@ export default class MyOrder extends React.Component {
                     title: '单价（元）',
                     dataIndex: 'commodityPrice',
                     key: 'commodityPrice',
+                    width: 200,
                 },
                 {
                     title: '购买数量',
                     dataIndex: 'amount',
                     key: 'amount',
+                    width: 200,
                 },
                 {
                     title: '总价',
                     dataIndex: 'totalPrice',
                     key: 'totalPrice',
+                    width: 200,
                 },
                 {
                     title: '操作',
                     key: 'action',
+                    width: 200,
                     render: (text, record) => {
                         return (
                             <div>
@@ -142,6 +147,7 @@ export default class MyOrder extends React.Component {
                 <div className="basicTitle">订单记录</div>
                 <div className="basicBox">
                     <Table
+                        bordered
                         rowKey={record => record.id}
                         pagination={false}
                         rowSelection={rowSelection}

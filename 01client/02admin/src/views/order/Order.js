@@ -14,36 +14,43 @@ export default class Order extends React.Component {
                     title: '商品名称',
                     dataIndex: 'commodityName',
                     key: 'commodityName',
+                    width:200,
                     render: text => <a>{text}</a>,
                 },
                 {
                     title: '商品价格',
                     dataIndex: 'commodityPrice',
-                    key: 'commodityprice'
+                    key: 'commodityprice',
+                    width: 200,
                 },
                 {
                     title: '购买人',
                     dataIndex: 'buyUser',
-                    key: 'buyUser'
+                    key: 'buyUser',
+                    width: 200,
                 },
                 {
                     title: '购买日期',
                     dataIndex: 'buyDate',
-                    key: 'buyDate'
+                    key: 'buyDate',
+                    width: 200,
                 },
                 {
                     title: '数量',
                     dataIndex: 'amount',
-                    key: 'amount'
+                    key: 'amount',
+                    width: 200,
                 },
                 {
                     title: '总价',
                     dataIndex: 'totalPrice',
-                    key: 'totalPrice'
+                    key: 'totalPrice',
+                    width: 200,
                 },
                 {
                     title: '操作',
                     key: 'action',
+                    width: 200,
                     render: (text, record) => {
                         var that = this;
                         return (
@@ -150,6 +157,7 @@ export default class Order extends React.Component {
           </Button>
                     </div>
                     <Table
+                        bordered
                         rowKey={record => record.id}
                         columns={this.state.columns}
                         dataSource={this.state.allOrder}

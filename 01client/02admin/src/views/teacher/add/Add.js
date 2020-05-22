@@ -46,12 +46,14 @@ export default class Add extends React.Component {
         {
           title: "姓名",
           dataIndex: "name",
-          key: "name"
+          key: "name",
+          width:200
         },
         {
           title: "照片",
           dataIndex: "tkey",
           key: "tkey",
+          width:200,
           render: (tkey) => {
             return (
               <img src={tkey} style={{ width: 50, height: 50 }} />
@@ -61,16 +63,19 @@ export default class Add extends React.Component {
         {
           title: "介绍",
           dataIndex: "introduce",
-          key: "introduce"
+          key: "introduce",
+          width:200
         },
         {
           title: "职称",
           dataIndex: "tType",
           key: "tType",
+          width:200
         },
         {
           title: '操作',
           key: 'action',
+          width:200,
           render: (text, record) => {
             return (
               <div>
@@ -356,6 +361,7 @@ export default class Add extends React.Component {
           </Button>
           </div>
           <Table
+            bordered
             rowKey={record => record.id}
             isLoading={this.state.isLoading}
             columns={this.state.columns}

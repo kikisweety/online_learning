@@ -33,12 +33,14 @@ export default class Commodity extends React.Component {
                     title: '商品名称',
                     dataIndex: 'commodityName',
                     key: 'commodityName',
+                    width: 200,
                     render: text => <a>{text}</a>,
                 },
                 {
                     title: '商品图片',
                     dataIndex: 'url',
                     key: 'url',
+                    width: 200,
                     render: text => { 
                         return <div style={{ overflow: 'hidden',whiteSpace: 'nowrap',textOverflow:'ellipsis'}}>{text}</div>
                     }
@@ -47,6 +49,7 @@ export default class Commodity extends React.Component {
                     title: '价格',
                     dataIndex: 'commodityPrice',
                     key: 'commodityPrice',
+                    width: 200,
                     render: text => {
                         return <div>{text}元</div>
                     }
@@ -54,12 +57,14 @@ export default class Commodity extends React.Component {
                 {
                     title: '库存',
                     dataIndex: 'amount',
-                    key: 'amount'
+                    key: 'amount',
+                    width: 200,
                 },
                 {
                     title: '商品详情',
                     dataIndex: 'commodityDetails',
                     key: 'commodityDetails',
+                    width: 200,
                     render: text => {
                         return <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{text}</div>
                     }
@@ -67,6 +72,7 @@ export default class Commodity extends React.Component {
                 {
                     title: '操作',
                     key: 'action',
+                    width: 200,
                     render: (text, record) => {
                         return (
                             <div>
@@ -329,6 +335,7 @@ export default class Commodity extends React.Component {
           </Button>
                     </div>
                     <Table
+                        bordered
                         rowKey={record => record.id}
                         columns={this.state.columns}
                         dataSource={this.state.allCommodity}

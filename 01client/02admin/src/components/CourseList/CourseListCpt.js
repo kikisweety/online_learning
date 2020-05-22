@@ -29,12 +29,14 @@ export default class MyUserAdd extends React.Component {
         {
           title: "课程编号",
           dataIndex: "id",
-          key: "id"
+          key: "id",
+          width:200
         },
         {
           title: "课程状态",
           dataIndex: "state",
           key: "state",
+          width: 200,
           render: text => {
             if (text == 0) {
               return "未发布";
@@ -48,17 +50,20 @@ export default class MyUserAdd extends React.Component {
         {
           title: "名称",
           dataIndex: "name",
-          key: "name"
+          key: "name",
+          width: 200
         },
         {
           title: "介绍",
           dataIndex: "introduce",
-          key: "introduce"
+          key: "introduce",
+          width: 200
         },
         {
           title: "课程图片",
           dataIndex: "url",
           key: "url",
+          width:200,
           render: (url) => {
             return (
               <div>
@@ -71,6 +76,7 @@ export default class MyUserAdd extends React.Component {
           title: "操作",
           dataIndex: "action",
           key: "action",
+          width:200,
           render: (text, record) => {
             return (
               <div>
@@ -273,6 +279,7 @@ export default class MyUserAdd extends React.Component {
           rowKey={record => record.id}
           dataSource={this.state.courses}
           columns={this.state.columns}
+          bordered
           style={{
             width: "100%",
             margin: "0 auto",

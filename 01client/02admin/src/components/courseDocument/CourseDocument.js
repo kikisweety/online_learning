@@ -56,10 +56,11 @@ export default class CourseDocument extends React.Component {
   }
   expandedRowRender = (record) => {
     const columns = [
-      { title: "视频名称", dataIndex: "name", key: "name" },
+      { title: "视频名称", dataIndex: "name", key: "name",width:200 },
       {
         title: "视频链接",
         key: "url",
+        width: 200,
         render: ob => {
           let url = ob.url;
           let id = ob.id;
@@ -87,6 +88,7 @@ export default class CourseDocument extends React.Component {
       {
         title: '操作',
         key: 'action',
+        width: 200,
         render: (text,record) => {
           var that = this;
           return (
@@ -114,7 +116,7 @@ export default class CourseDocument extends React.Component {
     let length = allLeaf.length;
     for (let i = 0; i < length; i++) {
       if (record.id === i + 1) {
-        return <Table key={i} columns={columns} dataSource={buffer} pagination={false} />
+        return <Table bordered key={i} columns={columns} dataSource={buffer} pagination={false} />
       }
     }
 
@@ -328,11 +330,12 @@ export default class CourseDocument extends React.Component {
 
   render() {
     const columns = [
-      { title: "课程名称", dataIndex: "name", key: "name" },
+      { title: "课程名称", dataIndex: "name", key: "name",width:200 },
       {
         title: "课程章节",
         dataIndex: "chapters",
         key: "chapters",
+        width: 200,
         render: chapters => {
           if (chapters.length < 1) {
             return;
@@ -351,7 +354,7 @@ export default class CourseDocument extends React.Component {
           );
         }
       },
-      { title: '课程介绍', dataIndex: 'introduce', key: 'introduce' },
+      { title: '课程介绍', dataIndex: 'introduce', key: 'introduce', width: 200 },
     ];
     return (
       <div className="coursesAdd-1">
@@ -369,6 +372,7 @@ export default class CourseDocument extends React.Component {
 
           <div className="addCourseBox">
             <Table
+              bordered
               style={{ maxWidth: '100%', margin: "0 auto", margin: "10px" }}
               className="components-table-demo-nested courseTable"
               columns={columns}

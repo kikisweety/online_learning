@@ -150,7 +150,6 @@ export default class MyUserAdd extends React.Component {
     });
   }
   edit(record) {
-    console.log(record);
     let name = record.name;
     let introduce = record.introduce;
     let type = record.courseType;

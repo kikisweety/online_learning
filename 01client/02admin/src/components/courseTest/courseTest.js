@@ -55,6 +55,7 @@ export default class MyCourseTest extends React.Component {
     this.refs.addChapters.style.display = "block";
     this.refs.opacity.style.display = "block";
     this.setState({
+      isAdd:true,
       chapterName:'',
       currentCourse: record
     })
@@ -76,11 +77,11 @@ export default class MyCourseTest extends React.Component {
       }
     })
   };
-  edit(record) { 
-    console.log(record);
+  edit(record) {
     let name = record.name;
     let id = record.id;
     this.setState({
+      isAdd:false,
       chapterName: name,
       chapterId:id
     })
@@ -91,8 +92,8 @@ export default class MyCourseTest extends React.Component {
     let that = this;
     let name = this.state.chapterName;
     let chapterId = this.state.chapterId;
-    net.uploadFile("", {name:name,chapterId:chapterId},function (ob) {
-      if (ob.code==1) {
+    net.uploadFile("chapters/update", {name:name,id:chapterId},function (ob) {
+      if (ob.code == 1) {
         message.success(ob.msg);
         that.refs.addChapters.style.display = "none";
         that.refs.opacity.style.display = "none";
@@ -108,10 +109,12 @@ export default class MyCourseTest extends React.Component {
       content: '确定删除吗？',
       onOk() {
         return net.get(
-          "courses/delete", { id: id },
+          "chapters/delete", { id: id },
           function (res) {
-            message.success(res.msg);
-            that.getCourses();
+            if (res.data.code==1) {
+              message.success(res.data.msg);
+              that.getChapter();
+            }
           }
         )
       },

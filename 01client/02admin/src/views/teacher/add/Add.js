@@ -226,7 +226,7 @@ export default class Add extends React.Component {
       name: name,
       type: type,
       introduceText: introduceText,
-      imageUrl:imageUrl,
+      imageUrl: imageUrl,
       currentData: record,
     })
     this.refs.addform.style.display = "block";

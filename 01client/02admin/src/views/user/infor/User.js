@@ -2,7 +2,7 @@ import React from "react";
 import "./User.css";
 import net from "../../../utils/net";
 import {
-  Button, Table, Select, Popconfirm, Form, Input, InputNumber, Radio, Modal
+  Button, Table, Select, Popconfirm, Form, Input, InputNumber, Radio, Modal, message
 } from "antd";
 const layout = {
   labelCol: { span: 5 },
@@ -15,7 +15,13 @@ export default class User extends React.Component {
     this.state = {
       age: null,
       userId: "",
-      searchName:'',
+      searchName: '',
+      isAdd: true,
+      name: '',
+      loginName:'',
+      age: '',
+      sex: '',
+      currentUser:[],
       columns: [
         {
           title: '用户名',
@@ -57,7 +63,7 @@ export default class User extends React.Component {
             var that = this;
             return (
                 <div>
-                  <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} onClick={this.update.bind(this, record)} >修改</Button>
+                  <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} onClick={this.edit.bind(this, record)} >修改</Button>
                   <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record.userId)}>删除</Button>
               </div>
             )
@@ -88,6 +94,13 @@ export default class User extends React.Component {
     this.getUser();
   };
   displayAddForm() {
+    this.setState({
+      isAdd:true,
+      name: '',
+      age: '',
+      sex: '',
+      loginName:''
+    })
     this.refs.userForm.style.display = "block";
     this.refs.opacity.style.display = "block";
   }
@@ -130,9 +143,54 @@ export default class User extends React.Component {
       }
     )
   }
-  update(record) {
-
-   }
+  changeName(e) {
+    this.setState({
+      name: e.target.value
+    })
+  };
+  changeAge(value) {
+    this.setState({
+      age: value
+    })
+  };
+  changeSex(e) {
+    this.setState({
+      sex: e.target.value
+    })
+  }
+  edit(record) {
+    let name = record.name;
+    let age = record.age;
+    let sex = record.sex;
+    let loginName = record.loginName;
+    this.setState({
+      isAdd: false,
+      name: name,
+      age: age,
+      sex: sex,
+      loginName:loginName,
+      currentUser:record
+    })
+    this.refs.userForm.style.display = "block";
+    this.refs.opacity.style.display = "block"
+  };
+  update() { 
+    let that = this;
+    let name = this.state.name;
+    let age = this.state.age;
+    let sex = this.state.sex;
+    let userId = this.state.currentUser.userId;
+    console.log(name,age,sex,userId);
+    net.uploadFile("user/update", {userId,name,age,sex},function (ob) {
+      if (ob.code==1) {
+        message.success(ob.msg);
+        that.refs.userForm.style.display = "none";
+        that.refs.opacity.style.display = "none";
+        that.getUser();
+      }
+      
+    })
+  }
   delete(userId) {
     confirm({
       title: '提示',
@@ -201,28 +259,28 @@ export default class User extends React.Component {
         </div>
         {/* 用户添加 */}
         <div className="addForm" ref="userForm">
-          <div className="addTeacherTitle">用户添加</div>
+          {this.state.isAdd == true ? (<div className="addTeacherTitle">用户添加</div>) : (<div className="addTeacherTitle">用户修改</div>)}
           <Form
             name="nest-messages"
             {...layout}
             style={{ width: '100%', marginTop: 20 }}>
             <Form.Item name={['user', 'name']} label="姓名：" rules={[{ required: true }]}>
-              <Input placeholder="请输入姓名" ref="inputName" />
+              <Input value={this.state.name} onChange={this.changeName.bind(this)} placeholder="请输入姓名"  ref="inputName" />
             </Form.Item>
             <Form.Item name={['user', 'age']} label="年龄" rules={[{ type: 'number', min: 0, max: 99 }]}>
-              <InputNumber onChange={this.handleAge.bind(this)} />
+              <InputNumber value={this.state.age} onChange={this.changeAge.bind(this)} onChange={this.handleAge.bind(this)} />
             </Form.Item>
             <Form.Item name="radio-button" label="性别">
-              <Radio.Group ref="sex">
+              <Radio.Group buttonStyle="solid" ref="sex" value={this.state.sex} onChange={this.changeSex.bind(this)}>
                 <Radio.Button value="man">男</Radio.Button>
                 <Radio.Button value="woman">女</Radio.Button>
               </Radio.Group>
             </Form.Item>
             <Form.Item name={['user', 'loginName']} label="昵称：">
-              <Input placeholder="请输入昵称" ref="inputLoginName" />
+              <Input value={this.state.loginName} placeholder="请输入昵称" ref="inputLoginName" />
             </Form.Item>
             <Form.Item name="button" className="formButton">
-              <Button onClick={this.upload.bind(this)} type="primary" style={{ marginRight: 20 }}>提交</Button>
+              {this.state.isAdd == true ? (<Button onClick={this.upload.bind(this)} type="primary" style={{ marginRight: 20 }}>保存</Button>) : (<Button onClick={this.update.bind(this)} type="primary" style={{ marginRight: 20 }}>提交修改</Button>)}
               <Button type="primary"
                 onClick={this.closeForm.bind(this)}
               >

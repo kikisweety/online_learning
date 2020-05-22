@@ -22,9 +22,12 @@ export default class Commodity extends React.Component {
             fileList1: [],
             loading: false,
             isLoading: false,
-            price: null,
+            commodityName: '',
+            commodityPrice: null,
             amount: null,
-            searchName:'',
+            searchName: '',
+            isAdd: true,
+            currentCommodity:[],
             columns: [
                 {
                     title: '商品名称',
@@ -67,7 +70,7 @@ export default class Commodity extends React.Component {
                     render: (text, record) => {
                         return (
                             <div>
-                                <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} >修改</Button>
+                                <Button style={{ marginRight: 10, background: "#43BB60", color: 'white' }} onClick={this.edit.bind(this,record)}>修改</Button>
                                 <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
                             </div>
                         )
@@ -78,6 +81,14 @@ export default class Commodity extends React.Component {
         };
     }
     displayAddForm() {
+        this.setState({
+            isAdd:true,
+            commodityName: '',
+            commodityPrice: null,
+            amount: '',
+            imageUrl: '',
+            imageUrl1:''
+        })
         this.refs.commodityForm.style.display = "block";
         this.refs.opacity.style.display = "block";
     }
@@ -109,14 +120,40 @@ export default class Commodity extends React.Component {
             );
         }
     };
+    beforeUpload1(file) {
+        const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+        if (!isJpgOrPng) {
+            message.error("你只能传图片格式为JPG/PNG!");
+        }
+        let fileList = this.state.fileList;
+        fileList.push(file);
+        this.setState({ fileList: fileList });
+        return isJpgOrPng;
+    }
+    handleChangeimg1 = info => {
+        if (info.file.status === "uploading") {
+            this.setState({ loading: true });
+            return;
+        }
+        if (info.file.status === "done") {
+            getBase64(info.file.originFileObj, imageUrl1 =>
+                this.setState({
+                    imageUrl1,
+                    loading: false
+                })
+            );
+        }
+    };
     uploadDetail(file) {
         let fileList = this.state.fileList;
         fileList.push(file);
         this.setState({ fileList: fileList });
     };
+    changeImg(info) { 
+    }
     handlePrice(e) { 
         this.setState({
-            price:e
+            commodityPrice:e
         })
     };
     handleAmount(e) {
@@ -126,7 +163,7 @@ export default class Commodity extends React.Component {
     };
     upload() {
         let commodityName = this.refs.inputName.state.value;
-        let commodityPrice = this.state.price;
+        let commodityPrice = this.state.commodityPrice;
         let amount = this.state.amount;
         let fileList = this.state.fileList;
         let that = this;
@@ -149,7 +186,54 @@ export default class Commodity extends React.Component {
             let allCommodity = ob.data.object;
             that.setState({ allCommodity: allCommodity });
         })
+    };
+    onChangeName(e) { 
+        this.setState({
+            commodityName:e.target.value
+        })
+    };
+    edit(record) {
+        console.log(record);
+        let commodityName = record.commodityName;
+        let amount = record.amount;
+        let commodityPrice = record.commodityPrice;
+        let imageUrl = record.url;
+        let imageUrl1 = record.commodityDetails;
+        this.setState({
+            isAdd: false,
+            commodityName: commodityName,
+            amount: amount,
+            commodityPrice: commodityPrice,
+            imageUrl: imageUrl,
+            imageUrl1:imageUrl1,
+            currentCommodity: record
+        });
+        this.refs.commodityForm.style.display = "block";
+        this.refs.opacity.style.display = "block";
      };
+    update() {
+        let that = this;
+        let commodityName = this.state.commodityName;
+        let commodityPrice = this.state.commodityPrice;
+        let amount = this.state.amount;
+        let fileList = this.state.fileList;
+        let id = this.state.currentCommodity.id;
+        net.uploadFile("commodity/update", {
+            id: id,
+            commodityName: commodityName,
+            commodityPrice: commodityPrice,
+            amount:amount,
+            files:fileList
+        }, function (ob) {
+            if (ob.code==1) {
+                message.success(ob.msg);
+                that.refs.commodityForm.style.display = "none";
+                that.refs.opacity.style.display = "none";
+                that.getCommodity();
+            }
+            
+        })
+     }
     delete(record) {
         let that = this;
         let id = record.id;
@@ -198,6 +282,13 @@ export default class Commodity extends React.Component {
             </div>
         );
         const { imageUrl } = this.state;
+        const uploadButton1 = (
+            <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
+        const { imageUrl1 } = this.state;
         return (
             <div className="addView">
                 <div className="addCourseList" ref="box">
@@ -248,13 +339,13 @@ export default class Commodity extends React.Component {
                 </div>
                 {/* 商品添加 */}
                 <div className="addForm" ref="commodityForm">
-                    <div className="addTeacherTitle">商品添加</div>
+                    {this.state.isAdd == true ? (<div className="addTeacherTitle">商品添加</div>) : (<div className="addTeacherTitle">商品修改</div>)}
                     <Form
                         name="nest-messages"
                         {...layout}
                         style={{ width: '100%', marginTop: 20 }}>
                         <Form.Item name={['commodity_name']} label="商品名称：" rules={[{ required: true }]}>
-                            <Input placeholder="请输入商品名称" ref="inputName" />
+                            <Input value={this.state.commodityName} onChange={this.onChangeName.bind(this)} placeholder="请输入商品名称" ref="inputName" />
                         </Form.Item>
                         <Form.Item name={['url']} label="商品图片：">
                             <Upload
@@ -275,23 +366,31 @@ export default class Commodity extends React.Component {
                             </Upload>
                         </Form.Item>
                         <Form.Item name={['commodity_price']} label="价格：" rules={[{ type: 'number', min: 0, max: 99 }]}>
-                            <InputNumber onChange={this.handlePrice.bind(this)}/>
+                            <InputNumber value={this.state.commodityPrice} onChange={this.handlePrice.bind(this)}/>
                         </Form.Item>
                         <Form.Item name={['amount']} label="库存：">
-                            <InputNumber onChange={this.handleAmount.bind(this)}/>
+                            <InputNumber value={this.state.amount} onChange={this.handleAmount.bind(this)}/>
                         </Form.Item>
                         <Form.Item name={['commodity_detail']} label="商品详情：">
-                            <Upload name="logo"
+                            <Upload
+                                ref="uploadImg1"
+                                name="avatar1"
+                                listType="picture-card"
+                                className="avatar-uploader"
+                                showUploadList={false}
                                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                listType="picture"
-                                beforeUpload={this.uploadDetail.bind(this)}>
-                                <Button>
-                                    <Icon type="upload" /> 点击选择图片
-              </Button>
+                                beforeUpload={this.beforeUpload1.bind(this)}
+                                onChange={this.handleChangeimg1}
+                            >
+                                {imageUrl1 ? (
+                                    <img src={imageUrl1} alt="avatar" style={{ width: 70,height:70 }} />
+                                ) : (
+                                        uploadButton1
+                                    )}
                             </Upload>
                         </Form.Item>
                         <Form.Item name="button" className="formButton" style={{ margin:'auto'}}>
-                            <Button type="primary" style={{ marginRight: 20 }} onClick={this.upload.bind(this)}>提交</Button>
+                            {this.state.isAdd == true ? (<Button type="primary" style={{ marginRight: 20 }} onClick={this.upload.bind(this)}>保存</Button>) : (<Button type="primary" style={{ marginRight: 20 }} onClick={this.update.bind(this)}>提交修改</Button>)}
                             <Button type="primary"
                                 onClick={this.closeForm.bind(this)}
                             >

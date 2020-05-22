@@ -1,27 +1,25 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "./Add.css";
 import net from "../../../utils/net";
-import StringUtil from "../../../utils/StringUtil";
-import { Form, Select, Input, Button, Radio, Cascader, message,TreeSelect } from "antd";
+import { Form, Select, Input, Button, Radio,  message,TreeSelect } from "antd";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 const { TreeNode } = TreeSelect;
-// const { TextArea } = Input;
-
-// Just show the latest item.
 function displayRender(label) {
   return label[label.length - 1];
 }
 class ExaminationAdd extends React.Component {
   constructor(props) {
     super(props);
-    // this.examList = props.location.state.examList;
     this.state = {
       data: [],
       chapterId: -1,
       courses: [],
-      answer: "0",
-      deep: "a",
+      textA: 'textA',
+      textB: 'textB',
+      textC: 'textC',
+      textD:'textD',
+      answer: '',
+      deep: '',
       value: undefined
     };
   }
@@ -32,7 +30,6 @@ class ExaminationAdd extends React.Component {
     this.getId();
     let that = this;
     net.post("courses/and/chapters", {}, function (ob) {
-      console.log(ob);
       that.setState({
         courses: ob.object
       });
@@ -42,11 +39,19 @@ class ExaminationAdd extends React.Component {
     console.log(e);
   };
   getValue = (event) => {
+    let textA = this.refs.textA.state.value;
+    let textB = this.refs.textB.state.value;
+    let textC = this.refs.textC.state.value;
+    let textD = this.refs.textD.state.value; 
     //获取单选框选中的值
     this.setState({
+      textA: textA,
+      textB: textB,
+      textC: textC,
+      textD: textD,
       answer: event.target.value,
       deep: event.target.value
-    })
+    });
   };
   getId = (slectedKeys,e) => {
     this.setState({
@@ -59,8 +64,7 @@ class ExaminationAdd extends React.Component {
     let textB = this.refs.textB.state.value;
     let textC = this.refs.textC.state.value;
     let textD = this.refs.textD.state.value;
-    let answer =this.state.answer;
-    console.log(this.state.chapterId);
+    let answer = this.state.answer;
     let chapterId = this.state.chapterId;
     net.uploadFile(
       "question/add",
@@ -74,10 +78,10 @@ class ExaminationAdd extends React.Component {
         chapterId: chapterId
       },
       function (ob) {
-        if (ob.code === -1) {
-          alert("保存失败");
+        if (ob.code ===1) {
+          message.success(ob.msg);
         } else {
-          alert("保存成功");
+          message.warning("添加失败！");
         }
 
       }
@@ -124,7 +128,6 @@ class ExaminationAdd extends React.Component {
                 placeholder="请选择课程章节"
                 allowClear
                 showSearch={false}
-                // treeDefaultExpandAll
                 onChange={this.onChange}
                 onSelect={this.getId}
               >
@@ -143,25 +146,25 @@ class ExaminationAdd extends React.Component {
                 <Input ref="textA" placeholder="" />
               </Form.Item>
               <div className="readySelect">
-                <Radio value="textA" onChange={(e) => this.getValue(e)}>正确答案</Radio>
+                <Radio value={this.state.textA} onChange={(e) => this.getValue(e)}>正确答案</Radio>
               </div>
               <Form.Item label="选项B" >
                 <Input ref="textB" placeholder="" />
               </Form.Item>
               <div className="readySelect">
-                <Radio value="textB" onChange={(e) => this.getValue(e)}>正确答案</Radio>
+                <Radio value={this.state.textB} onChange={(e) => this.getValue(e)}>正确答案</Radio>
               </div>
               <Form.Item label="选项C" >
                 <Input ref="textC" placeholder="" />
               </Form.Item>
               <div className="readySelect">
-                <Radio value="textC" onChange={(e) => this.getValue(e)}>正确答案</Radio>
+                <Radio value={this.state.textC} onChange={(e) => this.getValue(e)}>正确答案</Radio>
               </div>
               <Form.Item label="选项D" >
                 <Input ref="textD" placeholder="" />
               </Form.Item>
               <div className="readySelect">
-                <Radio value="textD" onChange={(e) => this.getValue(e)}>正确答案</Radio>
+                <Radio value={this.state.textD} onChange={(e) => this.getValue(e)}>正确答案</Radio>
               </div>
               {/* <Form.Item label="答案" >
                 <Input ref="answer" placeholder="请输入答案" />

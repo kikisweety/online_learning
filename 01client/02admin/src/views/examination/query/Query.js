@@ -1,9 +1,13 @@
 import React from "react";
 import "./Query.css";
 import net from "../../../utils/net";
-import { Button, Table, TreeSelect, Modal } from "antd";
+import { Button, Table, TreeSelect, Modal,Input,Form, message } from "antd";
 const { TreeNode } = TreeSelect;
 const { confirm } = Modal;
+const layout = {
+  labelCol: { span: 5 },
+  wrapperCol: { span: 16 },
+};
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(
@@ -28,6 +32,13 @@ export default class ExaminationQuery extends React.Component {
       chapterId: -1,
       courses: [],
       allQuestions: [],
+      title:'',
+      textA: '',
+      textB: '',
+      textC: '',
+      textD: '',
+      answer: '',
+      currentQuestion:[],
       columns: [
         {
           title: '题目',
@@ -66,7 +77,7 @@ export default class ExaminationQuery extends React.Component {
           render: (text, record) => {
             return (
               <div>
-                <Button style={{ background: "#43BB60", color: 'white', marginRight: 10 }} onClick={this.toBankAdd.bind(this, record)}>修改</Button>
+                <Button style={{ background: "#43BB60", color: 'white', marginRight: 10 }} onClick={this.edit.bind(this, record)}>修改</Button>
                 <Button type="danger" style={{ color: 'white' }} onClick={this.delete.bind(this, record)}>删除</Button>
               </div>
             )
@@ -77,7 +88,37 @@ export default class ExaminationQuery extends React.Component {
     };
 
   };
-  componentDidMount = e => {
+  onChangeTitle(e) {
+    this.setState({
+      title:e.target.value
+    })
+  };
+  onChangeTextA(e) {
+    this.setState({
+      textA: e.target.value
+    })
+  };
+  onChangeTextB(e) {
+    this.setState({
+      textB: e.target.value
+    })
+  };
+  onChangeTextC(e) {
+    this.setState({
+      textC: e.target.value
+    })
+  };
+  onChangeTextD(e) {
+    this.setState({
+      textD: e.target.value
+    })
+  };
+  onChangeAnswer(e) {
+    this.setState({
+      answer: e.target.value
+    })
+  };
+  componentDidMount (){
     let that = this;
     net.post("courses/and/chapters", {}, function (ob) {
       that.setState({
@@ -94,8 +135,49 @@ export default class ExaminationQuery extends React.Component {
       })
     })
   };
-  toBankAdd(record) {
-    this.props.history.push({ pathname: `/home/examination/add`, state: { examList: record } })
+  edit(record) { 
+    let title = record.title;
+    let textA = record.textA;
+    let textB = record.textB;
+    let textC = record.textC;
+    let textD = record.textD;
+    let answer = record.answer;
+    let chapterId = record.chapterId;
+    this.setState({
+      title: title,
+      textA: textA,
+      textB: textB,
+      textC: textC,
+      textD: textD,
+      answer: answer,
+      chapterId:chapterId,
+      currentQuestion:record
+    });
+    this.refs.addForm.style.display = "block";
+    this.refs.opacity.style.display = "block";
+  };
+  update() { 
+    let that = this;
+    let id = this.state.currentQuestion.id;
+    let title = this.state.title;
+    let textA = this.state.textA;
+    let textB = this.state.textB;
+    let textC = this.state.textC;
+    let textD = this.state.textD;
+    let answer = this.state.answer;
+    let chapterId = this.state.chapterId;
+    net.uploadFile("question/update", {id,title,textA,textB,textC,textD,answer,chapterId},function (ob) {
+      if (ob.code==1) {
+        message.success(ob.msg);
+        that.refs.addForm.style.display = "none";
+        that.refs.opacity.style.display = "none";
+        that.getQuestions();
+      }
+    })
+  }
+  closeForm() {
+    this.refs.addForm.style.display = "none";
+    this.refs.opacity.style.display = "none";
   };
   onChange = value => {
     this.setState({ value });
@@ -159,7 +241,6 @@ export default class ExaminationQuery extends React.Component {
               placeholder="请选择课程章节"
               allowClear
               showSearch={false}
-              // treeDefaultExpandAll
               onChange={this.onChange}
               onSelect={this.getId}
             >
@@ -194,6 +275,40 @@ export default class ExaminationQuery extends React.Component {
             pagination={{ pageSize: 8 }}
             scroll={{ y: 500 }}
           ></Table>
+          <div className="opacity" ref="opacity"></div>
+          <div className="addForm teacherForm" ref="addForm">
+            <div className="addTeacherTitle">题目修改</div>
+            <Form
+              name="nest-messages"
+              {...layout}
+              style={{ marginTop: '10px' }}
+            >
+              <Form.Item name='title' label="题目" rules={[{ required: true }]}>
+                <Input value={this.state.title} onChange={this.onChangeTitle.bind(this)} />
+              </Form.Item>
+              <Form.Item name='textA' label="选项A" >
+                <Input value={this.state.textA} onChange={this.onChangeTextA.bind(this)} />
+              </Form.Item>
+              <Form.Item name='textB' label="选项B" >
+                <Input value={this.state.textB} onChange={this.onChangeTextB.bind(this)} />
+              </Form.Item>
+              <Form.Item name='textC' label="选项C" >
+                <Input value={this.state.textC} onChange={this.onChangeTextC.bind(this)} />
+              </Form.Item>
+              <Form.Item name='textD' label="选项D" >
+                <Input value={this.state.textD} onChange={this.onChangeTextD.bind(this)} />
+              </Form.Item>
+              <Form.Item name='answer' label="答案" >
+                <Input value={this.state.answer} onChange={this.onChangeAnswer.bind(this)} />
+              </Form.Item>
+              <Form.Item wrapperCol={{ span: 24, offset: 6 }}>
+                <Button onClick={this.update.bind(this)}>提交更改</Button>
+                <Button type="primary" onClick={this.closeForm.bind(this)}>
+                  取消
+                            </Button>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
       </div>
     );

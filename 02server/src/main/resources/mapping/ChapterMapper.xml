@@ -88,7 +88,7 @@
 </delete>
 
 	<update id="update" parameterType="com.ff.pojo.Chapter" >
-		update courses
+		update chapters
 		<set >
 			<if test="name != null" >
 				name = #{name},

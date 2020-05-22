@@ -119,7 +119,8 @@ public class ChapterServiceImpl implements ChapterService {
 	@Override
 	public Msg update(Chapter chapter) {
 		Msg msg =new Msg();
-		if(chapterMapper.update(chapter)==1){
+		int n=chapterMapper.update(chapter);
+		if(n==1){
 			msg.setMsg("ok");
 			msg.setCode(1);
 		}
